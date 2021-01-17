@@ -390,3 +390,13 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Angular gitignore Angular
+
+.DS_STORE
+
+/dist/
+/bazel-out
+/integration/bazel/bazel-*
+*.log
+node_modules
