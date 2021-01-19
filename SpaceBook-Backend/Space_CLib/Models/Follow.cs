@@ -14,6 +14,10 @@ namespace Space_CLib.Models
 
         public User FollowedUser { get; set; }
 
+        public Follow()
+        {
+            Date = DateTime.Now;
+        }
 
     }
 }
