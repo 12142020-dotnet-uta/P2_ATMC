@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Space_CLib.Models
 {
-    class Message
+    class Message: IDate
     {
         public int MessageID { get; set; }
 

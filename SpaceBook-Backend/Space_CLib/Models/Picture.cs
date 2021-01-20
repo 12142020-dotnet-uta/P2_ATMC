@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Space_CLib.Models
 {
-    class Picture
+    class Picture :IDate
     {
 
         public int PictureID { get; set; }
@@ -24,10 +24,7 @@ namespace Space_CLib.Models
 
         public DateTime Date { get; set; }
 
-        public Picture()
-        {
-            Date = DateTime.Now;
-        }
+        
 
     }
 }
