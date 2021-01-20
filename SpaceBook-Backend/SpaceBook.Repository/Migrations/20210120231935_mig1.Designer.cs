@@ -10,7 +10,7 @@ using SpaceBook.Repository;
 namespace SpaceBook.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210120214200_mig1")]
+    [Migration("20210120231935_mig1")]
     partial class mig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,9 +90,14 @@ namespace SpaceBook.Repository.Migrations
                     b.Property<int>("FollowedId")
                         .HasColumnType("int");
 
+                    b.Property<int>("FollowerId")
+                        .HasColumnType("int");
+
                     b.HasKey("FollowID");
 
                     b.HasIndex("FollowedId");
+
+                    b.HasIndex("FollowerId");
 
                     b.ToTable("Follows");
                 });
@@ -110,6 +115,9 @@ namespace SpaceBook.Repository.Migrations
                     b.Property<int?>("ParentMessageMessageID")
                         .HasColumnType("int");
 
+                    b.Property<int>("RecipientId")
+                        .HasColumnType("int");
+
                     b.Property<int>("SenderId")
                         .HasColumnType("int");
 
@@ -121,6 +129,8 @@ namespace SpaceBook.Repository.Migrations
                     b.HasKey("MessageID");
 
                     b.HasIndex("ParentMessageMessageID");
+
+                    b.HasIndex("RecipientId");
 
                     b.HasIndex("SenderId");
 
@@ -291,7 +301,15 @@ namespace SpaceBook.Repository.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SpaceBook.Models.User", "Follower")
+                        .WithMany()
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Followed");
+
+                    b.Navigation("Follower");
                 });
 
             modelBuilder.Entity("SpaceBook.Models.Message", b =>
@@ -300,6 +318,12 @@ namespace SpaceBook.Repository.Migrations
                         .WithMany()
                         .HasForeignKey("ParentMessageMessageID");
 
+                    b.HasOne("SpaceBook.Models.User", "Recipient")
+                        .WithMany()
+                        .HasForeignKey("RecipientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SpaceBook.Models.User", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId")
@@ -307,6 +331,8 @@ namespace SpaceBook.Repository.Migrations
                         .IsRequired();
 
                     b.Navigation("ParentMessage");
+
+                    b.Navigation("Recipient");
 
                     b.Navigation("Sender");
                 });

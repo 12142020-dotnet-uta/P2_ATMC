@@ -88,33 +88,16 @@ namespace SpaceBook.Repository.Migrations
                     b.Property<int>("FollowedId")
                         .HasColumnType("int");
 
+                    b.Property<int>("FollowerId")
+                        .HasColumnType("int");
+
                     b.HasKey("FollowID");
 
                     b.HasIndex("FollowedId");
 
+                    b.HasIndex("FollowerId");
+
                     b.ToTable("Follows");
-                });
-
-            modelBuilder.Entity("SpaceBook.Models.Follower", b =>
-                {
-                    b.Property<int>("FollowerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int?>("FollowID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserID")
-                        .HasColumnType("int");
-
-                    b.HasKey("FollowerId");
-
-                    b.HasIndex("FollowID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("Followers");
                 });
 
             modelBuilder.Entity("SpaceBook.Models.Message", b =>
@@ -130,6 +113,9 @@ namespace SpaceBook.Repository.Migrations
                     b.Property<int?>("ParentMessageMessageID")
                         .HasColumnType("int");
 
+                    b.Property<int>("RecipientId")
+                        .HasColumnType("int");
+
                     b.Property<int>("SenderId")
                         .HasColumnType("int");
 
@@ -142,31 +128,11 @@ namespace SpaceBook.Repository.Migrations
 
                     b.HasIndex("ParentMessageMessageID");
 
+                    b.HasIndex("RecipientId");
+
                     b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
-                });
-
-            modelBuilder.Entity("SpaceBook.Models.MessageRecipient", b =>
-                {
-                    b.Property<int>("MessageRecipientId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("MessageId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RecipientId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MessageRecipientId");
-
-                    b.HasIndex("MessageId");
-
-                    b.HasIndex("RecipientId");
-
-                    b.ToTable("MessageRecipients");
                 });
 
             modelBuilder.Entity("SpaceBook.Models.Picture", b =>
@@ -333,22 +299,15 @@ namespace SpaceBook.Repository.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SpaceBook.Models.User", "Follower")
+                        .WithMany()
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Followed");
-                });
 
-            modelBuilder.Entity("SpaceBook.Models.Follower", b =>
-                {
-                    b.HasOne("SpaceBook.Models.Follow", "Follow")
-                        .WithMany()
-                        .HasForeignKey("FollowID");
-
-                    b.HasOne("SpaceBook.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserID");
-
-                    b.Navigation("Follow");
-
-                    b.Navigation("User");
+                    b.Navigation("Follower");
                 });
 
             modelBuilder.Entity("SpaceBook.Models.Message", b =>
@@ -356,6 +315,12 @@ namespace SpaceBook.Repository.Migrations
                     b.HasOne("SpaceBook.Models.Message", "ParentMessage")
                         .WithMany()
                         .HasForeignKey("ParentMessageMessageID");
+
+                    b.HasOne("SpaceBook.Models.User", "Recipient")
+                        .WithMany()
+                        .HasForeignKey("RecipientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SpaceBook.Models.User", "Sender")
                         .WithMany()
@@ -365,26 +330,9 @@ namespace SpaceBook.Repository.Migrations
 
                     b.Navigation("ParentMessage");
 
-                    b.Navigation("Sender");
-                });
-
-            modelBuilder.Entity("SpaceBook.Models.MessageRecipient", b =>
-                {
-                    b.HasOne("SpaceBook.Models.Message", "Message")
-                        .WithMany()
-                        .HasForeignKey("MessageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SpaceBook.Models.User", "Recipient")
-                        .WithMany()
-                        .HasForeignKey("RecipientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Message");
-
                     b.Navigation("Recipient");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("SpaceBook.Models.Rating", b =>
