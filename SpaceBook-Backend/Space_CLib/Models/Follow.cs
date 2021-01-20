@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Space_CLib.Models
 {
-    class Follow
+    class Follow :IDate
     {
         public int FollowID { get; set; }
 

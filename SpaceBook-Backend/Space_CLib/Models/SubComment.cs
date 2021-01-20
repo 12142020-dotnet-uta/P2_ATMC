@@ -5,14 +5,12 @@ using System.Text;
 
 namespace Space_CLib.Models
 {
-    class SubComment
+    class SubComment: IComments, IDate
     {
         public int SubCommentID { get; set; }
 
-        [Required]
-        [DataType(DataType.Text)]
-        [StringLength(300, ErrorMessage = "The comment must not exceed 300 characters.")]
-        public string Text { get; set; }
+        private string strText;
+        public string CommentText { get => strText; set => strText = value; }
 
         public DateTime Date { get; set; }
 
