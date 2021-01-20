@@ -14,8 +14,6 @@ namespace SpaceBook.Repository
         DbSet<Rating> Ratings { get; set; }
         DbSet<User> Users { get; set; }
         DbSet<UserPicture> UserPictures { get; set; }
-        //DbSet<MessageRecipient> MessageRecipients { get; set; }
-        //DbSet<Follower> Followers { get; set; }
 
 
         public ApplicationDbContext()
@@ -34,7 +32,7 @@ namespace SpaceBook.Repository
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=SpaceBookTest;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=tcp:atmc.database.windows.net,1433;Initial Catalog=atmcdb;Persist Security Info=False;User ID=proj2;Password=password123!;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
                 base.OnConfiguring(optionsBuilder);
             }
         }
