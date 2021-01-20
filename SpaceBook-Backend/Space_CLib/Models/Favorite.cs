@@ -5,12 +5,18 @@ using System.Text;
 
 namespace SpaceBook.Models
 {
-    class Favorite
+    public class Favorite
     {
         [Key]
         public int FavoriteID { get; set; }
 
         public User User { get; set; }
+
+        public int UserId { get; set; }
+
         public Picture Picture { get; set; }
+
+        public int PictureId { get; set; }
+
     }
 }

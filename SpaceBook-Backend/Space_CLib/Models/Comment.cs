@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SpaceBook.Models
 {
-    class Comment: IComments, IDate
+   public class Comment: IComments, IDate
     {
         [Key]
         public int CommentID { get; set; }
@@ -16,8 +16,14 @@ namespace SpaceBook.Models
 
         public User UserCommented { get; set; }
 
+        public int UserCommentedId { get; set; }
+
+
         public Picture PictureCommented { get; set; }
 
+        public int PictureCommentedId { get; set; }
+
+        public Comment? ParentComment { get; set; }
 
         public Comment()
         {

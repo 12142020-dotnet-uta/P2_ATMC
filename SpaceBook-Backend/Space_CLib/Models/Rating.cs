@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SpaceBook.Models
 {
-    class Rating
+    public class Rating
     {
         [Key]
         public int RatingID { get; set; }
@@ -16,7 +16,12 @@ namespace SpaceBook.Models
 
         public User UserRating { get; set; }
 
+        public int UserRatingId { get; set; }
+
         public Picture RatedPicture { get; set; }
+
+        public int RatedPictureId { get; set; }
+
 
 
     }

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace SpaceBook.Models
 {
-    class Message: IDate
+    public class Message: IDate
     {
         [Key]
         public int MessageID { get; set; }
@@ -19,7 +20,10 @@ namespace SpaceBook.Models
 
         public User Sender { get; set; }
 
-        public User Receiver { get; set; }
+        public int SenderId { get; set; }
+
+        public Message ParentMessage { get; set; }
+
 
         public Message()
         {
