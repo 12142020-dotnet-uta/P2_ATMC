@@ -7,16 +7,16 @@ namespace Space_CLib.Models
 {
     class SubComment: IComments, IDate
     {
+        [Key]
         public int SubCommentID { get; set; }
-
-        private string strText;
-        public string CommentText { get => strText; set => strText = value; }
+        [Required]
+        public string CommentText { get; set; }
 
         public DateTime Date { get; set; }
 
         public User UserComment { get; set; }
 
-        public Comment comment { get; set; }
+        public Comment Comment { get; set; }
 
         public SubComment()
         {

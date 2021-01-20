@@ -7,6 +7,7 @@ namespace Space_CLib.Models
 {
     class Message: IDate
     {
+        [Key]
         public int MessageID { get; set; }
 
         [DataType(DataType.Text)]
@@ -16,9 +17,9 @@ namespace Space_CLib.Models
 
         public DateTime Date { get; set; }
 
-        public User UserMessaged { get; set; }
+        public User Sender { get; set; }
 
-        public User MessagedUser { get; set; }
+        public User Receiver { get; set; }
 
         public Message()
         {

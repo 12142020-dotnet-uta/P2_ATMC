@@ -7,8 +7,9 @@ namespace Space_CLib.Models
 {
     class Comment: IComments, IDate
     {
+        [Key]
         public int CommentID { get; set; }
-
+        [Required]
         public string CommentText { get; set; }
 
         public DateTime Date { get; set; }

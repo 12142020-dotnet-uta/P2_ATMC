@@ -8,13 +8,17 @@ namespace Space_CLib.Models
     class Picture :IDate
     {
 
+        [Key] 
         public int PictureID { get; set; }
         
         [Required]
         [DataType(DataType.Text)]
         public string Title { get; set; }
-        public bool MediaType { get; set; }
 
+        [Required]
+        public MediaType MediaType { get; set; }
+
+        [Required]
         [DataType(DataType.ImageUrl)]
         public string ImageURL { get; set; }
 
@@ -23,8 +27,5 @@ namespace Space_CLib.Models
         public string Description { get; set; }
 
         public DateTime Date { get; set; }
-
-        
-
     }
 }

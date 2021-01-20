@@ -7,6 +7,7 @@ namespace Space_CLib.Models
 {
     class User
     {
+        [Key]
         public int UserID { get; set; }
 
         [Required]
@@ -17,6 +18,7 @@ namespace Space_CLib.Models
         public string Email { get; set; }
 
         [Required]
+        [StringLength(50, MinimumLength = 7)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 

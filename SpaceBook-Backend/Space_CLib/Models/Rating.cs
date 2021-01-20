@@ -7,10 +7,11 @@ namespace Space_CLib.Models
 {
     class Rating
     {
-
+        [Key]
         public int RatingID { get; set; }
 
         [Required]
+        [Range(0,5)]
         public double Value { get; set; }
 
         public User UserRating { get; set; }
