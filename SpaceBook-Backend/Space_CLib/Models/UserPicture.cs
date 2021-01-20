@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SpaceBook.Models
 {
-    class UserPicture
+    public class UserPicture
     {
         [Key]
         public int UserPictureID { get; set; }

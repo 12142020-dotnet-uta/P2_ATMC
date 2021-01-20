@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SpaceBook.Models
 {
-    class Favorite
+    public class Favorite
     {
         [Key]
         public int FavoriteID { get; set; }

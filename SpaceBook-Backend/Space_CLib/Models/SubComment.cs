@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SpaceBook.Models
 {
-    class SubComment: IComments, IDate
+    public class SubComment : IComments, IDate
     {
         [Key]
         public int SubCommentID { get; set; }

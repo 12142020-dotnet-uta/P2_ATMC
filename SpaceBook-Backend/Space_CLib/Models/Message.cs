@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SpaceBook.Models
 {
-    class Message: IDate
+    public class Message : IDate
     {
         [Key]
         public int MessageID { get; set; }

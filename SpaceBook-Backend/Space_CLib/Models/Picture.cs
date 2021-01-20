@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SpaceBook.Models
 {
-    class Picture :IDate
+    public class Picture :IDate
     {
 
         [Key] 
