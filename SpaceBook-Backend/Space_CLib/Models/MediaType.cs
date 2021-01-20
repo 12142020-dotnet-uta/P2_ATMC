@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Space_CLib.Models
+namespace SpaceBook.Models
 {
     public enum MediaType
     {

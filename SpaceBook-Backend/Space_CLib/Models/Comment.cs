@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Space_CLib.Models
+namespace SpaceBook.Models
 {
     class Comment: IComments, IDate
     {

@@ -6,4 +6,12 @@
     <RootNamespace>SpaceBook</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Space_CLib\SpaceBook.Models.csproj" />
+  </ItemGroup>
+
 </Project>

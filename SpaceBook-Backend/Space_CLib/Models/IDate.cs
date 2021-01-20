@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Space_CLib.Models
+namespace SpaceBook.Models
 {
     internal interface IDate
     {
