@@ -150,7 +150,7 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public List<Picture> GetAllFavoritePicturesForUser(int userId)
+        public List<Picture> GetAllFavoritePicturesForUser(string userId)
         {
             return _dbContext.Favorites.Include(x => x.Picture).Where(x => x.UserId == userId).Select(x => x.Picture).ToList();
         }

@@ -14,10 +14,10 @@ namespace SpaceBook.Models
         public DateTime Date { get; set; }
         
         public ApplicationUser Followed { get; set; }
-        public int FollowedId { get; set; }
+        public string FollowedId { get; set; }
 
         public ApplicationUser Follower { get; set; }
-        public int FollowerId { get; set; }
+        public string FollowerId { get; set; }
 
 
 

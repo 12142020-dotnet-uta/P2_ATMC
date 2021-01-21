@@ -13,7 +13,7 @@ namespace SpaceBook.Repository
         public DbSet<Message> Messages { get; set; }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<Rating> Ratings { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<UserPicture> UserPictures { get; set; }
 
 

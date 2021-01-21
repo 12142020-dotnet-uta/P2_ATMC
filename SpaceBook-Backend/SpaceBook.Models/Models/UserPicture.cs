@@ -12,7 +12,7 @@ namespace SpaceBook.Models
         public ApplicationUser UploadedBy { get; set; }
         /* save the picture as stream in db, a folder in the API resources or in a Azure Blob storage?? */
 
-        public int UploadedById { get; set; }
+        public string UploadedById { get; set; }
 
         public Picture Picture { get; set; }
 

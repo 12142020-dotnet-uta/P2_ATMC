@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SpaceBook.Repository;
 
 namespace SpaceBook.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210121222810_m2")]
+    partial class m2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,7 +243,10 @@ namespace SpaceBook.Repository.Migrations
                     b.Property<int>("PictureCommentedId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserCommentedId")
+                    b.Property<int>("UserCommentedId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserCommentedId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("CommentID");
@@ -250,7 +255,7 @@ namespace SpaceBook.Repository.Migrations
 
                     b.HasIndex("PictureCommentedId");
 
-                    b.HasIndex("UserCommentedId");
+                    b.HasIndex("UserCommentedId1");
 
                     b.ToTable("Comments");
                 });
@@ -265,14 +270,17 @@ namespace SpaceBook.Repository.Migrations
                     b.Property<int>("PictureId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("FavoriteID");
 
                     b.HasIndex("PictureId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Favorites");
                 });
@@ -377,7 +385,10 @@ namespace SpaceBook.Repository.Migrations
                     b.Property<int>("RatedPictureId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserRatingId")
+                    b.Property<int>("UserRatingId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserRatingId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<double>("Value")
@@ -387,7 +398,7 @@ namespace SpaceBook.Repository.Migrations
 
                     b.HasIndex("RatedPictureId");
 
-                    b.HasIndex("UserRatingId");
+                    b.HasIndex("UserRatingId1");
 
                     b.ToTable("Ratings");
                 });
@@ -402,14 +413,17 @@ namespace SpaceBook.Repository.Migrations
                     b.Property<int>("PictureId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UploadedById")
+                    b.Property<int>("UploadedById")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UploadedById1")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("UserPictureID");
 
                     b.HasIndex("PictureId");
 
-                    b.HasIndex("UploadedById");
+                    b.HasIndex("UploadedById1");
 
                     b.ToTable("UserPictures");
                 });
@@ -496,7 +510,7 @@ namespace SpaceBook.Repository.Migrations
 
                     b.HasOne("SpaceBook.Models.ApplicationUser", "UserCommented")
                         .WithMany()
-                        .HasForeignKey("UserCommentedId");
+                        .HasForeignKey("UserCommentedId1");
 
                     b.Navigation("ParentComment");
 
@@ -515,7 +529,7 @@ namespace SpaceBook.Repository.Migrations
 
                     b.HasOne("SpaceBook.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("Picture");
 
@@ -568,7 +582,7 @@ namespace SpaceBook.Repository.Migrations
 
                     b.HasOne("SpaceBook.Models.ApplicationUser", "UserRating")
                         .WithMany()
-                        .HasForeignKey("UserRatingId");
+                        .HasForeignKey("UserRatingId1");
 
                     b.Navigation("RatedPicture");
 
@@ -585,7 +599,7 @@ namespace SpaceBook.Repository.Migrations
 
                     b.HasOne("SpaceBook.Models.ApplicationUser", "UploadedBy")
                         .WithMany()
-                        .HasForeignKey("UploadedById");
+                        .HasForeignKey("UploadedById1");
 
                     b.Navigation("Picture");
 

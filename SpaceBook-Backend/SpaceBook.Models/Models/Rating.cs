@@ -16,7 +16,7 @@ namespace SpaceBook.Models
 
         public ApplicationUser UserRating { get; set; }
 
-        public int UserRatingId { get; set; }
+        public string UserRatingId { get; set; }
 
         public Picture RatedPicture { get; set; }
 

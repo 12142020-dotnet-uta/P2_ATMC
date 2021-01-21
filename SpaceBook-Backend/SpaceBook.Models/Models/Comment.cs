@@ -16,7 +16,7 @@ namespace SpaceBook.Models
 
         public ApplicationUser UserCommented { get; set; }
 
-        public int UserCommentedId { get; set; }
+        public string UserCommentedId { get; set; }
 
 
         public Picture PictureCommented { get; set; }
