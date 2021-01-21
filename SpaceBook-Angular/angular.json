@@ -120,5 +120,8 @@
       }
     }
   },
-  "defaultProject": "SpaceBook-Angular"
+  "defaultProject": "SpaceBook-Angular",
+  "cli": {
+    "analytics": false
+  }
 }
