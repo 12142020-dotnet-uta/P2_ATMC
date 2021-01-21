@@ -10,6 +10,7 @@ const routes : Routes = [
   {path: '', redirectTo:'/dashboard', pathMatch:'full' },
   {path: 'dashboard', component: DashboardComponent},
   {path: 'gallery',component:GalleryComponent},
+  { path: '**', redirectTo:'/dashboard'}, //WildCard, if not found...
 ];
 
 
