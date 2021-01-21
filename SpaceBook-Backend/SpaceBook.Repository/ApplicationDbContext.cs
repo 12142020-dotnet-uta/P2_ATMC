@@ -33,8 +33,8 @@ namespace SpaceBook.Repository
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //optionsBuilder.UseSqlServer("Server=tcp:atmc.database.windows.net,1433;Initial Catalog=atmcdb;Persist Security Info=False;User ID=proj2;Password=password123!;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=Proj2Test;Trusted_Connection=True;MultipleActiveResultSets=true");
+                optionsBuilder.UseSqlServer("Server=tcp:atmc.database.windows.net,1433;Initial Catalog=atmcdb;Persist Security Info=False;User ID=proj2;Password=password123!;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                //optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=Proj2Test;Trusted_Connection=True;MultipleActiveResultSets=true");
                 base.OnConfiguring(optionsBuilder);
             }
         }
