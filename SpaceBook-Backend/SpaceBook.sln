@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceBook", "SpaceBook\SpaceBook.csproj", "{36CFA10B-2FC3-4189-A374-31487B87788D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceBook.Models", "Space_CLib\SpaceBook.Models.csproj", "{242EA65F-35F6-49C2-AE51-685C4A04EF45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceBook.Models", "SpaceBook.Models\SpaceBook.Models.csproj", "{242EA65F-35F6-49C2-AE51-685C4A04EF45}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceBook.Business", "SpaceBook.Business\SpaceBook.Business.csproj", "{669FB074-C9CF-4B54-A9A3-586B3CAD7297}"
 EndProject

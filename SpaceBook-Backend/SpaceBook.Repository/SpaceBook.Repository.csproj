@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Space_CLib\SpaceBook.Models.csproj" />
+    <ProjectReference Include="..\SpaceBook.Models\SpaceBook.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

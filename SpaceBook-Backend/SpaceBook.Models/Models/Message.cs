@@ -22,6 +22,10 @@ namespace SpaceBook.Models
 
         public int SenderId { get; set; }
 
+        public User Recipient { get; set; }
+
+        public int RecipientId { get; set; }
+
         public Message ParentMessage { get; set; }
 
 

@@ -14,8 +14,6 @@ namespace SpaceBook.Repository
         DbSet<Rating> Ratings { get; set; }
         DbSet<User> Users { get; set; }
         DbSet<UserPicture> UserPictures { get; set; }
-        DbSet<MessageRecipient> MessageRecipients { get; set; }
-        DbSet<Follower> Followers { get; set; }
 
 
         public ApplicationDbContext()

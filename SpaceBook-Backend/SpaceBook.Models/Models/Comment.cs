@@ -23,7 +23,7 @@ namespace SpaceBook.Models
 
         public int PictureCommentedId { get; set; }
 
-        public Comment? ParentComment { get; set; }
+        public Comment ParentComment { get; set; }
 
         public Comment()
         {
