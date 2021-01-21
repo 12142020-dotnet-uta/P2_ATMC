@@ -10,7 +10,7 @@ namespace SpaceBook.Models
         [Key]
         public int FavoriteID { get; set; }
 
-        public User User { get; set; }
+        public ApplicationUser User { get; set; }
 
         public int UserId { get; set; }
 

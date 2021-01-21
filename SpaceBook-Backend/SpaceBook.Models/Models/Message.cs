@@ -18,11 +18,11 @@ namespace SpaceBook.Models
 
         public DateTime Date { get; set; }
 
-        public User Sender { get; set; }
+        public ApplicationUser Sender { get; set; }
 
         public int SenderId { get; set; }
 
-        public User Recipient { get; set; }
+        public ApplicationUser Recipient { get; set; }
 
         public int RecipientId { get; set; }
 

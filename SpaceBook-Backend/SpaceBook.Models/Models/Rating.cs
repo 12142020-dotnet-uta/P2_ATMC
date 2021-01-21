@@ -14,7 +14,7 @@ namespace SpaceBook.Models
         [Range(0,5)]
         public double Value { get; set; }
 
-        public User UserRating { get; set; }
+        public ApplicationUser UserRating { get; set; }
 
         public int UserRatingId { get; set; }
 

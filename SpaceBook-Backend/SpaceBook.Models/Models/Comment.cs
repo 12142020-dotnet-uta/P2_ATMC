@@ -14,7 +14,7 @@ namespace SpaceBook.Models
 
         public DateTime Date { get; set; }
 
-        public User UserCommented { get; set; }
+        public ApplicationUser UserCommented { get; set; }
 
         public int UserCommentedId { get; set; }
 
