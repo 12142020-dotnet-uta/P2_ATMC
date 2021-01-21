@@ -6,14 +6,14 @@ namespace SpaceBook.Repository
 {         
     public class ApplicationDbContext : DbContext
     {
-        DbSet<Comment> Comments { get; set; }
-        DbSet<Favorite> Favorites { get; set; }
-        DbSet<Follow> Follows { get; set; }
-        DbSet<Message> Messages { get; set; }
-        DbSet<Picture> Pictures { get; set; }
-        DbSet<Rating> Ratings { get; set; }
-        DbSet<User> Users { get; set; }
-        DbSet<UserPicture> UserPictures { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Favorite> Favorites { get; set; }
+        public DbSet<Follow> Follows { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Picture> Pictures { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserPicture> UserPictures { get; set; }
 
 
         public ApplicationDbContext()
