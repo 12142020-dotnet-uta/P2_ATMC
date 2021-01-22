@@ -2,7 +2,7 @@ export interface Message {
     MessageID: number;
     Text: string;
     Date:Date;
-    SenderID: number;
-    RecipientId: number;
+    SenderID: string;
+    RecipientId: string;
     ParentMessageID?: number;
 }

@@ -1,6 +1,6 @@
 export interface Rating {
     RatingID: number;
     Value: number;
-    UserRatingID: number;
+    UserRatingID: string;
     RatedPictureID: number; 
 }
