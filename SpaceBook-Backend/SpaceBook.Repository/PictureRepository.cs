@@ -86,12 +86,7 @@ namespace SpaceBook.Repository
                 return false;
             }
             //make changes and save
-            Picture original = GetPictureById(picture.PictureID);
-            original.MediaType = picture.MediaType;
-            original.ImageURL = picture.ImageURL;
-            original.Title = picture.Title;
-            original.Description = picture.Description;
-            original.Date = picture.Date;
+            _dbContext.Pictures.Update(picture);
             _dbContext.SaveChanges();
             //check that changes were made
             Picture checking = GetPictureById(picture.PictureID);
@@ -128,7 +123,8 @@ namespace SpaceBook.Repository
             //attempt to remove
             _dbContext.Pictures.Remove(picture);
             _dbContext.SaveChanges();
-            return IsPictureInDb(pictureId);
+            //return true if picture is no longer in db
+            return !IsPictureInDb(pictureId);
         }
 
         /// <summary>
