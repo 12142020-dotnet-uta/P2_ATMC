@@ -8,12 +8,20 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 /* Bootstrap Modules */
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DirectMessagingComponent } from './components/direct-messaging/direct-messaging.component';
+import { PictureDetailComponent } from "./components/picture/picture-detail/picture-detail.component";
+import { UploadPictureComponent } from "./components/picture/upload-picture/upload-picture.component";
+import { LogInComponent } from './components/user/log-in/log-in.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GalleryComponent,
-    DashboardComponent
+    DashboardComponent,
+    UploadPictureComponent,
+    PictureDetailComponent,
+    DirectMessagingComponent,
+    LogInComponent
   ],
   imports: [
     BrowserModule,
