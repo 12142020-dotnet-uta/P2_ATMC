@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceBook", "SpaceBook\SpaceBook.csproj", "{36CFA10B-2FC3-4189-A374-31487B87788D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceBook", "SpaceBook\SpaceBook.csproj", "{1DD0BE48-A351-43DC-9A62-0D9A84FE3F68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Space_CLib", "Space_CLib\Space_CLib.csproj", "{242EA65F-35F6-49C2-AE51-685C4A04EF45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceBook.Business", "SpaceBook.Business\SpaceBook.Business.csproj", "{0DA03DE7-465F-4F1B-A5D1-407853AD9D15}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceBook.Models", "SpaceBook.Models\SpaceBook.Models.csproj", "{76B53718-0EE5-41C7-A835-60229C1B36DC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceBook.Repository", "SpaceBook.Repository\SpaceBook.Repository.csproj", "{6A709B33-5813-4D36-8964-CB90346FDA4C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceBook.Tests", "SpaceBook.Tests\SpaceBook.Tests.csproj", "{768F6CC9-E692-4293-A69F-E9F8D404368F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,19 +19,31 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{36CFA10B-2FC3-4189-A374-31487B87788D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{36CFA10B-2FC3-4189-A374-31487B87788D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{36CFA10B-2FC3-4189-A374-31487B87788D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{36CFA10B-2FC3-4189-A374-31487B87788D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{242EA65F-35F6-49C2-AE51-685C4A04EF45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{242EA65F-35F6-49C2-AE51-685C4A04EF45}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{242EA65F-35F6-49C2-AE51-685C4A04EF45}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{242EA65F-35F6-49C2-AE51-685C4A04EF45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DD0BE48-A351-43DC-9A62-0D9A84FE3F68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DD0BE48-A351-43DC-9A62-0D9A84FE3F68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DD0BE48-A351-43DC-9A62-0D9A84FE3F68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DD0BE48-A351-43DC-9A62-0D9A84FE3F68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DA03DE7-465F-4F1B-A5D1-407853AD9D15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DA03DE7-465F-4F1B-A5D1-407853AD9D15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DA03DE7-465F-4F1B-A5D1-407853AD9D15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DA03DE7-465F-4F1B-A5D1-407853AD9D15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76B53718-0EE5-41C7-A835-60229C1B36DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76B53718-0EE5-41C7-A835-60229C1B36DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76B53718-0EE5-41C7-A835-60229C1B36DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76B53718-0EE5-41C7-A835-60229C1B36DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A709B33-5813-4D36-8964-CB90346FDA4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A709B33-5813-4D36-8964-CB90346FDA4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A709B33-5813-4D36-8964-CB90346FDA4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A709B33-5813-4D36-8964-CB90346FDA4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{768F6CC9-E692-4293-A69F-E9F8D404368F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{768F6CC9-E692-4293-A69F-E9F8D404368F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{768F6CC9-E692-4293-A69F-E9F8D404368F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{768F6CC9-E692-4293-A69F-E9F8D404368F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D99422B0-06E8-4B7F-8013-FF3CE0D8FD32}
+		SolutionGuid = {9E42B300-3245-4334-8D03-F358BF8515B5}
 	EndGlobalSection
 EndGlobal
