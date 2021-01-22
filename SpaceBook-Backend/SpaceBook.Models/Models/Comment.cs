@@ -25,6 +25,8 @@ namespace SpaceBook.Models
 
         public Comment ParentComment { get; set; }
 
+        public int ParentCommentId { get; set; }
+
         public Comment()
         {
             Date = DateTime.Now;
