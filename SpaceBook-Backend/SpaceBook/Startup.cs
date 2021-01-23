@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SpaceBook.Business;
 using SpaceBook.Models;
 using SpaceBook.Repository;
 using System;
@@ -69,6 +70,7 @@ namespace SpaceBook
             //services.AddScoped<ApplicationDbContext>();
 
             services.AddScoped<PictureRepository>();
+            services.AddScoped<PictureBusinessLogic>();
 
         }
 
