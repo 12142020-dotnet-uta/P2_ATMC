@@ -20,7 +20,6 @@ namespace SpaceBook.Controllers
             _pictureBusinessLogic = pictureBusinessLogic;
         }
 
-        [Authorize]
         [HttpGet("{pictureId}")]
         public IActionResult GetPicture(int pictureId)
         {
