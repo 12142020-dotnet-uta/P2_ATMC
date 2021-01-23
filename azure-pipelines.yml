@@ -28,10 +28,6 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
 
 - task: SonarCloudPrepare@1
   inputs:
@@ -41,9 +37,10 @@ steps:
     projectKey: 'TeamATMC_P2_ATMC'
     projectName: 'P2_ATMC'
 
-- task: DotNetCoreCLI@2
+- task: VSTest@2
   inputs:
-    command: 'build'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
 
 - task: SonarCloudAnalyze@1
 - task: SonarCloudPublish@1
