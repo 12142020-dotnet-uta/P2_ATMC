@@ -1,3 +1,8 @@
 .myTitle{
-    margin: .5em;
+    font-size: 1.25em;
+}
+
+/**/
+.nav-item2{
+    margin-bottom: -4px;
 }

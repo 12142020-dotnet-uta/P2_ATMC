@@ -12,4 +12,27 @@ export class LogInComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  userLogIn = true;
+  userRegister = false;
+
+  /* The user object that will be used over here */
+
+  onChangingSection()
+  {
+    this.userLogIn = !this.userLogIn;
+    this.userRegister = !this.userRegister;
+  
+  }
+
+
+  RegisteringUser(){
+
+    //
+  }
+
+  LogIngUser()
+  {
+
+  }
+
 }
