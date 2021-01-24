@@ -14,12 +14,24 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
+
+
 steps:
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'sonarcloud'
+    organization: 'teamatmc'
+    scannerMode: 'MSBuild'
+    projectKey: 'TeamATMC_P2_ATMC'
+    projectName: 'P2_ATMC'
+
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
+
+
 
 - task: VSBuild@1
   inputs:
@@ -29,13 +41,6 @@ steps:
     configuration: '$(buildConfiguration)'
 
 
-- task: SonarCloudPrepare@1
-  inputs:
-    SonarCloud: 'sonarcloud'
-    organization: 'teamatmc'
-    scannerMode: 'MSBuild'
-    projectKey: 'TeamATMC_P2_ATMC'
-    projectName: 'P2_ATMC'
 
 - task: VSTest@2
   inputs:
