@@ -39,6 +39,8 @@ namespace SpaceBook.Controllers
             _userManager = userManager;
         }
 
+        //FOR AUTHORIZATION: Uncomment Authorize
+        //[Authorize]
         [HttpGet]
         public async Task<ActionResult> GetAllUsers()
         {
@@ -58,7 +60,7 @@ namespace SpaceBook.Controllers
                 }
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize]
         [HttpDelete("Id/{userId}")]
         public async Task<ActionResult> DeleteUser(string userId)
         {
@@ -77,7 +79,7 @@ namespace SpaceBook.Controllers
             return Ok(await _userRepo.AttemptRemoveApplicationUser(userId));
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize]
         [HttpPut("Id/{userId}")]
         public async Task<ActionResult> EditUser(string userId, [FromBody] EditUserModel model)
         {
@@ -152,16 +154,26 @@ namespace SpaceBook.Controllers
             return Ok(await _followRepo.GetFollowedOfUser(userId));
         }
 
+        //FOR AUTHORIZATION: Uncomment Authorize, Remove followerUserId paramater
+        //[Authorize]
         [HttpPost("Id/{followedUserId}/Follow")]
         public async Task<ActionResult> FollowUser(string followedUserId, [FromBody] string followerUserId)
         {
+            //var claimsIdentity = (ClaimsIdentity)User.Identity;
+            //var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
+            //var loggedIn = _userRepo.GetUserByUsername(claim.Value).Result;
+
+
+            //FOR AUTHORIZATION: Remove followerUserId from if statement, Add loggedIn.Id 
             if (!_userRepo.IsUserInDb(followedUserId).Result || !_userRepo.IsUserInDb(followerUserId).Result)
             {
                 return NotFound();
             }
             else
             {
+                //FOR AUTHORIZATION: Remove following line, uncomment follower = loggedIn
                 ApplicationUser follower = _userRepo.GetUserById(followerUserId).Result;
+                //ApplicationUser follower = loggedIn;
                 ApplicationUser followed = _userRepo.GetUserById(followedUserId).Result;
                 Follow follow = new Follow()
                 {
@@ -174,27 +186,48 @@ namespace SpaceBook.Controllers
             }
         }
 
+        //FOR AUTHORIZATION: Uncomment Authorize, Remove followerUserId paramater
+        //[Authorize]
         [HttpDelete("Id/{followedUserId}/Follow")]
         public async Task<ActionResult> DeleteFollow(string followedUserId, [FromBody] string followerUserId)
         {
+            //FOR AUTHORIZATION: Uncomment following 3 lines
+            //var claimsIdentity = (ClaimsIdentity)User.Identity;
+            //var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
+            //var loggedIn = _userRepo.GetUserByUsername(claim.Value).Result;
+
+            //FOR AUTHORIZATION: Remove followerUserId from if statement, Add loggedIn.Id 
             if (!_userRepo.IsUserInDb(followedUserId).Result || !_userRepo.IsUserInDb(followerUserId).Result)
             {
                 return NotFound();
             }
             else
             {
+                //FOR AUTHORIZATION: Remove followerUserId parameter, Add loggedIn.Id  
                 Follow follow = _followRepo.GetFollowByFollowerAndFollowedIds(followerUserId, followedUserId).Result;
                 return Ok(await _followRepo.AttemptRemoveFollow(follow.FollowID));
             }
 
         }
 
-
+        //FOR AUTHORIZATION: Uncomment Authorize
+        //[Authorize]
         [HttpPost("Id/{userId}/Favorites")]
-        public async Task<ActionResult> PostFavorite(string userId, [FromBody]int pictureId)
+        public async Task<ActionResult> PostFavorite(string userId, [FromBody] int pictureId)
         {
+            //FOR AUTHORIZATION: Uncomment following 3 lines
+            //var claimsIdentity = (ClaimsIdentity)User.Identity;
+            //var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
+            //var loggedIn = _userRepo.GetUserByUsername(claim.Value).Result;
+
+
             ApplicationUser user = _userRepo.GetUserById(userId).Result;
             Picture picture = _pictureRepo.GetPictureById(pictureId);
+
+            //FOR AUTHORIZATION: Uncomment following 3 lines
+            //if(loggedIn.Id != userId){
+            //  return Forbid();
+            //}
             Favorite favorite = new Favorite()
             {
                 User = user,
@@ -205,22 +238,24 @@ namespace SpaceBook.Controllers
             return Ok(await _favoriteRepo.AttemptAddFavorite(favorite));
         }
 
+
+        //FOR AUTHORIZATION: Uncomment Authorize
+        //[Authorize]
         [HttpDelete("Id/{userId}/Favorites")]
         public async Task<ActionResult> RemoveFavorite(string userId, [FromBody] int pictureId)
         {
+            //FOR AUTHORIZATION: Uncomment following 6 commented lines
+            //var claimsIdentity = (ClaimsIdentity)User.Identity;
+            //var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
+            //var loggedIn = _userRepo.GetUserByUsername(claim.Value).Result;
+
+            //if(loggedIn.Id != userId){
+            //  return Forbid();
+            //}
+
             Favorite favorite = _favoriteRepo.GetFavoriteByUserPicture(userId, pictureId).Result;
             return Ok(await _favoriteRepo.AttemptRemoveFavorite(favorite.FavoriteID));
         }
 
-
-        //[HttpGet("Id/{id}/Comments")]
-        //public ActionResult GetCommentsOfUser(string userId)
-        //{
-        //    if (!_userRepo.IsUserInDb(userId))
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(_commentRepo.GetAllCommentsByUser(userId));
-        //}
     }
 }
