@@ -10,3 +10,19 @@ a{
 a:hover{
     color: #794d60;
 }
+
+h5, h2, p ,label, span {
+    color: #FFFFFF;
+}
+
+.card{
+    background-color: #794d60;
+}
+
+html, body { height: 100%; }
+
+html, body { height: 100%; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+

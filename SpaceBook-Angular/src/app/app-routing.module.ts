@@ -6,6 +6,8 @@ import { DirectMessagingComponent } from "./components/direct-messaging/direct-m
 import { PictureDetailComponent } from "./components/picture/picture-detail/picture-detail.component";
 import { UploadPictureComponent } from "./components/picture/upload-picture/upload-picture.component";
 import { LogInComponent } from "./components/user/log-in/log-in.component";
+import { FollowingComponent } from "./components/user/following/following.component";
+import { ProfileComponent } from "./components/user/profile/profile.component";
 
 import { RouterModule,Routes } from "@angular/router";
 
@@ -13,7 +15,7 @@ const routes : Routes = [
   //Default route for navigation
   {path: '', redirectTo:'/dashboard', pathMatch:'full' },
   {path: 'dashboard', component: DashboardComponent},
-  {path: 'gallery',component:GalleryComponent},
+  {path: 'user/:id',component:ProfileComponent},
   {path: 'messaging',component:DirectMessagingComponent},
   {path: 'picture/upload',component:UploadPictureComponent},
   {path: 'picture/:id',component:PictureDetailComponent},

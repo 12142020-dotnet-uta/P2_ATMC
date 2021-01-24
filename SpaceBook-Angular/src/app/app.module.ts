@@ -23,8 +23,14 @@ import { NgbModule, NgbRating } from '@ng-bootstrap/ng-bootstrap';
 
 /*REVIEW*/
 import { MultiImageDisplayComponent } from './multi-image-display/multi-image-display.component';
+
+/*
+// import { FollowingComponent } from './following/following.component';
+import { DmButtonComponent } from './dm-button/dm-button.component';
 import { FollowingComponent } from './components/following/following.component';
 import { DmButtonComponent } from './components/dm-button/dm-button.component';
+*/
+
 import { UsernameComponent } from './username/username.component';
 /*REVIEW*/
 
@@ -32,6 +38,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
  /* Material Design Modules */
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { PictureComponent } from './components/picture/picture.component';
+import { FollowingComponent } from './components/user/following/following.component';
+import { ProfileComponent } from './components/user/profile/profile.component';
 
  
 @NgModule({
@@ -39,11 +48,15 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
     AppComponent,
     GalleryComponent,
     DashboardComponent,
-    HeroImageComponent,
-    MultiImageDisplayComponent,
+
+    UploadPictureComponent,
+    PictureDetailComponent,
+    DirectMessagingComponent,
+    LogInComponent,
+    PictureComponent,
     FollowingComponent,
-    DmButtonComponent,
-    UsernameComponent
+    ProfileComponent
+
   ],
   imports: [
     BrowserModule,
