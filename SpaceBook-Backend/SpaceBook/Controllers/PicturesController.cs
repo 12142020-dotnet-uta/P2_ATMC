@@ -20,6 +20,23 @@ namespace SpaceBook.Controllers
             _pictureBusinessLogic = pictureBusinessLogic;
         }
 
+        [HttpGet("daily")]
+        public IActionResult GetDailyPicture()
+        {
+            //will get daily pictures in the future; just gets picture 1 for now
+            //TODO: actually get picture of the day from nasa api; probably do it in business layer
+            Picture picture = _pictureBusinessLogic.GetPicture(1);
+            if (picture != null)
+            {
+                return Ok(picture);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+        }
+
         [HttpGet("{pictureId}")]
         public IActionResult GetPicture(int pictureId)
         {
