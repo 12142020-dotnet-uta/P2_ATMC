@@ -1,7 +1,13 @@
+//modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
+//services
+import { HeroimageService } from '../app/services/heroimage.service';
+
+//components
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { GalleryComponent } from './components/gallery/gallery.component';
@@ -10,15 +16,15 @@ import { DirectMessagingComponent } from './components/direct-messaging/direct-m
 import { PictureDetailComponent } from "./components/picture/picture-detail/picture-detail.component";
 import { UploadPictureComponent } from "./components/picture/upload-picture/upload-picture.component";
 import { LogInComponent } from './components/user/log-in/log-in.component';
+import { HeroImageComponent } from './components/hero-image/hero-image.component';
 
 /* Bootstrap Modules */
 import { NgbModule, NgbRating } from '@ng-bootstrap/ng-bootstrap';
 
 /*REVIEW*/
-import { HeroImageComponent } from './hero-image/hero-image.component';
 import { MultiImageDisplayComponent } from './multi-image-display/multi-image-display.component';
-import { FollowingComponent } from './following/following.component';
-import { DmButtonComponent } from './dm-button/dm-button.component';
+import { FollowingComponent } from './components/following/following.component';
+import { DmButtonComponent } from './components/dm-button/dm-button.component';
 import { UsernameComponent } from './username/username.component';
 /*REVIEW*/
 
@@ -45,10 +51,11 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
     NgbModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   exports: [NgbRating],
-  providers: [],
+  providers: [HeroimageService],
   bootstrap: [AppComponent, NgbRating]
 })
 export class AppModule { }
