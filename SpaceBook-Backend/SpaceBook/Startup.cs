@@ -70,6 +70,8 @@ namespace SpaceBook
             //services.AddScoped<ApplicationDbContext>();
 
             services.AddScoped<PictureRepository>();
+            services.AddScoped<ApplicationUserRepository>();
+            services.AddScoped<UserPictureRepository>();
             services.AddScoped<PictureBusinessLogic>();
 
         }

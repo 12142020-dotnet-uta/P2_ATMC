@@ -35,6 +35,15 @@ namespace SpaceBook.Controllers
             }
 
         }
+
+        [HttpGet("")]
+        public IActionResult GetAllPictures()
+        {
+            var pictures = _pictureBusinessLogic.GetAllPictures();
+            if (pictures == null) { return NotFound(); }
+            return Ok(pictures);
+        }
+
         [Authorize]
         [HttpPost]
         [Route("")]

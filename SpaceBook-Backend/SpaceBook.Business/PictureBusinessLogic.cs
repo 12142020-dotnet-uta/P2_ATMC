@@ -27,6 +27,11 @@ namespace SpaceBook.Business
             return _pictureRepository.GetPictureById(pictureId);
         }
 
+        public IEnumerable<Picture> GetAllPictures()
+        {
+            return _pictureRepository.GetAllPictures();
+        }
+
         public bool CreateUserPicture(Picture picture, string userId)
         {
             var user = _userRepository.GetUserByUsername(userId);
