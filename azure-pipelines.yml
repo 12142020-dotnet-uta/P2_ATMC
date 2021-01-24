@@ -40,7 +40,44 @@ steps:
     command: 'test'
     projects: '**/*Tests/*.csproj'
     arguments: --configuration $(buildConfiguration) --collect "Code Coverage"
+
+- task: Npm@1
+  displayName: 'Restore Angular Dependencies'
+  inputs:
+    workingDir: './SpaceBook-Angular/'
+    verbose: false
+
+- task: Npm@1
+  displayName: 'Build Angular'
+  inputs:
+    command: custom
+    workingDir: './SpaceBook-Angular/'
+    verbose: false
+    customCommand: 'run build'
+
+- task: PublishCodeCoverageResults@1
+  displayName: publish code coverage
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Agent.TempDirectory)/*/coburtura/coverage.xml'
 - task: SonarCloudAnalyze@1
 - task: SonarCloudPublish@1
   inputs:
     pollingTimeoutSec: '300'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet publish and zip'
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    zipAfterPublish: true
+
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(e220cb1a-5091-46b8-9758-b2b00183ab7f)'
+    appType: 'webApp'
+    WebAppName: 'ATMC-SpaceBook'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+
