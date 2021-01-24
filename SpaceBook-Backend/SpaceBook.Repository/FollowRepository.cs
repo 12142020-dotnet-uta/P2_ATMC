@@ -10,7 +10,7 @@ namespace SpaceBook.Repository
 {
     public class FollowRepository
     {
-        public ApplicationDbContext _dbContext;
+        private ApplicationDbContext _dbContext;
 
         public FollowRepository(ApplicationDbContext dbContext)
         {

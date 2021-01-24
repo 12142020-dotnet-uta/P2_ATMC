@@ -14,7 +14,7 @@ namespace SpaceBook.Repository
 
         public CommentRepository(ApplicationDbContext dbContext)
         {
-            dbContext = _dbContext;
+            _dbContext = dbContext;
         }
         
 
