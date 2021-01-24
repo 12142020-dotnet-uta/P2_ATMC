@@ -18,6 +18,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
  /* Material Design Modules */
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { PictureComponent } from './components/picture/picture.component';
+import { FollowingComponent } from './components/user/following/following.component';
+import { ProfileComponent } from './components/user/profile/profile.component';
 
  
 @NgModule({
@@ -28,7 +31,10 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
     UploadPictureComponent,
     PictureDetailComponent,
     DirectMessagingComponent,
-    LogInComponent
+    LogInComponent,
+    PictureComponent,
+    FollowingComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
