@@ -1,130 +1,69 @@
 <div class="back">
-    <div class="div-center">
-      <div class="content">
-        <!-- Use *ngIf for displaying the forms -->
-        <div class="Centrado">
-          <h5>Register&nbsp;&nbsp;</h5>
-          <mat-slide-toggle
-            [checked]='userLogIn'
-            (change)='onChangingSection()'
-          >
-        </mat-slide-toggle>
-        <!--    
-
-            [checked]='checkInicioSession'
-          (change)="IniSession()"
-          [color]='color'
-        
-        -->
-          <h5>&nbsp;&nbsp; Log In</h5>
-        </div>
-        <div class="" *ngIf="userLogIn" > <!--(submit)="LogIn($event)" *ngIf="checkInicioSession"-->
-          <hr />
-          <div class="form-group">
-            <label for="Telefono-o-Email">
-                <!-- {{'REWARDS.LOGIN.EMAIL' | translate}} -->
-                some text   
-            </label>
-            <input type="text" class="form-control" id="Telefono-o-Email" autofocus required><!--placeholder="{{'REWARDS.LOGIN.EMAIL' | translate}}"-->
-            <label for="Password">
-                <!-- {{'REWARDS.PASSWORD' | translate}} -->
-            </label>
-            <input type="password" class="form-control" id="Password"  required> <!-- placeholder="{{'REWARDS.PASSWORD' | translate}}" -->
-          </div>
-          <button type="submit" class="btn btn-light btn-block RedesSociales"> <span class="font-weight-bold miSpanBoton">
-              <!-- {{'REWARDS.LOGIN.TITLE' | translate}} -->
-            </span>
-            <img src="" alt="" class=""></button>
-            <!-- <small>¿Olvido su contraseña?</small> -->
-            <br>
-            <div class="row">
-              <div class="col-md-12">
-                <button class="btn btn-light btn-block"> 
-                    some text
-                    <!-- <span class=" font-weight-bold miSpanBoton">{{'REWARDS.FACEBOOK' | translate}}</span> -->
-                <!-- (click)="socialSignIn($event,'facebook')"  -->
-                    <img src="" alt="" class=""></button>
-              </div><!--
-              <div class="col-md-6">
-                <button (click)="socialSignIn($event,'google')" class="btn btn-light btn-block RedesSociales">Continuar con Google
-                  <img src="assets/img/icons8-logo-de-google-480.png" alt="" class="logoImg"></button>
-              </div>
-              -->
-            </div>
-          <!-- <button type="button" class="btn btn-link">Reset Password</button> -->
-        </div>
-        <div class="form-signin" *ngIf="userRegister"> <!--(submit)="RegistroManual($event)" *ngIf="checkRegistro"-->
-            <hr />
-            <div class="row">
-            <!--
-              <div class="col-md-12">
-                <button (click)="socialRegister($event,'facebook')" class="btn btn-light btn-block RedesSociales">{{'REWARDS.FACEBOOK' | translate}}
-                  <img src="assets/img/icons8-facebook-480.png" alt="" class="logoImg"></button>
-              </div>
-              <div class="col-md-6">
-                <button (click)="socialRegister($event,'google')" class="btn btn-light btn-block RedesSociales">Registrarse con Google
-                  <img src="assets/img/icons8-logo-de-google-480.png" alt="" class="logoImg"></button>
-              </div>
-            -->
-            </div>
-            <hr>
-            <!-- <label for="Nombre">Ingrese su nombre</label>
-            <input type="text" name="nombre" class="form-control" id="NombreUsuario" placeholder="Su nombre"> -->
-            <!-- 
-            <label for="Nombre">{{'REWARDS.LOGON.NOMBRE' | translate}}</label>
-            <input type="text" class="form-control" id="Nombre" placeholder="{{'REWARDS.LOGON.NOMBRE' | translate}}">
-            <label for="Apellido">{{'REWARDS.LOGON.APELLIDO' | translate}}</label>
-            <input type="text" class="form-control" id="Apellido" placeholder="{{'REWARDS.LOGON.APELLIDO' | translate}}">
-            <label for="FechaNacimiento" >{{'REWARDS.LOGON.NACIMIENTO' | translate}}</label>
-            <input type="text" class="form-control"
-            id="FechaNacimiento" name="Fecha"
-            placeholder="{{'REWARDS.LOGON.NACIMIENTO' | translate}}"
-            ngModel
-            bsDatepicker
-            [bsConfig]="dpConfig"
-            >
-            <label for="Ciudad">{{'REWARDS.LOGON.CIUDAD' | translate}}</label>
-            <select class="form-control" id="Ciudad" placeholder="Ciudad" >
-              <option> -Seleccione una ciudad-</option>
-              <option *ngFor="let ciudades of Ciudades">
-                {{ciudades}}
-              </option>
-            </select>
-             -->
-            <!-- <input type="text" class="form-control" id="Apellido" placeholder="Apellido"> -->
-            <div class="row">
-              <!-- <div class="col-md-6">
-                <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="Masculino" name="Sexo" checked value="M">
-                  <label class="custom-control-label" for="Masculino">{{'REWARDS.LOGON.MASCULINO' | translate}}</label>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" id="Femenino" name="Sexo" value="F">
-                  <label class="custom-control-label" for="Femenino">{{'REWARDS.LOGON.FEMENINO' | translate}}</label>
-                </div>
-              </div> -->
-            </div>
-            <!-- <label for="CorreoTelefono">{{'REWARDS.LOGON.TITLE-CORREO' | translate}}</label>
-            <div class="row">
-              <div class="col-md-6">
-                <input type="text" class="form-control" id="Correo" placeholder="{{'REWARDS.LOGON.CORREO' | translate}}">
-              </div>    
-              <div class="col-md-6">
-                <input type="text" class="form-control" id="Telefono" placeholder="{{'REWARDS.LOGON.TELEFONO' | translate}} ">
-              </div>
-            </div>
-            <label for="Pass">{{'REWARDS.PASSWORD' | translate}}</label>
-            <input type="password" class="form-control" id="Pass" placeholder="********" pattern=".{6,}"><br>
-            -->
-            <button type="button" class="btn btn-light btn-block" type="submit">  Register text
-              <!-- <img src="" alt="" class="logoImg"> -->
-              <!-- {{'REWARDS.LOGON.LOG' | translate}} -->
-            </button> 
-        </div>
-  
-  
+  <div class="div-center">
+    <div class="content">
+      <div class="Centered">
+        <h5>Register&nbsp;&nbsp;</h5>
+        <mat-slide-toggle
+          [checked]='boolLogIn'
+          (change)='onChangingSection()'
+        >
+      </mat-slide-toggle>
+      <h5>&nbsp;&nbsp; Log In</h5>
       </div>
+      <div *ngIf="boolLogIn" > <!--(submit)="LogIn($event)" *ngIf="checkInicioSession"-->
+        <hr />
+        <div class="form-group">
+          <label for="txtUserName">UserName</label>
+          <input type="text" [(ngModel)]="strLogInUserName" class="form-control" id="txtUserName" placeholder="UserName"> 
+          {{strLogInUserName}}
+          <!-- [userLogIn.UserName] -->
+          <label for="txtPassword">Password</label>
+          <input type="password" [(ngModel)]="strLogInPassword" class="form-control" id="txtPassword" placeholder="Password">
+          <!-- [(ngModel)]="strPassword" -->
+          {{strLogInPassword}}
+        </div>
+        <br>
+        <div class="row ">
+          <div class="col-md-12">
+            <button class="btn btn-light btn-block" (click)='LogIngUser()'>Log In</button>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="form-signin" *ngIf="boolRegister"> <!--(submit)="RegistroManual($event)" *ngIf="checkRegistro"-->
+          <hr />
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="txtFirstName" >First Name</label>
+              <input type="text" [(ngModel)]="strFirstName" class="form-control" id="txtFirstName" required placeholder="First Name">
+              {{strFirstName}}
+            </div>
+            <div class="form-group col-md-6">
+              <label for="txtLastName">Last Name</label>
+              <input type="text" [(ngModel)]="strLastName" class="form-control" id="txtLastName" placeholder="Last Name">
+              {{strLastName}}
+            </div>
+          </div>
+          <div class="form-group">
+              <label for="txtUserName">UserName</label>
+              <input type="text" [(ngModel)]="strUserName" class="form-control" id="txtUserName" placeholder="UserName">
+              {{strUserName}}
+              <label for="txtEmail">Email</label>
+              <input type="email" [(ngModel)]="strEmail" class="form-control" id="txtEmail" placeholder="Email">
+              {{strEmail}}
+              <label for="txtPassword">Password</label>
+              <input type="password" [(ngModel)]="strPassword" class="form-control" id="txtPassword" placeholder="Password">
+              {{strPassword}}
+          </div>
+          <br>
+          <div class="row ">
+            <div class="col-md-12">
+              <button class="btn btn-light btn-block"> Register</button>
+            </div>
+          </div>
+      </div>
+
+
     </div>
-  
+  </div>
