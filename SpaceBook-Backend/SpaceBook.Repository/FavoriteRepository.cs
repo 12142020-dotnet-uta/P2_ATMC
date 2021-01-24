@@ -23,23 +23,23 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="favoriteId"></param>
         /// <returns></returns>
-        public Favorite GetFavoriteById(int favoriteId)
+        public async Task<Favorite> GetFavoriteById(int favoriteId)
         {
-            return _dbContext.Favorites.Include(x=>x.Picture).Include(x=>x.User).FirstOrDefault(x => x.FavoriteID == favoriteId);
+            return await _dbContext.Favorites.Include(x=>x.Picture).Include(x=>x.User).AsQueryable().FirstOrDefaultAsync<Favorite>(x => x.FavoriteID == favoriteId);
         }
 
-        public Favorite GetFavoriteByUserPicture(string userId, int pictureId)
+        public async Task<Favorite> GetFavoriteByUserPicture(string userId, int pictureId)
         {
-            return _dbContext.Favorites.Include(x => x.Picture).Include(x => x.User).FirstOrDefault(x => x.UserId == userId && x.PictureId == pictureId);
+            return await _dbContext.Favorites.Include(x => x.Picture).Include(x => x.User).AsQueryable().FirstOrDefaultAsync<Favorite>(x => x.UserId == userId && x.PictureId == pictureId);
         }
 
         /// <summary>
         /// Returns all Favorites from the database.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Favorite> GetAllFavorites()
+        public async Task<IEnumerable<Favorite>> GetAllFavorites()
         {
-            return _dbContext.Favorites.Include(x => x.Picture).Include(x => x.User);
+            return await _dbContext.Favorites.Include(x => x.Picture).Include(x => x.User).ToListAsync<Favorite>();
         }
 
         /// <summary>
@@ -47,9 +47,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<Favorite> GetFavoritesByUser(string userId)
+        public async Task<IEnumerable<Favorite>> GetFavoritesByUser(string userId)
         {
-            return _dbContext.Favorites.Include(x=>x.Picture).Where(x => x.UserId == userId);
+            return await _dbContext.Favorites.Include(x=>x.Picture).AsQueryable().Where(x => x.UserId == userId).ToListAsync<Favorite>();
         }
 
         /// <summary>
@@ -57,9 +57,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="pictureId"></param>
         /// <returns></returns>
-        public IEnumerable<Favorite> GetFavoritesByPicture(int pictureId)
+        public async Task<IEnumerable<Favorite>> GetFavoritesByPicture(int pictureId)
         {
-            return _dbContext.Favorites.Include(x => x.User).Where(x => x.PictureId == pictureId);
+            return await _dbContext.Favorites.Include(x => x.User).AsQueryable().Where(x => x.PictureId == pictureId).ToListAsync<Favorite>();
         }
 
         /// <summary>
@@ -68,9 +68,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="favoriteId"></param>
         /// <returns></returns>
-        public bool IsFavoriteInDb(int favoriteId)
+        public async Task<bool> IsFavoriteInDb(int favoriteId)
         {
-            return GetFavoriteById(favoriteId) != null;
+            return await GetFavoriteById(favoriteId) != null;
         }
 
         /// <summary>
@@ -81,16 +81,16 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="favorite"></param>
         /// <returns></returns>
-        public bool AttemptAddFavorite(Favorite favorite)
+        public async Task<bool> AttemptAddFavorite(Favorite favorite)
         {
-            if (IsFavoriteInDb(favorite.FavoriteID))
+            if (await IsFavoriteInDb(favorite.FavoriteID))
             {
                 return false;
             }
             else
             {
                 _dbContext.Favorites.Add(favorite);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
         }
@@ -104,9 +104,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="favorite"></param>
         /// <returns></returns>
-        public bool AttemptRemoveFavorite(int favoriteId)
+        public async Task<bool> AttemptRemoveFavorite(int favoriteId)
         {
-            Favorite favorite = GetFavoriteById(favoriteId);
+            Favorite favorite = await GetFavoriteById(favoriteId);
             if (favorite == null)
             {
                 return false;
@@ -114,7 +114,7 @@ namespace SpaceBook.Repository
             else
             {
                 _dbContext.Favorites.Remove(favorite);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
         }

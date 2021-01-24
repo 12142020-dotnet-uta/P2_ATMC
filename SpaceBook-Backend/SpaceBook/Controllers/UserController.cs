@@ -40,46 +40,51 @@ namespace SpaceBook.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetAllUsers()
+        public async Task<ActionResult> GetAllUsers()
         {
-            return Ok(_userRepo.GetAllUsers());
+                return Ok(await _userRepo.GetAllUsers());
         }
 
         [HttpGet("Id/{userId}")]
-        public ActionResult GetUserById(string userId)
+        public async Task<ActionResult> GetUserById(string userId)
         {
-            if (!_userRepo.IsUserInDb(userId))
-            {
-                return NotFound();
-            }
-            return Ok(_userRepo.GetUserById(userId));
+                if (!_userRepo.IsUserInDb(userId).Result)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                return Ok(await _userRepo.GetUserById(userId));
+                }
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpDelete("Id/{userId}")]
-        public ActionResult DeleteUser(string userId)
+        public async Task<ActionResult> DeleteUser(string userId)
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
-            var loggedIn = _userRepo.GetUserByUsername(claim.Value);
+            var loggedIn = _userRepo.GetUserByUsername(claim.Value).Result;
 
-            if (!_userRepo.IsUserInDb(userId))
+            if (!_userRepo.IsUserInDb(userId).Result)
             {
                 return NotFound();
-            }else if(loggedIn.Id != userId){
+            }
+            else if(loggedIn.Id != userId)
+            {
                 return Forbid();
             }
-            return Ok(_userRepo.AttemptRemoveApplicationUser(userId));
+            return Ok(await _userRepo.AttemptRemoveApplicationUser(userId));
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut("Id/{userId}")]
-        public ActionResult EditUser(string userId, [FromBody] EditUserModel model)
+        public async Task<ActionResult> EditUser(string userId, [FromBody] EditUserModel model)
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
-            var loggedIn = _userRepo.GetUserByUsername(claim.Value);
-            if (!_userRepo.IsUserInDb(userId))
+            var loggedIn = _userRepo.GetUserByUsername(claim.Value).Result;
+            if (!_userRepo.IsUserInDb(userId).Result)
             {
                 return NotFound();
             }
@@ -102,62 +107,62 @@ namespace SpaceBook.Controllers
                     user.Email = model.Email;
                     user.NormalizedEmail = model.Email.ToUpper();
                 }
-                _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
-                return Ok(_userRepo.AttemptEditApplicationUser(user));
+                await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                return Ok(await _userRepo.AttemptEditApplicationUser(user));
             }
         }
 
         [HttpGet("Username/{username}")]
-        public ActionResult GetUserByUsername(string username)
+        public async Task<ActionResult> GetUserByUsername(string username)
         {
-            if (_userRepo.GetUserByUsername(username) == null)
+            if (_userRepo.GetUserByUsername(username).Result == null)
             {
                 return NotFound();
             }
-            return Ok(_userRepo.GetUserByUsername(username));
+            return Ok(await _userRepo.GetUserByUsername(username));
         }
 
         [HttpGet("Id/{userId}/Favorites")]
-        public ActionResult GetAllFavoritesOfUser(string userId)
+        public async Task<ActionResult> GetAllFavoritesOfUser(string userId)
         {
-            if (!_userRepo.IsUserInDb(userId))
+            if (!_userRepo.IsUserInDb(userId).Result)
             {
                 return NotFound();
             }
-            return Ok(_favoriteRepo.GetFavoritesByUser(userId));
+            return Ok(await _favoriteRepo.GetFavoritesByUser(userId));
         }
 
         [HttpGet("Id/{userId}/Followers")]
-        public ActionResult GetAllFollowersOfUser(string userId)
+        public async Task<ActionResult> GetAllFollowersOfUser(string userId)
         {
-            if (!_userRepo.IsUserInDb(userId))
+            if (!_userRepo.IsUserInDb(userId).Result)
             {
                 return NotFound();
             }
-            return Ok(_followRepo.GetFollowersOfUser(userId));
+            return Ok(await _followRepo.GetFollowersOfUser(userId));
         }
 
         [HttpGet("Id/{userId}/Followed")]
-        public ActionResult GetAllFollowedOfUser(string userId)
+        public async Task<ActionResult> GetAllFollowedOfUser(string userId)
         {
-            if (!_userRepo.IsUserInDb(userId))
+            if (!_userRepo.IsUserInDb(userId).Result)
             {
                 return NotFound();
             }
-            return Ok(_followRepo.GetFollowedOfUser(userId));
+            return Ok(await _followRepo.GetFollowedOfUser(userId));
         }
 
         [HttpPost("Id/{followedUserId}/Follow")]
-        public ActionResult FollowUser(string followedUserId, [FromBody] string followerUserId)
+        public async Task<ActionResult> FollowUser(string followedUserId, [FromBody] string followerUserId)
         {
-            if (!_userRepo.IsUserInDb(followedUserId) || !_userRepo.IsUserInDb(followerUserId))
+            if (!_userRepo.IsUserInDb(followedUserId).Result || !_userRepo.IsUserInDb(followerUserId).Result)
             {
                 return NotFound();
             }
             else
             {
-                ApplicationUser follower = _userRepo.GetUserById(followerUserId);
-                ApplicationUser followed = _userRepo.GetUserById(followedUserId);
+                ApplicationUser follower = _userRepo.GetUserById(followerUserId).Result;
+                ApplicationUser followed = _userRepo.GetUserById(followedUserId).Result;
                 Follow follow = new Follow()
                 {
                     Followed = followed,
@@ -165,30 +170,30 @@ namespace SpaceBook.Controllers
                     FollowerId = followerUserId,
                     FollowedId = followedUserId,
                 };
-                return Ok(_followRepo.AttemptAddFollow(follow));
+                return Ok(await _followRepo.AttemptAddFollow(follow));
             }
         }
 
         [HttpDelete("Id/{followedUserId}/Follow")]
-        public ActionResult DeleteFollow(string followedUserId, [FromBody] string followerUserId)
+        public async Task<ActionResult> DeleteFollow(string followedUserId, [FromBody] string followerUserId)
         {
-            if (!_userRepo.IsUserInDb(followedUserId) || !_userRepo.IsUserInDb(followerUserId))
+            if (!_userRepo.IsUserInDb(followedUserId).Result || !_userRepo.IsUserInDb(followerUserId).Result)
             {
                 return NotFound();
             }
             else
             {
-                Follow follow = _followRepo.GetFollowByFollowerAndFollowedIds(followerUserId, followedUserId);
-                return Ok(_followRepo.AttemptRemoveFollow(follow.FollowID));
+                Follow follow = _followRepo.GetFollowByFollowerAndFollowedIds(followerUserId, followedUserId).Result;
+                return Ok(await _followRepo.AttemptRemoveFollow(follow.FollowID));
             }
 
         }
 
 
         [HttpPost("Id/{userId}/Favorites")]
-        public ActionResult PostFavorite(string userId, [FromBody]int pictureId)
+        public async Task<ActionResult> PostFavorite(string userId, [FromBody]int pictureId)
         {
-            ApplicationUser user = _userRepo.GetUserById(userId);
+            ApplicationUser user = _userRepo.GetUserById(userId).Result;
             Picture picture = _pictureRepo.GetPictureById(pictureId);
             Favorite favorite = new Favorite()
             {
@@ -197,14 +202,14 @@ namespace SpaceBook.Controllers
                 UserId = userId,
                 PictureId = pictureId
             };
-            return Ok(_favoriteRepo.AttemptAddFavorite(favorite));
+            return Ok(await _favoriteRepo.AttemptAddFavorite(favorite));
         }
 
         [HttpDelete("Id/{userId}/Favorites")]
-        public ActionResult RemoveFavorite(string userId, [FromBody] int pictureId)
+        public async Task<ActionResult> RemoveFavorite(string userId, [FromBody] int pictureId)
         {
-            Favorite favorite = _favoriteRepo.GetFavoriteByUserPicture(userId, pictureId);
-            return Ok(_favoriteRepo.AttemptRemoveFavorite(favorite.FavoriteID));
+            Favorite favorite = _favoriteRepo.GetFavoriteByUserPicture(userId, pictureId).Result;
+            return Ok(await _favoriteRepo.AttemptRemoveFavorite(favorite.FavoriteID));
         }
 
 

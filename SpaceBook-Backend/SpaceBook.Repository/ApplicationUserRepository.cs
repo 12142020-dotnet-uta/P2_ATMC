@@ -1,4 +1,5 @@
-﻿using SpaceBook.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using SpaceBook.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,9 @@ namespace SpaceBook.Repository
         /// Returns all ApplicationUsers in the database.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ApplicationUser> GetAllUsers()
+        public async Task<IEnumerable<ApplicationUser>> GetAllUsers()
         {
-            return _dbContext.ApplicationUsers;
+            return await _dbContext.ApplicationUsers.AsQueryable().ToListAsync<ApplicationUser>();
         }
 
         /// <summary>
@@ -30,9 +31,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public ApplicationUser GetUserById(string userId)
+        public async Task<ApplicationUser> GetUserById(string userId)
         {
-            return _dbContext.ApplicationUsers.FirstOrDefault(x => x.Id == userId);
+            return await _dbContext.ApplicationUsers.FirstOrDefaultAsync<ApplicationUser>(x => x.Id == userId);
         }
 
         /// <summary>
@@ -40,9 +41,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
-        public ApplicationUser GetUserByUsername(string username)
+        public async Task<ApplicationUser> GetUserByUsername(string username)
         {
-            return _dbContext.ApplicationUsers.FirstOrDefault(x => x.UserName == username);
+            return await _dbContext.ApplicationUsers.FirstOrDefaultAsync<ApplicationUser>(x => x.UserName == username);
         }
         
 
@@ -52,9 +53,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public bool IsUserInDb(string userId)
+        public async Task<bool> IsUserInDb(string userId)
         {
-            return GetUserById(userId) != null;
+            return await GetUserById(userId) != null;
         }
 
         /// <summary>
@@ -64,15 +65,15 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public bool AttemptAddApplicationUser(ApplicationUser user)
+        public async Task<bool> AttemptAddApplicationUser(ApplicationUser user)
         {
-            if (IsUserInDb(user.Id)){
+            if (await IsUserInDb(user.Id)){
                 return false;
             }
             else
             {
                 _dbContext.ApplicationUsers.Add(user);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
         }
@@ -84,17 +85,17 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public bool AttemptEditApplicationUser(ApplicationUser user)
+        public async Task<bool> AttemptEditApplicationUser(ApplicationUser user)
         {
-            if (!IsUserInDb(user.Id))
+            if (await IsUserInDb(user.Id))
             {
-                return false;
+                _dbContext.ApplicationUsers.Update(user);
+                await _dbContext.SaveChangesAsync();
+                return true;
             }
             else
             {
-                _dbContext.ApplicationUsers.Update(user);
-                _dbContext.SaveChanges();
-                return true;
+                return false;
             }
         }
 
@@ -105,9 +106,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public bool AttemptRemoveApplicationUser(string userId)
+        public async Task<bool> AttemptRemoveApplicationUser(string userId)
         {
-            ApplicationUser user = GetUserById(userId);
+            ApplicationUser user = await GetUserById(userId);
             if(user == null)
             {
                 return false;
@@ -115,7 +116,7 @@ namespace SpaceBook.Repository
             else
             {
                 _dbContext.ApplicationUsers.Remove(user);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
         }

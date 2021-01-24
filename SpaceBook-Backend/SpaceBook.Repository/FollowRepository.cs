@@ -22,23 +22,23 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="followId"></param>
         /// <returns></returns>
-        public Follow GetFollowById(int followId)
+        public async Task<Follow> GetFollowById(int followId)
         {
-            return _dbContext.Follows.Include(x => x.Follower).Include(x => x.Followed).FirstOrDefault(x => x.FollowID == followId);
+            return await _dbContext.Follows.Include(x => x.Follower).Include(x => x.Followed).AsQueryable().FirstOrDefaultAsync<Follow>(x => x.FollowID == followId);
         }
 
-        public Follow GetFollowByFollowerAndFollowedIds(string followerId, string followedId)
+        public async Task<Follow> GetFollowByFollowerAndFollowedIds(string followerId, string followedId)
         {
-            return _dbContext.Follows.Include(x => x.Follower).Include(x => x.Followed).FirstOrDefault(x => x.FollowerId == followerId && x.FollowedId == followedId);
+            return await _dbContext.Follows.Include(x => x.Follower).Include(x => x.Followed).AsQueryable().FirstOrDefaultAsync<Follow>(x => x.FollowerId == followerId && x.FollowedId == followedId);
         }
 
         /// <summary>
         /// Returns all Follows from the database.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Follow> GetAllFollow()
+        public async Task<IEnumerable<Follow>> GetAllFollow()
         {
-            return _dbContext.Follows.Include(x => x.Follower).Include(x => x.Followed);
+            return await _dbContext.Follows.Include(x => x.Follower).Include(x => x.Followed).AsQueryable().ToListAsync<Follow>();
         }
 
         /// <summary>
@@ -46,9 +46,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<Follow> GetFollowersOfUser(string userId)
+        public async Task<IEnumerable<Follow>> GetFollowersOfUser(string userId)
         {
-            return _dbContext.Follows.Include(x=>x.Follower).Where(x => x.FollowedId == userId);
+            return await _dbContext.Follows.Include(x=>x.Follower).Where(x => x.FollowedId == userId).AsQueryable().ToListAsync<Follow>();
         }
         
         /// <summary>
@@ -56,9 +56,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<Follow> GetFollowedOfUser(string userId)
+        public async Task<IEnumerable<Follow>> GetFollowedOfUser(string userId)
         {
-            return _dbContext.Follows.Include(x=>x.Followed).Where(x => x.FollowerId == userId);
+            return await _dbContext.Follows.Include(x=>x.Followed).Where(x => x.FollowerId == userId).AsQueryable().ToListAsync<Follow>();
         }
 
         /// <summary>
@@ -67,9 +67,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="followId"></param>
         /// <returns></returns>
-        public bool IsFollowInDb(int followId)
+        public async Task<bool> IsFollowInDb(int followId)
         {
-            return GetFollowById(followId) != null;
+            return await GetFollowById(followId) != null;
         }
 
         /// <summary>
@@ -80,16 +80,16 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="follow"></param>
         /// <returns></returns>
-        public bool AttemptAddFollow(Follow follow)
+        public async Task<bool> AttemptAddFollow(Follow follow)
         {
-            if (IsFollowInDb(follow.FollowID))
+            if (await IsFollowInDb(follow.FollowID))
             {
                 return false;
             }
             else
             {
                 _dbContext.Follows.Add(follow);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
         }
@@ -102,9 +102,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="follow"></param>
         /// <returns></returns>
-        public bool AttemptRemoveFollow(int followId)
+        public async Task<bool> AttemptRemoveFollow(int followId)
         {
-            Follow follow = GetFollowById(followId);
+            Follow follow = await GetFollowById(followId);
             if (follow == null)
             {
                 return false;
@@ -112,7 +112,7 @@ namespace SpaceBook.Repository
             else
             {
                 _dbContext.Follows.Remove(follow);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
         }

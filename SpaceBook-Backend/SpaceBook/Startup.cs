@@ -36,7 +36,7 @@ namespace SpaceBook
 
             // For Entity Framework  
             
-            services.AddDbContext<ApplicationDbContext>();
+            //services.AddDbContext<ApplicationDbContext>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TestAPI", Version = "v1" });
@@ -78,6 +78,7 @@ namespace SpaceBook
             services.AddScoped<ApplicationUserRepository>();
             services.AddScoped<UserPictureRepository>();
             services.AddScoped<PictureBusinessLogic>();
+            services.AddScoped<ApplicationDbContext>();
 
         }
 
