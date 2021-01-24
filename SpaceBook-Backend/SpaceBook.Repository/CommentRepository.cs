@@ -23,18 +23,18 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Comment GetCommentById(int commentId)
+        public async Task<Comment> GetCommentById(int commentId)
         {
-            return _dbContext.Comments.Include(x=>x.PictureCommented).Include(x=>x.UserCommented).FirstOrDefault(x => x.CommentID == commentId);
+            return await _dbContext.Comments.Include(x=>x.PictureCommented).Include(x=>x.UserCommented).AsQueryable().FirstOrDefaultAsync<Comment>(x => x.CommentID == commentId);
         }
 
         /// <summary>
         /// Returns all comments in the database.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Comment> GetAllComments()
+        public async Task<IEnumerable<Comment>> GetAllComments()
         {
-            return _dbContext.Comments.Include(x => x.PictureCommented).Include(x => x.UserCommented);
+            return await _dbContext.Comments.Include(x => x.PictureCommented).Include(x => x.UserCommented).AsQueryable().ToListAsync<Comment>(); ;
         }
 
         /// <summary>
@@ -42,9 +42,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="pictureId"></param>
         /// <returns></returns>
-        public IEnumerable<Comment> GetAllCommentsForPicture(int pictureId)
+        public async Task<IEnumerable<Comment>> GetAllCommentsForPicture(int pictureId)
         {
-            return _dbContext.Comments.Include(x => x.UserCommented).Where(x => x.PictureCommentedId == pictureId);
+            return await _dbContext.Comments.Include(x => x.UserCommented).Where(x => x.PictureCommentedId == pictureId).AsQueryable().ToListAsync<Comment>();
         }
 
         /// <summary>
@@ -52,9 +52,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="commentId"></param>
         /// <returns></returns>
-        public IEnumerable<Comment> GetAllCommentsForParentComment(int commentId)
+        public async Task<IEnumerable<Comment>> GetAllCommentsForParentComment(int commentId)
         {
-            return _dbContext.Comments.Include(x => x.UserCommented).Include(x => x.PictureCommented).Where(x => x.ParentCommentId == commentId);
+            return await _dbContext.Comments.Include(x => x.UserCommented).Include(x => x.PictureCommented).Where(x => x.ParentCommentId == commentId).AsQueryable().ToListAsync<Comment>();
         }
 
         /// <summary>
@@ -62,9 +62,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<Comment> GetAllCommentsByUser(string userId)
+        public async Task<IEnumerable<Comment>> GetAllCommentsByUser(string userId)
         {
-            return _dbContext.Comments.Include(x => x.PictureCommented).Where(x => x.UserCommentedId == userId);
+            return await _dbContext.Comments.Include(x => x.PictureCommented).Where(x => x.UserCommentedId == userId).AsQueryable().ToListAsync<Comment>();
         }
 
         /// <summary>
@@ -72,9 +72,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool IsCommentInDb(int id)
+        public async Task<bool> IsCommentInDb(int id)
         {
-            return GetCommentById(id) != null;
+            return await GetCommentById(id) != null;
         }
 
         /// <summary>
@@ -84,16 +84,16 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="comment"></param>
         /// <returns></returns>
-        public bool AttemptAddCommentToDb(Comment comment)
+        public async Task<bool> AttemptAddCommentToDb(Comment comment)
         {
-            if (IsCommentInDb(comment.CommentID))
+            if (await IsCommentInDb(comment.CommentID))
             {
                 return false;
             }
             else
             {
                 _dbContext.Comments.Add(comment);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
             
@@ -106,16 +106,17 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="comment"></param>
         /// <returns></returns>
-        public bool AttemptEditComment(Comment comment)
+        public async Task<bool> AttemptEditComment(Comment comment)
         {
-            if (!IsCommentInDb(comment.CommentID))
+            Comment cmt = await GetCommentById(comment.CommentID);
+            if (cmt == null)
             {
                 return false;
             }
             else
             {
                 _dbContext.Comments.Update(comment);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
         }
@@ -125,9 +126,9 @@ namespace SpaceBook.Repository
         /// Checks to see if comment is in the database.
         /// Returns false if it isn't. Removes the comment from the DB and returns true if it is.
         /// </summary>
-        public bool AttemptRemoveComment(int commentId)
+        public async Task<bool> AttemptRemoveComment(int commentId)
         {
-            Comment comment = GetCommentById(commentId);
+            Comment comment = await GetCommentById(commentId);
             if(comment == null)
             {
                 return false;
@@ -135,7 +136,7 @@ namespace SpaceBook.Repository
             else
             {
                 _dbContext.Comments.Remove(comment);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
         }

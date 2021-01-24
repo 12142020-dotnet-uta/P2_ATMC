@@ -22,18 +22,18 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="ratingId"></param>
         /// <returns></returns>
-        public Rating GetRatingById(int ratingId)
+        public async Task<Rating> GetRatingById(int ratingId)
         {
-            return _dbContext.Ratings.Include(x=>x.RatedPicture).Include(x=>x.UserRating).FirstOrDefault(x => x.RatingID == ratingId);
+            return await _dbContext.Ratings.Include(x=>x.RatedPicture).Include(x=>x.UserRating).AsQueryable().FirstOrDefaultAsync<Rating>(x => x.RatingID == ratingId);
         }
 
         /// <summary>
         /// Returns all of the Ratings in the database.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Rating> GetAllRatings()
+        public async Task<IEnumerable<Rating>> GetAllRatings()
         {
-            return _dbContext.Ratings.Include(x => x.RatedPicture).Include(x => x.UserRating);
+            return await _dbContext.Ratings.Include(x => x.RatedPicture).Include(x => x.UserRating).AsQueryable().ToListAsync<Rating>();
         }
 
         /// <summary>
@@ -41,9 +41,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<Rating> GetRatingsByUser(string userId)
+        public async Task<IEnumerable<Rating>> GetRatingsByUser(string userId)
         {
-            return _dbContext.Ratings.Include(x => x.RatedPicture).Where(x => x.UserRatingId == userId);
+            return await _dbContext.Ratings.Include(x => x.RatedPicture).Where(x => x.UserRatingId == userId).AsQueryable().ToListAsync<Rating>();
         }
 
         /// <summary>
@@ -51,9 +51,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="pictureId"></param>
         /// <returns></returns>
-        public IEnumerable<Rating> GetRatingsForPicture(int pictureId)
+        public async Task<IEnumerable<Rating>> GetRatingsForPicture(int pictureId)
         {
-            return _dbContext.Ratings.Include(x => x.UserRating).Where(x => x.RatedPictureId == pictureId);
+            return await _dbContext.Ratings.Include(x => x.UserRating).Where(x => x.RatedPictureId == pictureId).AsQueryable().ToListAsync<Rating>();
         }
 
         /// <summary>
@@ -62,9 +62,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="ratingId"></param>
         /// <returns></returns>
-        public bool IsRatingInDb(int ratingId)
+        public async Task<bool> IsRatingInDb(int ratingId)
         {
-            return GetRatingById(ratingId) != null;
+            return await GetRatingById(ratingId) != null;
         }
 
         /// <summary>
@@ -74,16 +74,16 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="rating"></param>
         /// <returns></returns>
-        public bool AttemptAddRating(Rating rating)
+        public async Task<bool> AttemptAddRating(Rating rating)
         {
-            if (IsRatingInDb(rating.RatingID))
+            if (await IsRatingInDb(rating.RatingID))
             {
                 return false;
             }
             else
             {
                 _dbContext.Ratings.Add(rating);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
 
@@ -96,16 +96,17 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="rating"></param>
         /// <returns></returns>
-        public bool AttemptEditRating(Rating rating)
+        public async Task<bool> AttemptEditRating(Rating rating)
         {
-            if (!IsRatingInDb(rating.RatingID))
+            Rating rtg = await GetRatingById(rating.RatingID);
+            if (rtg == null)
             {
                 return false;
             }
             else
             {
                 _dbContext.Ratings.Update(rating);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
         }
@@ -117,9 +118,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="ratingId"></param>
         /// <returns></returns>
-        public bool AttemptRemoveRating(int ratingId)
+        public async Task<bool> AttemptRemoveRating(int ratingId)
         {
-            Rating rating = GetRatingById(ratingId);
+            Rating rating = await GetRatingById(ratingId);
             if (rating == null)
             {
                 return false;
@@ -127,7 +128,7 @@ namespace SpaceBook.Repository
             else
             {
                 _dbContext.Ratings.Remove(rating);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
         }

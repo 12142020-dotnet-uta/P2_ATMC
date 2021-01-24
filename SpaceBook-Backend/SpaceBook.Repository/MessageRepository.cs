@@ -22,18 +22,18 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="messageId"></param>
         /// <returns></returns>
-        public Message GetMessageById(int messageId)
+        public async Task<Message> GetMessageById(int messageId)
         {
-            return _dbContext.Messages.Include(x=>x.Recipient).Include(x=>x.Sender).FirstOrDefault(x => x.MessageID == messageId);
+            return await _dbContext.Messages.Include(x=>x.Recipient).Include(x=>x.Sender).AsQueryable().FirstOrDefaultAsync<Message>(x => x.MessageID == messageId);
         }
 
         /// <summary>
         /// Returns all of the Messages in the database.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Message> GetAllMessages()
+        public async Task<IEnumerable<Message>> GetAllMessages()
         {
-            return _dbContext.Messages.Include(x => x.Recipient).Include(x => x.Sender).Include(x => x.ParentMessage);
+            return await _dbContext.Messages.Include(x => x.Recipient).Include(x => x.Sender).Include(x => x.ParentMessage).AsQueryable().ToListAsync<Message>();
         }
 
         /// <summary>
@@ -41,9 +41,14 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<Message> GetMessagesByUser(string userId)
+        public async Task<IEnumerable<Message>> GetMessagesByUser(string userId)
         {
-            return _dbContext.Messages.Include(x => x.Recipient).Include(x => x.Sender).Where(x => x.RecipientId == userId || x.SenderId == userId);
+            return await _dbContext.Messages.Include(x => x.Recipient).Include(x => x.Sender).Where(x => x.RecipientId == userId || x.SenderId == userId).AsQueryable().ToListAsync<Message>();
+        }
+
+        public async Task<IEnumerable<Message>> GetMessagesBetween2Users(string user1Id, string user2Id)
+        {
+            return await _dbContext.Messages.Include(x => x.Recipient).Include(x => x.Sender).Where(x => (x.RecipientId == user1Id || x.SenderId == user1Id) && (x.RecipientId == user2Id || x.SenderId == user2Id)).AsQueryable().ToListAsync<Message>();
         }
 
         /// <summary>
@@ -51,9 +56,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<Message> GetSentMessagesByUser(string userId)
+        public async Task<IEnumerable<Message>> GetSentMessagesByUser(string userId)
         {
-            return _dbContext.Messages.Include(x=>x.Recipient).Where(x => x.SenderId == userId);
+            return await _dbContext.Messages.Include(x=>x.Recipient).Where(x => x.SenderId == userId).AsQueryable().ToListAsync<Message>();
         }
 
         /// <summary>
@@ -61,9 +66,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<Message> GetReceivedMessagesByUser(string userId)
+        public async Task<IEnumerable<Message>> GetReceivedMessagesByUser(string userId)
         {
-            return _dbContext.Messages.Include(x=>x.Sender).Where(x => x.RecipientId == userId);
+            return await _dbContext.Messages.Include(x=>x.Sender).Where(x => x.RecipientId == userId).AsQueryable().ToListAsync<Message>();
         }
 
         /// <summary>
@@ -72,9 +77,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="messageId"></param>
         /// <returns></returns>
-        public bool IsMessageInDb(int messageId)
+        public async Task<bool> IsMessageInDb(int messageId)
         {
-            return GetMessageById(messageId) != null;
+            return await GetMessageById(messageId) != null;
         }
 
         /// <summary>
@@ -84,16 +89,16 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        public bool AttemptAddMessage(Message message)
+        public async Task<bool> AttemptAddMessage(Message message)
         {
-            if (IsMessageInDb(message.MessageID))
+            if (await IsMessageInDb(message.MessageID))
             {
                 return false;
             }
             else
             {
                 _dbContext.Messages.Add(message);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
         }
@@ -105,9 +110,9 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="messageId"></param>
         /// <returns></returns>
-        public bool AttemptRemoveMessage(int messageId)
+        public async Task<bool> AttemptRemoveMessage(int messageId)
         {
-            Message message = GetMessageById(messageId);
+            Message message = await GetMessageById(messageId);
             if (message == null)
             {
                 return false;
@@ -115,7 +120,7 @@ namespace SpaceBook.Repository
             else
             {
                 _dbContext.Messages.Remove(message);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
         }

@@ -34,7 +34,7 @@ namespace SpaceBook.Business
 
         public bool CreateUserPicture(Picture picture, string userId)
         {
-            var user = _userRepository.GetUserByUsername(userId);
+            var user = _userRepository.GetUserByUsername(userId).Result;
 
             UserPicture userPicture = new UserPicture()
             {
