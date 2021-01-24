@@ -28,6 +28,11 @@ namespace SpaceBook.Repository
             return _dbContext.Favorites.Include(x=>x.Picture).Include(x=>x.User).FirstOrDefault(x => x.FavoriteID == favoriteId);
         }
 
+        public Favorite GetFavoriteByUserPicture(string userId, int pictureId)
+        {
+            return _dbContext.Favorites.Include(x => x.Picture).Include(x => x.User).FirstOrDefault(x => x.UserId == userId && x.PictureId == pictureId);
+        }
+
         /// <summary>
         /// Returns all Favorites from the database.
         /// </summary>

@@ -10,7 +10,7 @@ namespace SpaceBook.Repository
 {
     public class FollowRepository
     {
-        public ApplicationDbContext _dbContext;
+        private ApplicationDbContext _dbContext;
 
         public FollowRepository(ApplicationDbContext dbContext)
         {
@@ -24,7 +24,12 @@ namespace SpaceBook.Repository
         /// <returns></returns>
         public Follow GetFollowById(int followId)
         {
-            return _dbContext.Follows.Include(x=>x.Follower).Include(x=>x.Followed).FirstOrDefault(x => x.FollowID == followId);
+            return _dbContext.Follows.Include(x => x.Follower).Include(x => x.Followed).FirstOrDefault(x => x.FollowID == followId);
+        }
+
+        public Follow GetFollowByFollowerAndFollowedIds(string followerId, string followedId)
+        {
+            return _dbContext.Follows.Include(x => x.Follower).Include(x => x.Followed).FirstOrDefault(x => x.FollowerId == followerId && x.FollowedId == followedId);
         }
 
         /// <summary>

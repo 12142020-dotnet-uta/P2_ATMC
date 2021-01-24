@@ -66,9 +66,14 @@ namespace SpaceBook
                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
                  };
              });
-          
-            //services.AddScoped<ApplicationDbContext>();
 
+            //services.AddScoped<ApplicationDbContext>();
+            services.AddScoped<ApplicationUserRepository>();
+            services.AddScoped<FavoriteRepository>();
+            services.AddScoped<CommentRepository>();
+            services.AddScoped<FollowRepository>();
+            services.AddScoped<MessageRepository>();
+            services.AddScoped<RatingRepository>();
             services.AddScoped<PictureRepository>();
             services.AddScoped<ApplicationUserRepository>();
             services.AddScoped<UserPictureRepository>();
