@@ -33,10 +33,11 @@
   margin-top: 2%;
   width: 65%;
   padding: 10px;
-  background-color: #2FAEE0;
+  background-color: #794d60;
   overflow: auto;
   padding: 1em 2em;
-  border-bottom: 2px solid #ccc;
+  border-bottom: .3em solid 	#3d2730;
+  border-right: .2em solid 	#3d2730;
   display: table;
  }
  .Centered {
