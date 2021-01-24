@@ -9,7 +9,8 @@ export class GalleryComponent implements OnInit {
 
   constructor() { }
 
+  
   ngOnInit(): void {
   }
-
+  // currentRate = 0;
 }

@@ -1,0 +1,22 @@
+.imgContainer{
+    width: 90%;
+    height: 400px;
+    max-height: 500px;
+    background-color: black;
+}
+
+.MessageContent{
+    background-color: #492e3a;
+    border-radius: .7em;
+}
+
+.UserComment{
+    margin-left: 1em;
+}
+
+.UserSubComment{
+    background-color: #301f26;
+    margin-left: .5em;
+    padding-left: 2em;
+    border-radius: 1em;
+}

@@ -1,0 +1,69 @@
+<div class="back">
+  <div class="div-center">
+    <div class="content">
+      <div class="Centered">
+        <h5>Register&nbsp;&nbsp;</h5>
+        <mat-slide-toggle
+          [checked]='boolLogIn'
+          (change)='onChangingSection()'
+        >
+      </mat-slide-toggle>
+      <h5>&nbsp;&nbsp; Log In</h5>
+      </div>
+      <div *ngIf="boolLogIn" > <!--(submit)="LogIn($event)" *ngIf="checkInicioSession"-->
+        <hr />
+        <div class="form-group">
+          <label for="txtUserName">UserName</label>
+          <input type="text" [(ngModel)]="strLogInUserName" class="form-control" id="txtUserName" placeholder="UserName"> 
+          {{strLogInUserName}}
+          <!-- [userLogIn.UserName] -->
+          <label for="txtPassword">Password</label>
+          <input type="password" [(ngModel)]="strLogInPassword" class="form-control" id="txtPassword" placeholder="Password">
+          <!-- [(ngModel)]="strPassword" -->
+          {{strLogInPassword}}
+        </div>
+        <br>
+        <div class="row ">
+          <div class="col-md-12">
+            <button class="btn btn-light btn-block" (click)='LogIngUser()'>Log In</button>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="form-signin" *ngIf="boolRegister"> <!--(submit)="RegistroManual($event)" *ngIf="checkRegistro"-->
+          <hr />
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="txtFirstName" >First Name</label>
+              <input type="text" [(ngModel)]="strFirstName" class="form-control" id="txtFirstName" required placeholder="First Name">
+              {{strFirstName}}
+            </div>
+            <div class="form-group col-md-6">
+              <label for="txtLastName">Last Name</label>
+              <input type="text" [(ngModel)]="strLastName" class="form-control" id="txtLastName" placeholder="Last Name">
+              {{strLastName}}
+            </div>
+          </div>
+          <div class="form-group">
+              <label for="txtUserName">UserName</label>
+              <input type="text" [(ngModel)]="strUserName" class="form-control" id="txtUserName" placeholder="UserName">
+              {{strUserName}}
+              <label for="txtEmail">Email</label>
+              <input type="email" [(ngModel)]="strEmail" class="form-control" id="txtEmail" placeholder="Email">
+              {{strEmail}}
+              <label for="txtPassword">Password</label>
+              <input type="password" [(ngModel)]="strPassword" class="form-control" id="txtPassword" placeholder="Password">
+              {{strPassword}}
+          </div>
+          <br>
+          <div class="row ">
+            <div class="col-md-12">
+              <button class="btn btn-light btn-block"> Register</button>
+            </div>
+          </div>
+      </div>
+
+
+    </div>
+  </div>

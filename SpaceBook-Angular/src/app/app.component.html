@@ -1,38 +1,55 @@
 
 <!-- navbar-->
+<nav ngbNav #nav="ngbNav" class="nav-tabs navbar-expand-lg navbar-light ">
+  <ng-container ngbNavItem>
+    <a class="myTitle" ngbNavLink routerLink='/dashboard'> 
+      <b>
+        {{title}}
+      </b>
+    </a>
+  </ng-container>
+  <!-- Toggle button for responsive navbar -->        
+  <button class="navbar-toggler"
+     type="button" 
+     data-toggle="collapse" 
+     data-target="#myNavBarItems" 
+     aria-controls="myNavBarItems" 
+     aria-expanded="false" 
+     aria-label="Toggle navigation"
+     (click)="isCollapsed = !isCollapsed"
+     [attr.aria-expanded]="!isCollapsed">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <!-- container for the collapsing routes -->
+    <div class="collapse navbar-collapse" id='myNavBarItems' [ngbCollapse]="isCollapsed">
 
-<nav ngbNav #nav="ngbNav" class="nav-tabs ">
-  <ng-container>
-    <h4 class="myTitle">{{title}}</h4>
-  </ng-container>
-  <ng-container ngbNavItem>
-    <a ngbNavLink routerLink='/dashboard'>Home</a>
-  </ng-container>
-  <ng-container ngbNavItem>
-    <a ngbNavLink routerLink='/gallery'>User</a>
-  </ng-container>
-  <ng-container ngbNavItem>
-    <a ngbNavLink routerLink='/gallery'>Gallery</a>
-  </ng-container>
-  
-  <!-- <ng-container ngbNavItem>
-    <a ngbNavLink>Three</a>
-    <ng-template ngbNavContent>
-      <p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam. Nulla facilisi.
-        Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu, congue et odio.
-        Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed diam urna,
-        egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec
-        tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et
-        magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget
-        neque. Phasellus nec tortor vel tellus pulvinar feugiat.</p>
-    </ng-template>
-  </ng-container> -->
+      <ng-container ngbNavItem class="nav-item nav-item2">
+        <a ngbNavLink routerLink='/user/1'>User</a>
+      </ng-container>
+      <ng-container ngbNavItem class="nav-item nav-item2">
+        <a ngbNavLink routerLink='/picture/upload'>Upload Picture</a>
+      </ng-container>
+      <ng-container ngbNavItem class="nav-item nav-item2">
+        <a ngbNavLink routerLink='/messaging'>Messaging</a>
+      </ng-container>
+      <ng-container ngbNavItem class="nav-item nav-item2">
+        <a ngbNavLink routerLink='/authentication'>Register / Log In</a>
+      </ng-container>
+    </div>
+  <!-- </div> -->
 </nav>
+  
+  
+  <!-- Original form of nav -->
+  <!-- <nav ngbNav #nav="ngbNav" class="nav-tabs navbar-expand-lg navbar-light ">
+    <ng-container ngbNavItem>
+      <a ngbNavLink routerLink='/authentication'>Register / Log In</a>
+    </ng-container>
+  </nav> -->
+  
+<div class="container">
+  <router-outlet></router-outlet>
 
-<!-- <h1>{{title}}</h1> -->
-
-
-
-<router-outlet></router-outlet>
+</div>
 
 <!-- footer -->
