@@ -1,1 +1,27 @@
-<h2>upload-picture works!</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <h2>Upload your Photo</h2>
+             <div class="form-group">
+                <label for="txtTitle">Title</label>
+                <input type="text" class="form-control" id="txtTitle" placeholder="Title of the picture">
+                <label for="txtDescription">Description</label>
+                <textarea class="form-control" id="txtDescription" placeholder="Description of the picture" rows="5"></textarea>
+
+                <br>
+                <div class="custom-file">
+                    <input type="file" #file class="custom-file-input " id="Image" (change)='uploadFile(file.files)'> <!--(change)='uploadFile(file.files)'-->
+                    <label for="Image" class="custom-file-label" accept="image/*">Image file</label>
+                </div>
+                <br>
+                <label for="txtPassword">Password</label>
+                <input type="password" class="form-control" id="txtPassword" placeholder="Password">
+                <br>
+                <button type="button" class="btn btn-success btn-block" >Upload Picture</button> <!--(click)='file.click()'-->
+            </div>
+
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
