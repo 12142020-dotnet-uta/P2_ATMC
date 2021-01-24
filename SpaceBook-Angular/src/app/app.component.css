@@ -6,3 +6,25 @@
 .nav-item2{
     margin-bottom: -4px;
 }
+nav{
+    margin-bottom: 1.5em;
+    background-color: 	#0c080a;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: 		#180f13;
+    background-color: #6d4556;
+    border-color: #794d60 #6d4556	#794d60;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid #794d60;
+}
+
+.nav-tabs:hover{
+    border-color:  #794d60;
+}
+
+.container{
+    background-color: 	#6d4556;
+}

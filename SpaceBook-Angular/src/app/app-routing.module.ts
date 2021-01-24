@@ -15,8 +15,8 @@ const routes : Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {path: 'gallery',component:GalleryComponent},
   {path: 'messaging',component:DirectMessagingComponent},
-  {path: 'picture/:id',component:PictureDetailComponent},
   {path: 'picture/upload',component:UploadPictureComponent},
+  {path: 'picture/:id',component:PictureDetailComponent},
   {path: 'authentication',component:LogInComponent},
   { path: '**', redirectTo:'/dashboard'}, //WildCard, if not found...
 ];

@@ -26,93 +26,85 @@
 } */
 
 
-button {
-    /* font-weight: bold; */
+
   
-  }
-  
-  
-  .div-center {
-   margin:auto;
-   margin-top: 2%;
-   width: 65%;
-   padding: 10px;
-   background-color: #2FAEE0;
-   overflow: auto;
-   padding: 1em 2em;
-   border-bottom: 2px solid #ccc;
-   display: table;
-  }
-  .Centrado {
-    align-items: center;
-    justify-content: center;
-    display: flex;
-  }
-  
-  .miSpanBoton {
-    position: absolute;
-    margin-top: 1%;
-    text-align: center;
-  }
-  
-  @media screen and (max-width: 991px){
-    h5 {
-      font-size: 15px;
-    }
-    .div-center {
-     width: 80%;
-    }
-  }
-  @media screen and (max-width: 845px){
-    .RedesSociales{
-      margin-bottom: 10px;
-    }
-  }
-  @media screen and (max-width: 767px){
-    .div-center {
-     padding: 10px;
-    }
-  
-  }
-  @media screen and (max-width:575px){
-    h5 {
-      font-size: 15px;
-    }
-    .miSpanBoton{
-      font-size: 12px;
-      text-align: left;
-      padding-left: 10%;
-    }
-    .RedesSociales{
-      text-align: justify;
-    }
-  }
-  @media screen and (max-width:390xpx){
-    h5 {
-      font-size: 13px;
-    }
-  }
-  /* .fondoBlanco{
-    background-color: #fff;
-  } */
-  
-  label, h5 {
-    color: #fff;
-  }
-  
-  .logoImg {
-    width: 10%;
-    height: 10%;
-    text-align: left;
-    float: left;
-  }
-  
-  mat-slide-toggle, h5 {
-    display: inline-block;
-  }
-  
-  button {
-    align-items: center;
-    margin: auto;
-  }
-  
+.div-center {
+  margin:auto;
+  margin-top: 2%;
+  width: 65%;
+  padding: 10px;
+  background-color: #794d60;
+  overflow: auto;
+  padding: 1em 2em;
+  border-bottom: .3em solid 	#3d2730;
+  border-right: .2em solid 	#3d2730;
+  display: table;
+ }
+ .Centered {
+   align-items: center;
+   justify-content: center;
+   display: flex;
+ }
+ 
+ .SpanBtn {
+   position: absolute;
+   margin-top: 1%;
+   text-align: center;
+ }
+ 
+ @media screen and (max-width: 991px){
+   h5 {
+     font-size: 15px;
+   }
+   .div-center {
+    width: 80%;
+   }
+ }
+ @media screen and (max-width: 845px){
+
+ }
+ @media screen and (max-width: 767px){
+   .div-center {
+    padding: 10px;
+   }
+ 
+ }
+ @media screen and (max-width:575px){
+   h5 {
+     font-size: 15px;
+   }
+   .SpanBtn{
+     font-size: 12px;
+     text-align: left;
+     padding-left: 10%;
+   }
+ }
+ @media screen and (max-width:390xpx){
+   h5 {
+     font-size: 13px;
+   }
+ }
+ /* .fondoBlanco{
+   background-color: #fff;
+ } */
+ 
+ label, h5 {
+   color: #fff;
+ }
+ 
+ /* .logoImg {
+   width: 10%;
+   height: 10%;
+   text-align: left;
+   float: left;
+ } */
+ 
+ mat-slide-toggle, h5 {
+   display: inline-block;
+ }
+ 
+ button {
+   align-items: center;
+   margin: auto;
+ }
+ 
