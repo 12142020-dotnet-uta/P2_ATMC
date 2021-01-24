@@ -12,7 +12,7 @@ import { UploadPictureComponent } from "./components/picture/upload-picture/uplo
 import { LogInComponent } from './components/user/log-in/log-in.component';
 
 /* Bootstrap Modules */
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbRating } from '@ng-bootstrap/ng-bootstrap';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -38,7 +38,8 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
     MatSlideToggleModule,
     FormsModule
   ],
+  exports: [NgbRating],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, NgbRating]
 })
 export class AppModule { }
