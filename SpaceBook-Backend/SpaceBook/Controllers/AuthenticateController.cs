@@ -102,6 +102,8 @@ namespace SpaceBook.Controllers
 
             ApplicationUser user = new ApplicationUser()
             {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.Username

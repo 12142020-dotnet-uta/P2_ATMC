@@ -1,4 +1,5 @@
-﻿using SpaceBook.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using SpaceBook.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace SpaceBook.Repository
 
         public CommentRepository(ApplicationDbContext dbContext)
         {
-            dbContext = _dbContext;
+            _dbContext = dbContext;
         }
         
 
@@ -24,7 +25,7 @@ namespace SpaceBook.Repository
         /// <returns></returns>
         public Comment GetCommentById(int commentId)
         {
-            return _dbContext.Comments.FirstOrDefault(x => x.CommentID == commentId);
+            return _dbContext.Comments.Include(x=>x.PictureCommented).Include(x=>x.UserCommented).FirstOrDefault(x => x.CommentID == commentId);
         }
 
         /// <summary>
@@ -33,7 +34,37 @@ namespace SpaceBook.Repository
         /// <returns></returns>
         public IEnumerable<Comment> GetAllComments()
         {
-            return _dbContext.Comments;
+            return _dbContext.Comments.Include(x => x.PictureCommented).Include(x => x.UserCommented);
+        }
+
+        /// <summary>
+        /// Gets all comments for a Picture given the specified Picture ID.
+        /// </summary>
+        /// <param name="pictureId"></param>
+        /// <returns></returns>
+        public IEnumerable<Comment> GetAllCommentsForPicture(int pictureId)
+        {
+            return _dbContext.Comments.Include(x => x.UserCommented).Where(x => x.PictureCommentedId == pictureId);
+        }
+
+        /// <summary>
+        /// Gets all the Sub-Comments for a parent Comment given the specified Comment ID.
+        /// </summary>
+        /// <param name="commentId"></param>
+        /// <returns></returns>
+        public IEnumerable<Comment> GetAllCommentsForParentComment(int commentId)
+        {
+            return _dbContext.Comments.Include(x => x.UserCommented).Include(x => x.PictureCommented).Where(x => x.ParentCommentId == commentId);
+        }
+
+        /// <summary>
+        /// Gets all the Comments posted by a User given the specified User ID.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public IEnumerable<Comment> GetAllCommentsByUser(string userId)
+        {
+            return _dbContext.Comments.Include(x => x.PictureCommented).Where(x => x.UserCommentedId == userId);
         }
 
         /// <summary>
@@ -109,35 +140,7 @@ namespace SpaceBook.Repository
             }
         }
 
-        /// <summary>
-        /// Gets all comments for a Picture given the specified Picture ID.
-        /// </summary>
-        /// <param name="pictureId"></param>
-        /// <returns></returns>
-        public IEnumerable<Comment> GetAllCommentsForPicture(int pictureId)
-        {
-            return _dbContext.Comments.Where(x => x.PictureCommentedId == pictureId);
-        }
-
-        /// <summary>
-        /// Gets all the Sub-Comments for a parent Comment given the specified Comment ID.
-        /// </summary>
-        /// <param name="commentId"></param>
-        /// <returns></returns>
-        public IEnumerable<Comment> GetAllCommentsForParentComment(int commentId)
-        {
-            return _dbContext.Comments.Where(x => x.ParentCommentId == commentId);
-        }
-
-        /// <summary>
-        /// Gets all the Comments posted by a User given the specified User ID.
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        public IEnumerable<Comment> GetAllCommentsByUser(string userId)
-        {
-            return _dbContext.Comments.Where(x => x.UserCommentedId == userId);
-        }
+        
 
     }
 }
