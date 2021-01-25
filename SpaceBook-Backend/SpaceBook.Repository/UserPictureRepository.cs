@@ -22,18 +22,27 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="userPictureId"></param>
         /// <returns></returns>
-        public UserPicture GetUserPictureById(int userPictureId)
+        public async Task<UserPicture> GetUserPictureById(int userPictureId)
         {
-            return _dbContext.UserPictures.Include(x => x.Picture).Include(x => x.UploadedBy).FirstOrDefault(x => x.UserPictureID == userPictureId);
+            return await _dbContext.UserPictures.Include(x => x.Picture).Include(x => x.UploadedBy).AsQueryable().FirstOrDefaultAsync(x => x.UserPictureID == userPictureId);
+        }
+        /// <summary>
+        /// Returns a user picture (relationship model) based on the given picture Id(actual picture); returns null if the user picture is not in the db;
+        /// </summary>
+        /// <param name="userPictureId"></param>
+        /// <returns></returns>
+        public async Task<UserPicture> GetUserPictureByPicture(Picture picture)
+        {
+            return await _dbContext.UserPictures.Include(x => x.Picture).Include(x => x.UploadedBy).AsQueryable().FirstOrDefaultAsync(x => x.PictureId == picture.PictureID);
         }
 
         /// <summary>
         /// Returns a list of all user pictures in the Db
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<UserPicture> GetAllUserPictures()
+        public async Task<IEnumerable<UserPicture>> GetAllUserPictures()
         {
-            return _dbContext.UserPictures.Include(x=>x.Picture).Include(x=>x.UploadedBy);
+            return await _dbContext.UserPictures.Include(x=>x.Picture).Include(x=>x.UploadedBy).ToListAsync();
         }
 
         /// <summary>
@@ -41,10 +50,10 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="userPictureId"></param>
         /// <returns></returns>
-        public bool IsUserPictureInDb(int userPictureId)
+        public async Task<bool> IsUserPictureInDb(int userPictureId)
         {
             //attempt to get picture from the db
-            UserPicture userPicture = GetUserPictureById(userPictureId);
+            UserPicture userPicture = await GetUserPictureById(userPictureId);
             //return true if the picture is not null
             return userPicture != null;
         }
@@ -54,16 +63,16 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="userPicture"></param>
         /// <returns></returns>
-        public bool AttemptAddUserPictureToDb(UserPicture userPicture)
+        public async Task<bool> AttemptAddUserPictureToDb(UserPicture userPicture)
         {
-            if (IsUserPictureInDb(userPicture.UserPictureID))
+            if (await IsUserPictureInDb(userPicture.UserPictureID))
             {
                 //fail if picture is already in db
                 return false;
             }
             //attempt to add picture to db
             _dbContext.UserPictures.Add(userPicture);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
             return true;
         }
 
@@ -72,37 +81,38 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="userPicture"></param>
         /// <returns></returns>
-        public bool AttemptEditUserPictureInDb(UserPicture userPicture)
+        public async Task<bool> AttemptEditUserPictureInDb(UserPicture userPicture)
         {
-            if (!IsUserPictureInDb(userPicture.UserPictureID))
+            if (!(await IsUserPictureInDb(userPicture.UserPictureID)))
             {
                 //fail if picture is not in db
                 return false;
             }
             //make changes and save
             _dbContext.UserPictures.Update(userPicture);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
             return true;
         }
 
         /// <summary>
-        /// Attempts to remove picture from db; returns false if user picture was not in db beforehand; returns false if user picture is still in db after attempting to remove it.
+        /// Attempts to remove user picture from db (this doesn't delete the actual picture, only the relationship model between a user and a picture); returns false if user picture was not in db beforehand; returns false if user picture is still in db after attempting to remove it.
         /// </summary>
         /// <param name="userPictureId"></param>
         /// <returns></returns>
-        public bool AttemptRemovePictureFromDb(int userPictureId)
+        public async Task<bool> AttemptRemoveUserPictureFromDb(int userPictureId)
         {
-            if (!IsUserPictureInDb(userPictureId))
+            if (!(await IsUserPictureInDb(userPictureId)))
             {
+                //failed to delete if the picture is not in the db
                 return false;
             }
             //get pictcure to remove
-            UserPicture userPicture = GetUserPictureById(userPictureId);
+            UserPicture userPicture = await GetUserPictureById(userPictureId);
             //attempt to remove
             _dbContext.UserPictures.Remove(userPicture);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
             //return true if picture is no longer in db
-            return !IsUserPictureInDb(userPictureId);
+            return !(await IsUserPictureInDb(userPictureId));
         }
 
     }
