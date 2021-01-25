@@ -50,7 +50,7 @@ namespace SpaceBook.Controllers
         [HttpGet("Id/{userId}")]
         public async Task<ActionResult> GetUserById(string userId)
         {
-                if (!_userRepo.IsUserInDb(userId).Result)
+                if (await _userRepo.IsUserInDb(userId) == false)
                 {
                     return NotFound();
                 }
@@ -66,9 +66,9 @@ namespace SpaceBook.Controllers
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
-            var loggedIn = _userRepo.GetUserByUsername(claim.Value).Result;
+            var loggedIn = await _userRepo.GetUserByUsername(claim.Value);
 
-            if (!_userRepo.IsUserInDb(userId).Result)
+            if (await _userRepo.IsUserInDb(userId) == false)
             {
                 return NotFound();
             }
@@ -85,8 +85,8 @@ namespace SpaceBook.Controllers
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
-            var loggedIn = _userRepo.GetUserByUsername(claim.Value).Result;
-            if (!_userRepo.IsUserInDb(userId).Result)
+            var loggedIn = await _userRepo.GetUserByUsername(claim.Value);
+            if (await _userRepo.IsUserInDb(userId) == false)
             {
                 return NotFound();
             }
@@ -117,7 +117,7 @@ namespace SpaceBook.Controllers
         [HttpGet("Username/{username}")]
         public async Task<ActionResult> GetUserByUsername(string username)
         {
-            if (_userRepo.GetUserByUsername(username).Result == null)
+            if (await _userRepo.GetUserByUsername(username) == null)
             {
                 return NotFound();
             }
@@ -127,7 +127,7 @@ namespace SpaceBook.Controllers
         [HttpGet("Id/{userId}/Favorites")]
         public async Task<ActionResult> GetAllFavoritesOfUser(string userId)
         {
-            if (!_userRepo.IsUserInDb(userId).Result)
+            if (await _userRepo.IsUserInDb(userId) == false)
             {
                 return NotFound();
             }
@@ -137,7 +137,7 @@ namespace SpaceBook.Controllers
         [HttpGet("Id/{userId}/Followers")]
         public async Task<ActionResult> GetAllFollowersOfUser(string userId)
         {
-            if (!_userRepo.IsUserInDb(userId).Result)
+            if (await _userRepo.IsUserInDb(userId) == false)
             {
                 return NotFound();
             }
@@ -147,7 +147,7 @@ namespace SpaceBook.Controllers
         [HttpGet("Id/{userId}/Followed")]
         public async Task<ActionResult> GetAllFollowedOfUser(string userId)
         {
-            if (!_userRepo.IsUserInDb(userId).Result)
+            if (await _userRepo.IsUserInDb(userId) == false)
             {
                 return NotFound();
             }
@@ -161,20 +161,20 @@ namespace SpaceBook.Controllers
         {
             //var claimsIdentity = (ClaimsIdentity)User.Identity;
             //var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
-            //var loggedIn = _userRepo.GetUserByUsername(claim.Value).Result;
+            //var loggedIn = await _userRepo.GetUserByUsername(claim.Value);
 
 
             //FOR AUTHORIZATION: Remove followerUserId from if statement, Add loggedIn.Id 
-            if (!_userRepo.IsUserInDb(followedUserId).Result || !_userRepo.IsUserInDb(followerUserId).Result)
+            if (await _userRepo.IsUserInDb(followedUserId) == false || await _userRepo.IsUserInDb(followerUserId) == false)
             {
                 return NotFound();
             }
             else
             {
                 //FOR AUTHORIZATION: Remove following line, uncomment follower = loggedIn
-                ApplicationUser follower = _userRepo.GetUserById(followerUserId).Result;
+                ApplicationUser follower = await _userRepo.GetUserById(followerUserId);
                 //ApplicationUser follower = loggedIn;
-                ApplicationUser followed = _userRepo.GetUserById(followedUserId).Result;
+                ApplicationUser followed = await _userRepo.GetUserById(followedUserId);
                 Follow follow = new Follow()
                 {
                     Followed = followed,
@@ -194,17 +194,17 @@ namespace SpaceBook.Controllers
             //FOR AUTHORIZATION: Uncomment following 3 lines
             //var claimsIdentity = (ClaimsIdentity)User.Identity;
             //var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
-            //var loggedIn = _userRepo.GetUserByUsername(claim.Value).Result;
+            //var loggedIn = await _userRepo.GetUserByUsername(claim.Value);
 
             //FOR AUTHORIZATION: Remove followerUserId from if statement, Add loggedIn.Id 
-            if (!_userRepo.IsUserInDb(followedUserId).Result || !_userRepo.IsUserInDb(followerUserId).Result)
+            if (await _userRepo.IsUserInDb(followedUserId) == false || await _userRepo.IsUserInDb(followerUserId) == false)
             {
                 return NotFound();
             }
             else
             {
                 //FOR AUTHORIZATION: Remove followerUserId parameter, Add loggedIn.Id  
-                Follow follow = _followRepo.GetFollowByFollowerAndFollowedIds(followerUserId, followedUserId).Result;
+                Follow follow = await _followRepo.GetFollowByFollowerAndFollowedIds(followerUserId, followedUserId);
                 return Ok(await _followRepo.AttemptRemoveFollow(follow.FollowID));
             }
 
@@ -218,11 +218,11 @@ namespace SpaceBook.Controllers
             //FOR AUTHORIZATION: Uncomment following 3 lines
             //var claimsIdentity = (ClaimsIdentity)User.Identity;
             //var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
-            //var loggedIn = _userRepo.GetUserByUsername(claim.Value).Result;
+            //var loggedIn = await _userRepo.GetUserByUsername(claim.Value);
 
 
-            ApplicationUser user = _userRepo.GetUserById(userId).Result;
-            Picture picture = _pictureRepo.GetPictureById(pictureId);
+            ApplicationUser user = await _userRepo.GetUserById(userId);
+            Picture picture = await _pictureRepo.GetPictureById(pictureId);
 
             //FOR AUTHORIZATION: Uncomment following 3 lines
             //if(loggedIn.Id != userId){
@@ -247,13 +247,13 @@ namespace SpaceBook.Controllers
             //FOR AUTHORIZATION: Uncomment following 6 commented lines
             //var claimsIdentity = (ClaimsIdentity)User.Identity;
             //var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
-            //var loggedIn = _userRepo.GetUserByUsername(claim.Value).Result;
+            //var loggedIn = await _userRepo.GetUserByUsername(claim.Value);
 
             //if(loggedIn.Id != userId){
             //  return Forbid();
             //}
 
-            Favorite favorite = _favoriteRepo.GetFavoriteByUserPicture(userId, pictureId).Result;
+            Favorite favorite = await _favoriteRepo.GetFavoriteByUserPicture(userId, pictureId);
             return Ok(await _favoriteRepo.AttemptRemoveFavorite(favorite.FavoriteID));
         }
 

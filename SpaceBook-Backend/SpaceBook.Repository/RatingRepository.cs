@@ -28,6 +28,19 @@ namespace SpaceBook.Repository
         }
 
         /// <summary>
+        /// Returns the Rating based on the ids of the user and picture passed in
+        /// </summary>
+        /// <param name="pictureId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<Rating> GetRatingByPictureAndUser(int pictureId, string userId)
+        {
+            var userRatings = await GetRatingsByUser(userId);
+
+            return userRatings.Where(x => x.RatedPictureId == pictureId).FirstOrDefault();
+        }
+
+        /// <summary>
         /// Returns all of the Ratings in the database.
         /// </summary>
         /// <returns></returns>

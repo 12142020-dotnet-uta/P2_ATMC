@@ -21,11 +21,11 @@ namespace SpaceBook.Controllers
         }
 
         [HttpGet("daily")]
-        public IActionResult GetDailyPicture()
+        public async Task<IActionResult> GetDailyPicture()
         {
             //will get daily pictures in the future; just gets picture 1 for now
             //TODO: actually get picture of the day from nasa api; probably do it in business layer
-            Picture picture = _pictureBusinessLogic.GetPicture(1);
+            Picture picture = await _pictureBusinessLogic.GetPicture(1);
             if (picture != null)
             {
                 return Ok(picture);
@@ -38,10 +38,10 @@ namespace SpaceBook.Controllers
         }
 
         [HttpGet("{pictureId}")]
-        public IActionResult GetPicture(int pictureId)
+        public async Task<IActionResult> GetPicture(int pictureId)
         {
             //get picture by id
-            Picture picture = _pictureBusinessLogic.GetPicture(pictureId);
+            Picture picture = await _pictureBusinessLogic.GetPicture(pictureId);
             if (picture != null)
             {
                 return Ok(picture);
@@ -52,11 +52,24 @@ namespace SpaceBook.Controllers
             }
 
         }
+        [HttpDelete("{pictureId}")]
+        public async Task<IActionResult> DeletePicture(int pictureId)
+        {
+            //get picture by id
+            if(await _pictureBusinessLogic.DeleteUserPicture(pictureId))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
 
         [HttpGet("")]
-        public IActionResult GetAllPictures()
+        public async Task<IActionResult> GetAllPictures()
         {
-            var pictures = _pictureBusinessLogic.GetAllPictures();
+            var pictures = await _pictureBusinessLogic.GetAllPictures();
             if (pictures == null) { return NotFound(); }
             return Ok(pictures);
         }
@@ -64,20 +77,16 @@ namespace SpaceBook.Controllers
         [Authorize]
         [HttpPost]
         [Route("")]
-        public IActionResult CreatePicture([FromBody] Picture userPicture)
+        public async Task<IActionResult> CreatePicture([FromBody] Picture userPicture)
         {
-            //get logged in user
             var claimsIdentity = (ClaimsIdentity)User.Identity;
-            //var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            //if (claims== null)
-            //{
-            //    //if user isn't logged in
-            //    return Unauthorized();
-            //}
-            //var userId = claim.Value;
+            //make sure user is logged in
             if (!claimsIdentity.IsAuthenticated) { return Unauthorized(); }
-            var username = claimsIdentity.Name;
-            if (_pictureBusinessLogic.CreateUserPicture(userPicture,username))
+            //get logged in user
+            var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
+            var username = claim.Value;
+
+            if (await _pictureBusinessLogic.CreateUserPicture(userPicture,username))
             {
                 return Accepted(userPicture);
             }
@@ -86,6 +95,79 @@ namespace SpaceBook.Controllers
                 return BadRequest(userPicture);
             }
         }
+        #region Ratings
+        [HttpGet("{pictureId}/Ratings")]
+        public async Task<IActionResult> GetAllRatings(int pictureId)
+        {
+            var ratings = await _pictureBusinessLogic.GetRatingsForPicture(pictureId);
+            if (ratings==null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(ratings);
+            }
+        }
+
+        [HttpGet("{pictureId}/Ratings/{userId}")]
+        public async Task<IActionResult> GetRating(int pictureId, string userId)
+        {
+            var rating = await _pictureBusinessLogic.GetRating(userId, pictureId);
+            if (rating == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(rating);
+            }
+        }
+
+        [HttpPost("{pictureId}/Ratings")]
+        [Authorize]
+        public async Task<IActionResult> PostRating(int pictureId, [FromBody] double rating)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            //make sure user is logged in
+            if (!claimsIdentity.IsAuthenticated) { return Unauthorized(); }
+            //get logged in user
+            var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
+            var username = claim.Value;
+
+            if( await _pictureBusinessLogic.CreateRating(username, pictureId, rating))
+            {
+                return Ok(rating);
+            }
+            else
+            {
+                return BadRequest(rating);
+            }
+        }
+        [HttpPut("{pictureId}/Ratings")]
+        [Authorize]
+        public async Task<IActionResult> EditRating(int pictureId, [FromBody] double rating)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            //make sure user is logged in
+            if (!claimsIdentity.IsAuthenticated) { return Unauthorized(); }
+            //get logged in user
+            var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
+            var username = claim.Value;
+
+            if (await _pictureBusinessLogic.EditRating(username, pictureId, rating))
+            {
+                return Ok(rating);
+            }
+            else
+            {
+                return BadRequest(rating);
+            }
+
+
+        }
+        #endregion
+
 
     }
 }
