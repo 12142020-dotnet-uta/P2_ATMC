@@ -15,7 +15,8 @@ namespace SpaceBook.Models
         [StringLength(300, ErrorMessage = "The comment must not exceed 300 characters.")]
         [Required]
         public string Text { get; set; }
-
+        [Required]
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
         public ApplicationUser Sender { get; set; }

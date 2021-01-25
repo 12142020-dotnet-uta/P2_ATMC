@@ -25,7 +25,8 @@ namespace SpaceBook.Models
         [DataType(DataType.Text)]
         [Required]
         public string Description { get; set; }
-
+        [Required]
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
     }
 }
