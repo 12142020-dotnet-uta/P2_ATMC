@@ -30,8 +30,8 @@ namespace SpaceBook.Controllers
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
-            var loggedIn = _userRepo.GetUserByUsername(claim.Value).Result;
-            if (!_userRepo.IsUserInDb(loggedIn.Id).Result)
+            var loggedIn = await _userRepo.GetUserByUsername(claim.Value);
+            if (await _userRepo.IsUserInDb(loggedIn.Id) == false)
             {
                 return NotFound();
             }
@@ -44,8 +44,8 @@ namespace SpaceBook.Controllers
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
-            var loggedIn = _userRepo.GetUserByUsername(claim.Value).Result;
-            if (!_userRepo.IsUserInDb(loggedIn.Id).Result || !_userRepo.IsUserInDb(userId).Result)
+            var loggedIn = await _userRepo.GetUserByUsername(claim.Value);
+            if (await _userRepo.IsUserInDb(loggedIn.Id) == false || await _userRepo.IsUserInDb(userId) == false)
             {
                 return NotFound();
             }
@@ -62,18 +62,19 @@ namespace SpaceBook.Controllers
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
-            var loggedIn = _userRepo.GetUserByUsername(claim.Value).Result;
-            if (!_userRepo.IsUserInDb(loggedIn.Id).Result || !_userRepo.IsUserInDb(userId).Result)
+            var loggedIn = await _userRepo.GetUserByUsername(claim.Value);
+            if (await _userRepo.IsUserInDb(loggedIn.Id) == false || await _userRepo.IsUserInDb(userId) == false)
             {
                 return NotFound();
             }
             else
             {
-                ApplicationUser recipient = _userRepo.GetUserById(userId).Result;
+                ApplicationUser recipient = await _userRepo.GetUserById(userId);
                 Message parentMessage = null;
-                if (_messageRepo.GetMessagesBetween2Users(userId, loggedIn.Id).Result.Count() != 0)
+                IEnumerable<Message> messages = await _messageRepo.GetMessagesBetween2Users(userId, loggedIn.Id);
+                if (messages.Count() != 0)
                 {
-                    parentMessage = _messageRepo.GetMessagesBetween2Users(userId, loggedIn.Id).Result.Last();
+                    parentMessage = messages.Last();
                 }
                 Message message = new Message()
                 {
