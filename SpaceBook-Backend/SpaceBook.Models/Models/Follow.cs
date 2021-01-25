@@ -10,7 +10,8 @@ namespace SpaceBook.Models
     {
         [Key]
         public int FollowID { get; set; }
-
+        [Required]
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
         
         public ApplicationUser Followed { get; set; }

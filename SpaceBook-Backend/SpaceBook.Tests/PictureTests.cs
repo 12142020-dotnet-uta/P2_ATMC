@@ -2,6 +2,7 @@
 using SpaceBook.Models;
 using SpaceBook.Repository;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace SpaceBook.Tests
@@ -34,7 +35,7 @@ namespace SpaceBook.Tests
                 PictureRepository repo = new PictureRepository(context);
 
                 //test add picture to db
-                Assert.True( repo.AttemptAddPictureToDb(testPicture));
+                Assert.True(repo.AttemptAddPictureToDb(testPicture).Result);
 
 
             }
@@ -44,7 +45,7 @@ namespace SpaceBook.Tests
                 //create repository layer
                 PictureRepository repo = new PictureRepository(context);
 
-                var tempPicture = repo.GetPictureById(testPicture.PictureID);
+                var tempPicture = repo.GetPictureById(testPicture.PictureID).Result;
 
                 //test that all properties were successfully saved
 
@@ -97,9 +98,9 @@ namespace SpaceBook.Tests
                 PictureRepository repo = new PictureRepository(context);
 
                 //test add picture to db
-                Assert.True(repo.AttemptAddPictureToDb(testPicture));
-                Assert.True(repo.AttemptAddPictureToDb(testPicture2));
-                Assert.True(repo.AttemptAddPictureToDb(testPicture3));
+                Assert.True(repo.AttemptAddPictureToDb(testPicture).Result);
+                Assert.True(repo.AttemptAddPictureToDb(testPicture2).Result);
+                Assert.True(repo.AttemptAddPictureToDb(testPicture3).Result);
 
 
             }
@@ -109,11 +110,12 @@ namespace SpaceBook.Tests
                 //create repository layer
                 PictureRepository repo = new PictureRepository(context);
 
-                var pictureList = repo.GetAllPictures();
+                var pictureList = repo.GetAllPictures().Result;
 
                 //test that all properties were successfully saved
 
-                Assert.Equal(3,pictureList.Count);
+                var pictures = pictureList as ICollection<Picture>;
+                Assert.Equal(3,pictures.Count);
 
             }
         }
@@ -142,7 +144,7 @@ namespace SpaceBook.Tests
                 PictureRepository repo = new PictureRepository(context);
 
                 //test add picture to db
-                Assert.True(repo.AttemptAddPictureToDb(testPicture));
+                Assert.True(repo.AttemptAddPictureToDb(testPicture).Result);
 
 
             }
@@ -153,11 +155,11 @@ namespace SpaceBook.Tests
                 PictureRepository repo = new PictureRepository(context);
 
                 //make sure picture is in db
-                Assert.True(repo.IsPictureInDb(testPicture.PictureID));
+                Assert.True(repo.IsPictureInDb(testPicture.PictureID).Result);
                 //remove picture from db
-                Assert.True(repo.AttemptRemovePictureFromDb(testPicture.PictureID));
+                Assert.True(repo.AttemptRemovePictureFromDb(testPicture.PictureID).Result);
                 //make sure picture is not in db
-                Assert.False(repo.IsPictureInDb(testPicture.PictureID));
+                Assert.False(repo.IsPictureInDb(testPicture.PictureID).Result);
 
             }
         }
@@ -196,7 +198,7 @@ namespace SpaceBook.Tests
                 PictureRepository repo = new PictureRepository(context);
 
                 //attempt add picture to db
-                Assert.True(repo.AttemptAddPictureToDb(testPicture));
+                Assert.True(repo.AttemptAddPictureToDb(testPicture).Result);
 
             }
             using (var context = new ApplicationDbContext(options))
@@ -205,14 +207,14 @@ namespace SpaceBook.Tests
                 PictureRepository repo = new PictureRepository(context);
 
                 //test add picture to db
-                Picture temp = repo.GetPictureById(testPicture.PictureID);
+                Picture temp = repo.GetPictureById(testPicture.PictureID).Result;
                 temp.Date = editedPicture.Date;
                 temp.Description = editedPicture.Description;
                 temp.ImageURL = editedPicture.ImageURL;
                 temp.MediaType = editedPicture.MediaType;
                 temp.Title = editedPicture.Title;
                 //attempt edit
-                Assert.True(repo.AttemptEditPictureInDb(temp));
+                Assert.True(repo.AttemptEditPictureInDb(temp).Result);
             }
 
             //try to access db with a new instance of a repository
@@ -221,7 +223,7 @@ namespace SpaceBook.Tests
                 //create repository layer
                 PictureRepository repo = new PictureRepository(context);
 
-                var tempPicture = repo.GetPictureById(testPicture.PictureID);
+                var tempPicture = repo.GetPictureById(testPicture.PictureID).Result;
 
                 //test that all properties were successfully saved
 

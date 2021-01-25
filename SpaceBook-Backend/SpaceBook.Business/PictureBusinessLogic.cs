@@ -11,12 +11,14 @@ namespace SpaceBook.Business
         private readonly UserPictureRepository _userPictureRepository;
         private readonly ApplicationUserRepository _userRepository;
         private readonly RatingRepository _ratingRepository;
-        public PictureBusinessLogic(PictureRepository pictureRepository, ApplicationUserRepository userRepository,UserPictureRepository userPictureRepository, RatingRepository ratingRepository)
+        private readonly CommentRepository _commentRepository;
+        public PictureBusinessLogic(PictureRepository pictureRepository, ApplicationUserRepository userRepository,UserPictureRepository userPictureRepository, RatingRepository ratingRepository,CommentRepository commentRepository )
         {
             _pictureRepository = pictureRepository;
             _userRepository = userRepository;
             _userPictureRepository = userPictureRepository;
             _ratingRepository = ratingRepository;
+            _commentRepository = commentRepository;
         }
 
         public async Task<Picture> GetPicture(int pictureId)
@@ -51,12 +53,26 @@ namespace SpaceBook.Business
         /// </summary>
         /// <param name="pictureId"></param>
         /// <returns></returns>
-        public async Task<bool> DeleteUserPicture(int pictureId)
+        public async Task<bool> DeleteUserPicture(int pictureId, string username)
         {
             var userPicture = await _userPictureRepository.GetUserPictureByPicture(await _pictureRepository.GetPictureById(pictureId));
+            if(userPicture.UploadedBy.UserName != username)
+            {
+                //users can only delete their own pictures.
+                return false;
+            }
             //delete userpicture
             if (await _userPictureRepository.AttemptRemoveUserPictureFromDb(userPicture.UserPictureID))
             {
+                //delete comments and ratings on picture
+                foreach (Comment comment in await _commentRepository.GetAllCommentsForPicture(userPicture.PictureId))
+                {
+                    await _commentRepository.AttemptRemoveComment(comment.CommentID);
+                }
+                foreach (Rating rating in await _ratingRepository.GetRatingsForPicture(userPicture.PictureId))
+                {
+                    await _ratingRepository.AttemptRemoveRating(rating.RatingID);
+                }
                 //if user picture is deleted, delete picture and return whether or not it was successful
                 return await _pictureRepository.AttemptRemovePictureFromDb(userPicture.PictureId);
             }
@@ -140,5 +156,9 @@ namespace SpaceBook.Business
 
         #endregion
 
+        #region Comments
+
+
+        #endregion
     }
 }
