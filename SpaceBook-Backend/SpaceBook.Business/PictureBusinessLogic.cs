@@ -1,11 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using SpaceBook.Models;
+﻿using SpaceBook.Models;
 using SpaceBook.Repository;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SpaceBook.Business
@@ -32,9 +27,9 @@ namespace SpaceBook.Business
             return _pictureRepository.GetAllPictures();
         }
 
-        public bool CreateUserPicture(Picture picture, string userId)
+        public async Task<bool> CreateUserPicture(Picture picture, string username)
         {
-            var user = _userRepository.GetUserByUsername(userId).Result;
+            var user =  await _userRepository.GetUserByUsername(username);
 
             UserPicture userPicture = new UserPicture()
             {

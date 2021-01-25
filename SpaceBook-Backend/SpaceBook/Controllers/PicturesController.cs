@@ -64,7 +64,7 @@ namespace SpaceBook.Controllers
         [Authorize]
         [HttpPost]
         [Route("")]
-        public IActionResult CreatePicture([FromBody] Picture userPicture)
+        public async Task<IActionResult> CreatePicture([FromBody] Picture userPicture)
         {
             //get logged in user
             var claimsIdentity = (ClaimsIdentity)User.Identity;
@@ -77,7 +77,7 @@ namespace SpaceBook.Controllers
             //var userId = claim.Value;
             if (!claimsIdentity.IsAuthenticated) { return Unauthorized(); }
             var username = claimsIdentity.Name;
-            if (_pictureBusinessLogic.CreateUserPicture(userPicture,username))
+            if (await _pictureBusinessLogic.CreateUserPicture(userPicture,username))
             {
                 return Accepted(userPicture);
             }
