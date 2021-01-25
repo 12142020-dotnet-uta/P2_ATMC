@@ -222,7 +222,7 @@ namespace SpaceBook.Controllers
 
 
             ApplicationUser user = _userRepo.GetUserById(userId).Result;
-            Picture picture = _pictureRepo.GetPictureById(pictureId);
+            Picture picture =await _pictureRepo.GetPictureById(pictureId);
 
             //FOR AUTHORIZATION: Uncomment following 3 lines
             //if(loggedIn.Id != userId){

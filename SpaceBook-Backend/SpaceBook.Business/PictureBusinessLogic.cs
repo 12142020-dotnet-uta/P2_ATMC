@@ -10,23 +10,25 @@ namespace SpaceBook.Business
         private readonly PictureRepository _pictureRepository;
         private readonly UserPictureRepository _userPictureRepository;
         private readonly ApplicationUserRepository _userRepository;
-        public PictureBusinessLogic(PictureRepository pictureRepository, ApplicationUserRepository userRepository,UserPictureRepository userPictureRepository)
+        private readonly RatingRepository _ratingRepository;
+        public PictureBusinessLogic(PictureRepository pictureRepository, ApplicationUserRepository userRepository,UserPictureRepository userPictureRepository, RatingRepository ratingRepository)
         {
             _pictureRepository = pictureRepository;
             _userRepository = userRepository;
             _userPictureRepository = userPictureRepository;
+            _ratingRepository = ratingRepository;
         }
 
-        public Picture GetPicture(int pictureId)
+        public async Task<Picture> GetPicture(int pictureId)
         {
-            return _pictureRepository.GetPictureById(pictureId);
+            return await _pictureRepository.GetPictureById(pictureId);
         }
 
-        public IEnumerable<Picture> GetAllPictures()
+        public async Task<IEnumerable<Picture>> GetAllPictures()
         {
-            return _pictureRepository.GetAllPictures();
+            return await _pictureRepository.GetAllPictures();
         }
-
+        #region User Pictures
         public async Task<bool> CreateUserPicture(Picture picture, string username)
         {
             var user =  await _userRepository.GetUserByUsername(username);
@@ -41,8 +43,102 @@ namespace SpaceBook.Business
 
             //do checks on picture before adding?
             //like make sure user is logged in?
-            return _userPictureRepository.AttemptAddUserPictureToDb(userPicture);
+            return await _userPictureRepository.AttemptAddUserPictureToDb(userPicture);
         }
+
+        /// <summary>
+        /// Takes a picture Id, and attmepts to delete both the user picture(relationship model) and the picture(object model) from the db
+        /// </summary>
+        /// <param name="pictureId"></param>
+        /// <returns></returns>
+        public async Task<bool> DeleteUserPicture(int pictureId)
+        {
+            var userPicture = await _userPictureRepository.GetUserPictureByPicture(await _pictureRepository.GetPictureById(pictureId));
+            //delete userpicture
+            if (await _userPictureRepository.AttemptRemoveUserPictureFromDb(userPicture.UserPictureID))
+            {
+                //if user picture is deleted, delete picture and return whether or not it was successful
+                return await _pictureRepository.AttemptRemovePictureFromDb(userPicture.PictureId);
+            }
+            else
+            {
+                //the attempt to remove the user picture failed
+                return false;
+            }
+        }
+        #endregion
+
+        #region Ratings
+        /// <summary>
+        /// Takes the username of the user creating the rating, the id of the picture being rated, and the value of the rating, and creates a new rating
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="pictureId"></param>
+        /// <param name="rating"></param>
+        /// <returns></returns>
+        public async Task<bool> CreateRating(string username, int pictureId, double rating)
+        {
+            var user = await _userRepository.GetUserByUsername(username);
+            var picture = await _pictureRepository.GetPictureById(pictureId);
+
+            //var user = await userTask;
+            //var picture = await pictureTask;
+
+            if (user == null || picture == null)
+            {
+                return false;
+            }
+            Rating newRating = new Rating()
+            {
+                Value = rating,
+                RatedPicture = picture,
+                RatedPictureId = picture.PictureID,
+                UserRating = user,
+                UserRatingId = user.Id
+            };
+            return await _ratingRepository.AttemptAddRating(newRating);
+        }
+        /// <summary>
+        /// edits a rating in the db based on the username, pictureId, and new value for the rating
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="pictureId"></param>
+        /// <param name="newRating"></param>
+        /// <returns></returns>
+        public async Task<bool> EditRating(string username, int pictureId, double newRating)
+        {
+            var user = await _userRepository.GetUserByUsername(username);
+            if (user == null) { 
+                //invalid user
+                return false; 
+            }
+            var retrievedRating = await _ratingRepository.GetRatingByPictureAndUser(pictureId, user.Id);
+            if (retrievedRating == null)
+            {
+                //no rating found
+                return false;
+            }
+            retrievedRating.Value = newRating;
+            return await _ratingRepository.AttemptEditRating(retrievedRating); 
+        }
+
+        public async Task<Rating> GetRating(string userId, int pictureId)
+        {
+            var user = await _userRepository.GetUserById(userId);
+            if (user == null)
+            {
+                //invalid user
+                return null;
+            }
+            return await _ratingRepository.GetRatingByPictureAndUser(pictureId,user.Id);
+        }
+
+        public async Task<IEnumerable<Rating>> GetRatingsForPicture(int pictureId)
+        {
+            return await _ratingRepository.GetRatingsForPicture(pictureId);
+        }
+
+        #endregion
 
     }
 }
