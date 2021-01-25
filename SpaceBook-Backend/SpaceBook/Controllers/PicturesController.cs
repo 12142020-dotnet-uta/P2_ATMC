@@ -52,11 +52,18 @@ namespace SpaceBook.Controllers
             }
 
         }
+        [Authorize]
         [HttpDelete("{pictureId}")]
         public async Task<IActionResult> DeletePicture(int pictureId)
         {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            //make sure user is logged in
+            if (!claimsIdentity.IsAuthenticated) { return Unauthorized(); }
+            //get logged in user
+            var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
+            var username = claim.Value;
             //get picture by id
-            if(await _pictureBusinessLogic.DeleteUserPicture(pictureId))
+            if (await _pictureBusinessLogic.DeleteUserPicture(pictureId,username))
             {
                 return Ok();
             }
@@ -168,6 +175,9 @@ namespace SpaceBook.Controllers
         }
         #endregion
 
+        #region Comments
+
+        #endregion
 
     }
 }

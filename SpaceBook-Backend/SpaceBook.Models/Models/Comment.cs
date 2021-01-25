@@ -9,9 +9,12 @@ namespace SpaceBook.Models
     {
         [Key]
         public int CommentID { get; set; }
+        [StringLength(300, ErrorMessage = "The comment must not exceed 300 characters.")]
+        [DataType(DataType.Text)]
         [Required]
         public string CommentText { get; set; }
-
+        [Required]
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
         public ApplicationUser UserCommented { get; set; }
