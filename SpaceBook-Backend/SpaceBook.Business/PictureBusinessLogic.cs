@@ -78,11 +78,11 @@ namespace SpaceBook.Business
         /// <returns></returns>
         public async Task<bool> CreateRating(string username, int pictureId, double rating)
         {
-            var userTask = _userRepository.GetUserByUsername(username);
-            var pictureTask = _pictureRepository.GetPictureById(pictureId);
+            var user = await _userRepository.GetUserByUsername(username);
+            var picture = await _pictureRepository.GetPictureById(pictureId);
 
-            var user = await userTask;
-            var picture = await pictureTask;
+            //var user = await userTask;
+            //var picture = await pictureTask;
 
             if (user == null || picture == null)
             {
@@ -122,15 +122,20 @@ namespace SpaceBook.Business
             return await _ratingRepository.AttemptEditRating(retrievedRating); 
         }
 
-        public async Task<Rating> GetRating(string username, int pictureId)
+        public async Task<Rating> GetRating(string userId, int pictureId)
         {
-            var user = await _userRepository.GetUserByUsername(username);
+            var user = await _userRepository.GetUserById(userId);
             if (user == null)
             {
                 //invalid user
                 return null;
             }
             return await _ratingRepository.GetRatingByPictureAndUser(pictureId,user.Id);
+        }
+
+        public async Task<IEnumerable<Rating>> GetRatingsForPicture(int pictureId)
+        {
+            return await _ratingRepository.GetRatingsForPicture(pictureId);
         }
 
         #endregion

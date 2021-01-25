@@ -37,7 +37,7 @@ namespace SpaceBook.Repository
         {
             var userRatings = await GetRatingsByUser(userId);
 
-            return await userRatings.Where(x => x.RatedPictureId == pictureId).AsQueryable().FirstOrDefaultAsync();
+            return userRatings.Where(x => x.RatedPictureId == pictureId).FirstOrDefault();
         }
 
         /// <summary>
