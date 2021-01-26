@@ -1,5 +1,6 @@
 ﻿using SpaceBook.Models;
 using SpaceBook.Repository;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -158,6 +159,45 @@ namespace SpaceBook.Business
 
         #region Comments
 
+        public async Task<Comment> CreateCommentOnPicture(int pictureId, string username, int? commentId, string commentText)
+        {
+            ApplicationUser user = await _userRepository.GetUserByUsername(username);
+            Picture picture = await _pictureRepository.GetPictureById(pictureId);
+            Comment parentComment = null;
+            if (commentId != null)
+            {
+                parentComment = await _commentRepository.GetCommentById((int)commentId);
+            }
+
+            Comment comment = new Comment()
+            {
+                CommentText = commentText,
+                UserCommented = user,
+                UserCommentedId = user.Id,
+                PictureCommented = picture,
+                PictureCommentedId = picture.PictureID,
+                ParentComment = parentComment,
+            };
+            if (await _commentRepository.AttemptAddCommentToDb(comment))
+            {
+                return comment;
+            }
+            else return null;
+        }
+
+        public async Task<IEnumerable<Comment>> GetCommentsForPicture(int pictureId)
+        {
+            return await _commentRepository.GetAllCommentsForPicture(pictureId);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="commentId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Comment>> GetCommentsForComment(int commentId)
+        {
+            return await _commentRepository.GetAllCommentsForParentComment(commentId);
+        }
 
         #endregion
     }

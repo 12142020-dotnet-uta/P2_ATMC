@@ -176,7 +176,106 @@ namespace SpaceBook.Controllers
         #endregion
 
         #region Comments
+        [HttpGet("{pictureId}/Comments")]
+        public async Task<IActionResult> GetAllComments(int pictureId)
+        {
+            var comments = await _pictureBusinessLogic.GetCommentsForPicture(pictureId);
+            if (comments == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(comments);
+            }
+        }
 
+        [Authorize]
+        [HttpPost]
+        [Route("{pictureId}/Comments")]
+        public async Task<IActionResult> CreateCommentOnPicture(int pictureId, [FromBody] string text)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            //make sure user is logged in
+            if (!claimsIdentity.IsAuthenticated) { return Unauthorized(); }
+            //get logged in user
+            var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
+            var username = claim.Value;
+
+            var comment = await _pictureBusinessLogic.CreateCommentOnPicture(pictureId, username, null, text);
+            if (comment!=null)
+            {
+                return Accepted(comment);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        [Authorize]
+        [HttpPost]
+        [Route("{pictureId}/Comments/CommentId")]
+        public async Task<IActionResult> CreateCommentOnComment(int pictureId, int commentId, [FromBody] string text)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            //make sure user is logged in
+            if (!claimsIdentity.IsAuthenticated) { return Unauthorized(); }
+            //get logged in user
+            var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
+            var username = claim.Value;
+
+            var comment = await _pictureBusinessLogic.CreateCommentOnPicture(pictureId, username, commentId, text);
+            if (comment != null)
+            {
+                return Accepted(comment);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+        
+
+        [HttpGet("{pictureId}/Comments/CommentId")]
+        public async Task<IActionResult> GetAllCommentsOnComment(int commentId)
+        {
+            var comments = await _pictureBusinessLogic.GetCommentsForComment(commentId);
+            if (comments == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(comments);
+            }
+        }
+        //[HttpPut("{pictureId}/Comments/CommentId")]
+        //public async Task<IActionResult> EditComment(int commentId, [FromBody] string newText)
+        //{
+        //    var comments = await _pictureBusinessLogic.EditComment(commentId, newText);
+        //    if (comments == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    else
+        //    {
+        //        return Ok(comments);
+        //    }
+        //}
+        //[HttpDelete("{pictureId}/Comments/CommentId")]
+        //public async Task<IActionResult> DeleteComment(int commentId, [FromBody] string newText)
+        //{
+        //    var comments = await _pictureBusinessLogic.DeleteComment(commentId);
+
+        //    if (comments == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    else
+        //    {
+        //        return Ok(comments);
+        //    }
+        //}
         #endregion
 
     }
