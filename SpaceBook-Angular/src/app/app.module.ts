@@ -11,6 +11,8 @@ import { PictureDetailComponent } from "./components/picture/picture-detail/pict
 import { UploadPictureComponent } from "./components/picture/upload-picture/upload-picture.component";
 import { LogInComponent } from './components/user/log-in/log-in.component';
 
+import { HttpClientModule } from "@angular/common/http";
+
 /* Bootstrap Modules */
 import { NgbModule, NgbRating } from '@ng-bootstrap/ng-bootstrap';
 
@@ -21,6 +23,8 @@ import { MultiImageDisplayComponent } from './multi-image-display/multi-image-di
 import { DmButtonComponent } from './dm-button/dm-button.component';
 import { UsernameComponent } from './username/username.component';
 /*REVIEW*/
+
+
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -52,7 +56,8 @@ import { ProfileComponent } from './components/user/profile/profile.component';
     NgbModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   exports: [NgbRating],
   providers: [],

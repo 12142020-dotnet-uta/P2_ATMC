@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+// import { PassThrough } from 'stream';
 import { UserLogIn } from "../../../interfaces/user-log-in";
 import { UserRegister } from "../../../interfaces/user-register";
-
+import { UserAuthService } from "../../../services/user-auth.service";
 
 
 @Component({
@@ -11,7 +12,7 @@ import { UserRegister } from "../../../interfaces/user-register";
 })
 export class LogInComponent implements OnInit {
 
-  constructor() { }
+  constructor( private _userAuthService: UserAuthService ) { }
 
   ngOnInit(): void {
     
@@ -19,8 +20,6 @@ export class LogInComponent implements OnInit {
 
   boolLogIn = true;
   boolRegister = false;
-  userLogIn: UserLogIn;
-  userRegister: UserRegister;
 
   strFirstName:string;
   strLastName:string;
@@ -41,33 +40,51 @@ export class LogInComponent implements OnInit {
   }
 
 
-  RegisteringUser(){
+  RegisteringUser(event){
 
+    event.preventDefault();
     //
-    this.userRegister = {
+    const FIRSTNAME = event.target.querySelector('#txtFirstName').value;
+    const LASTNAME = event.target.querySelector('#txtLastName').value;
+    const USERNAME = event.target.querySelector('#txtUserNameLog').value;
+    const PASSWORD = event.target.querySelector('#txtPasswordLog').value;
+    const EMAIL = event.target.querySelector('#txtEmail').value;
+    
+    let userRegister: UserRegister = {
       UserID : '',
-      UserName : this.strUserName,
-      Password : this.strPassword,
-      FirstName : this.strPassword,
-      LastName : this.strLastName,
-      Email: this.strEmail
+      UserName : USERNAME,
+      Password : PASSWORD,
+      FirstName : FIRSTNAME,
+      LastName : LASTNAME,
+      Email: EMAIL
     }
-    console.log(this.userLogIn);
+    console.log( userRegister );
     
   }
 
-  LogIngUser()
+  LogIngUser(event)
   {
+    event.preventDefault();
 
-    this.userLogIn= {
+    const USERNAME = event.target.querySelector('#txtUserNameLog').value;
+    const PASSWORD = event.target.querySelector('#txtPasswordLog').value;
+
+
+    let userLogIn: UserLogIn = {
       UserID : '',
-      UserName : this.strUserName,
-      Password : this.strPassword,
+      UserName : USERNAME,
+      Password : PASSWORD,
       FirstName : this.strPassword,
       LastName : this.strLastName
     }
 
-    console.log(this.userRegister);
+    console.log( userLogIn );
+
+    let result :any = this._userAuthService.postLoginAutentication(userLogIn)
+        .subscribe( ( userAutenticated ) => {
+          console.log(userAutenticated);
+
+        } )
   }
 
 }
