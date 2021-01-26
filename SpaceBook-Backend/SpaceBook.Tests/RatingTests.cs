@@ -16,8 +16,7 @@ namespace SpaceBook.Tests
         public void CheckRatingAddToDatabase()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb").Options;
-            //var context = new ApplicationDbContext(options);
-            //context.Database.EnsureDeleted();
+            
             ApplicationUser user = new ApplicationUser()
             {
                 FirstName = "Test",
@@ -43,8 +42,6 @@ namespace SpaceBook.Tests
                 context.Database.EnsureCreated();
 
                 //create repository layer
-                PictureRepository pictureRepo = new PictureRepository(context);
-                ApplicationUserRepository userRepo = new ApplicationUserRepository(context);
                 RatingRepository ratingRepo = new RatingRepository(context);
 
                 testRating.RatedPicture = testPicture;
@@ -73,8 +70,7 @@ namespace SpaceBook.Tests
         public void CheckGetRatingFromDatabaseById()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb1").Options;
-            //var context = new ApplicationDbContext(options);
-            //context.Database.EnsureDeleted();
+           
             ApplicationUser user = new ApplicationUser()
             {
                 FirstName = "Test",
@@ -107,9 +103,6 @@ namespace SpaceBook.Tests
                 testRating.UserRatingId = user.Id;
                 testRating.Value = 4.5d;
 
-                context.Users.Add(user);
-                context.Pictures.Add(testPicture);
-                context.SaveChanges();
                 bool test = ratingRepo.AttemptAddRating(testRating).Result;
                 
            
@@ -124,8 +117,7 @@ namespace SpaceBook.Tests
         public void CheckGetRatingsFromDatabaseByUser()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb2").Options;
-            //var context = new ApplicationDbContext(options);
-            //context.Database.EnsureDeleted();
+            
             ApplicationUser user = new ApplicationUser()
             {
                 FirstName = "Test",
@@ -158,9 +150,6 @@ namespace SpaceBook.Tests
                 testRating.UserRatingId = user.Id;
                 testRating.Value = 4.5d;
 
-                context.Users.Add(user);
-                context.Pictures.Add(testPicture);
-                context.SaveChanges();
                 bool test = ratingRepo.AttemptAddRating(testRating).Result;
 
                 //Create list and add the test rating to it
@@ -178,8 +167,7 @@ namespace SpaceBook.Tests
         public void CheckGetRatingsFromDatabaseByPicture()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb3").Options;
-            //var context = new ApplicationDbContext(options);
-            //context.Database.EnsureDeleted();
+            
             ApplicationUser user = new ApplicationUser()
             {
                 FirstName = "Test",
@@ -212,9 +200,6 @@ namespace SpaceBook.Tests
                 testRating.UserRatingId = user.Id;
                 testRating.Value = 4.5d;
 
-                context.Users.Add(user);
-                context.Pictures.Add(testPicture);
-                context.SaveChanges();
                 bool test = ratingRepo.AttemptAddRating(testRating).Result;
 
                 List<Rating> ratings = new List<Rating>();
@@ -230,9 +215,8 @@ namespace SpaceBook.Tests
         [Fact]
         public void CheckGetRatingFromDatabaseByUserAndPicture()
         {
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb6").Options;
-            //var context = new ApplicationDbContext(options);
-            //context.Database.EnsureDeleted();
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb4").Options;
+            
             ApplicationUser user = new ApplicationUser()
             {
                 FirstName = "Test",
@@ -264,10 +248,7 @@ namespace SpaceBook.Tests
                 testRating.UserRating = user;
                 testRating.UserRatingId = user.Id;
                 testRating.Value = 4.5d;
-
-                context.Users.Add(user);
-                context.Pictures.Add(testPicture);
-                context.SaveChanges();
+                          
                 bool test = ratingRepo.AttemptAddRating(testRating).Result;
 
                 //Check to see that the rating you added is the same as the rating retrieved from the db using the picture ID and user ID
@@ -280,9 +261,8 @@ namespace SpaceBook.Tests
         [Fact]
         public void CheckEditRatingInDatabase()
         {
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb4").Options;
-            //var context = new ApplicationDbContext(options);
-            //context.Database.EnsureDeleted();
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb5").Options;
+            
             ApplicationUser user = new ApplicationUser()
             {
                 FirstName = "Test",
@@ -315,9 +295,6 @@ namespace SpaceBook.Tests
                 testRating.UserRatingId = user.Id;
                 testRating.Value = 4.5d;
 
-                context.Users.Add(user);
-                context.Pictures.Add(testPicture);
-                context.SaveChanges();
                 bool test = ratingRepo.AttemptAddRating(testRating).Result;
 
                 Assert.Equal(testRating, ratingRepo.GetRatingById(testRating.RatingID).Result);
@@ -336,9 +313,8 @@ namespace SpaceBook.Tests
         [Fact]
         public void CheckDeleteRatingInDatabase()
         {
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb5").Options;
-            //var context = new ApplicationDbContext(options);
-            //context.Database.EnsureDeleted();
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb6").Options;
+            
             ApplicationUser user = new ApplicationUser()
             {
                 FirstName = "Test",
@@ -371,9 +347,6 @@ namespace SpaceBook.Tests
                 testRating.UserRatingId = user.Id;
                 testRating.Value = 4.5d;
 
-                context.Users.Add(user);
-                context.Pictures.Add(testPicture);
-                context.SaveChanges();
                 bool test = ratingRepo.AttemptAddRating(testRating).Result;
 
                 //Show that the rating was added
