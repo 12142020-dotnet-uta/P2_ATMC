@@ -235,7 +235,6 @@ namespace SpaceBook.Tests
                 Assert.Equal(editedPicture.Date, tempPicture.Date);
 
                 context.Database.EnsureDeleted();
-
             }
         }
     }
