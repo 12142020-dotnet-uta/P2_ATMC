@@ -25,4 +25,8 @@
     <ProjectReference Include="..\SpaceBook.Models\SpaceBook.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>
