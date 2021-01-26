@@ -159,14 +159,22 @@ namespace SpaceBook.Business
 
         #region Comments
 
-        public async Task<Comment> CreateCommentOnPicture(int pictureId, string username, int? commentId, string commentText)
+        public async Task<Comment> CreateCommentOnPicture(int pictureId, string username, int? parentCommentId, string commentText)
         {
             ApplicationUser user = await _userRepository.GetUserByUsername(username);
             Picture picture = await _pictureRepository.GetPictureById(pictureId);
             Comment parentComment = null;
-            if (commentId != null)
+            if (parentCommentId != null)
             {
-                parentComment = await _commentRepository.GetCommentById((int)commentId);
+                if (await _commentRepository.IsCommentInDb((int)parentCommentId))
+                {
+                    parentComment = await _commentRepository.GetCommentById((int)parentCommentId);
+                }
+                else
+                {
+                    //trying to comment on a comment that doesn't exist
+                    return null;
+                }
             }
 
             Comment comment = new Comment()
@@ -177,6 +185,7 @@ namespace SpaceBook.Business
                 PictureCommented = picture,
                 PictureCommentedId = picture.PictureID,
                 ParentComment = parentComment,
+                ParentCommentId = parentCommentId
             };
             if (await _commentRepository.AttemptAddCommentToDb(comment))
             {
@@ -184,13 +193,17 @@ namespace SpaceBook.Business
             }
             else return null;
         }
-
+        /// <summary>
+        /// Gets all comments for the given picture id
+        /// </summary>
+        /// <param name="pictureId"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<Comment>> GetCommentsForPicture(int pictureId)
         {
             return await _commentRepository.GetAllCommentsForPicture(pictureId);
         }
         /// <summary>
-        /// 
+        /// Gets all child comments for the given comment id
         /// </summary>
         /// <param name="commentId"></param>
         /// <returns></returns>
@@ -198,6 +211,43 @@ namespace SpaceBook.Business
         {
             return await _commentRepository.GetAllCommentsForParentComment(commentId);
         }
+        public async Task<bool> DeleteComment(int commentId, string username)
+        {
+            var user = await _userRepository.GetUserByUsername(username);
+            var comment = await _commentRepository.GetCommentById(commentId);
+            if (user == null || comment == null)
+            {
+                return false;
+            }
+
+            var childComments =await _commentRepository.GetAllCommentsForParentComment(commentId);
+            foreach(Comment child in childComments)
+            {
+                child.ParentComment = comment.ParentComment;
+                child.ParentCommentId = comment.ParentCommentId;
+                await _commentRepository.AttemptEditComment(child);
+            }
+            return await _commentRepository.AttemptRemoveComment(commentId);
+        }
+
+        public async Task<Comment> EditComment(int commentId,string username, string commentText)
+        {
+            var user = await _userRepository.GetUserByUsername(username);
+            var comment = await _commentRepository.GetCommentById(commentId);
+            if (user == null || comment == null)
+            {
+                return null;
+            }
+
+            comment.CommentText = commentText;
+            //update time?
+            if (await _commentRepository.AttemptEditComment(comment))
+            {
+                return comment;
+            }
+            else return null;
+        }
+
 
         #endregion
     }

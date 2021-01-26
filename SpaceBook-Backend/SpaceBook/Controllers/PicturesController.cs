@@ -176,6 +176,8 @@ namespace SpaceBook.Controllers
         #endregion
 
         #region Comments
+
+        //this gets all of the comments. should we just get the comments directly on the picture?
         [HttpGet("{pictureId}/Comments")]
         public async Task<IActionResult> GetAllComments(int pictureId)
         {
@@ -214,7 +216,7 @@ namespace SpaceBook.Controllers
         }
         [Authorize]
         [HttpPost]
-        [Route("{pictureId}/Comments/CommentId")]
+        [Route("{pictureId}/Comments/{commentId}")]
         public async Task<IActionResult> CreateCommentOnComment(int pictureId, int commentId, [FromBody] string text)
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
@@ -234,9 +236,7 @@ namespace SpaceBook.Controllers
                 return BadRequest();
             }
         }
-        
-
-        [HttpGet("{pictureId}/Comments/CommentId")]
+        [HttpGet("{pictureId}/Comments/{commentId}/Comments")]
         public async Task<IActionResult> GetAllCommentsOnComment(int commentId)
         {
             var comments = await _pictureBusinessLogic.GetCommentsForComment(commentId);
@@ -249,33 +249,48 @@ namespace SpaceBook.Controllers
                 return Ok(comments);
             }
         }
-        //[HttpPut("{pictureId}/Comments/CommentId")]
-        //public async Task<IActionResult> EditComment(int commentId, [FromBody] string newText)
-        //{
-        //    var comments = await _pictureBusinessLogic.EditComment(commentId, newText);
-        //    if (comments == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    else
-        //    {
-        //        return Ok(comments);
-        //    }
-        //}
-        //[HttpDelete("{pictureId}/Comments/CommentId")]
-        //public async Task<IActionResult> DeleteComment(int commentId, [FromBody] string newText)
-        //{
-        //    var comments = await _pictureBusinessLogic.DeleteComment(commentId);
+        [Authorize]
+        [HttpPut("{pictureId}/Comments/{commentId}")]
+        public async Task<IActionResult> EditComment(int commentId, [FromBody] string newText)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            //make sure user is logged in
+            if (!claimsIdentity.IsAuthenticated) { return Unauthorized(); }
+            //get logged in user
+            var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
+            var username = claim.Value;
 
-        //    if (comments == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    else
-        //    {
-        //        return Ok(comments);
-        //    }
-        //}
+            var comment = await _pictureBusinessLogic.EditComment(commentId,username, newText);
+            if (comment == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(comment);
+            }
+        }
+        [Authorize]
+        [HttpDelete("{pictureId}/Comments/{commentId}")]
+        public async Task<IActionResult> DeleteComment(int commentId, [FromBody] string newText)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            //make sure user is logged in
+            if (!claimsIdentity.IsAuthenticated) { return Unauthorized(); }
+            //get logged in user
+            var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
+            var username = claim.Value;
+
+
+            if (await _pictureBusinessLogic.DeleteComment(commentId,username))
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
         #endregion
 
     }
