@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace SpaceBook.Models
@@ -26,9 +27,10 @@ namespace SpaceBook.Models
 
         public int PictureCommentedId { get; set; }
 
+        [ForeignKey("ParentCommentId")]
         public Comment ParentComment { get; set; }
 
-        public int ParentCommentId { get; set; }
+        public int? ParentCommentId { get; set; }
 
         public Comment()
         {
