@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ComponentFactoryResolver, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from "@angular/common/http";
 
 //services
 import { HeroimageService } from '../app/services/heroimage.service';
@@ -17,6 +17,7 @@ import { PictureDetailComponent } from "./components/picture/picture-detail/pict
 import { UploadPictureComponent } from "./components/picture/upload-picture/upload-picture.component";
 import { LogInComponent } from './components/user/log-in/log-in.component';
 import { HeroImageComponent } from './components/hero-image/hero-image.component';
+
 
 /* Bootstrap Modules */
 import { NgbModule, NgbRating } from '@ng-bootstrap/ng-bootstrap';
@@ -33,6 +34,8 @@ import { DmButtonComponent } from './components/dm-button/dm-button.component';
 
 import { UsernameComponent } from './username/username.component';
 /*REVIEW*/
+
+
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
