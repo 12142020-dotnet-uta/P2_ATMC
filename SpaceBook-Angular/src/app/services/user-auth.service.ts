@@ -20,7 +20,7 @@ export class UserAuthService {
 
     // let options = {headers: headers}
 
-    return this._http.post<UserLogIn>("https://localhost:44398/api/Authenticate/login", {
+    return this._http.post<UserLogIn>("/api/Authenticate/login", {
       UserName: userLogin.UserName,
       Password: userLogin.Password  
     } ) 
