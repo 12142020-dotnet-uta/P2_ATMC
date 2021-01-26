@@ -54,7 +54,7 @@ namespace SpaceBook.Tests
                 Assert.Equal(testPicture.MediaType, tempPicture.MediaType);
                 Assert.Equal(testPicture.Title, tempPicture.Title);
                 Assert.Equal(testPicture.Date, tempPicture.Date);
-
+                context.Database.EnsureDeleted();
             }
         }
         [Fact]
@@ -116,7 +116,7 @@ namespace SpaceBook.Tests
 
                 var pictures = pictureList as ICollection<Picture>;
                 Assert.Equal(3,pictures.Count);
-
+                context.Database.EnsureDeleted();
             }
         }
         [Fact]
@@ -160,8 +160,9 @@ namespace SpaceBook.Tests
                 Assert.True(repo.AttemptRemovePictureFromDb(testPicture.PictureID).Result);
                 //make sure picture is not in db
                 Assert.False(repo.IsPictureInDb(testPicture.PictureID).Result);
-
+                context.Database.EnsureDeleted();
             }
+            
         }
         [Fact]
         public void CheckEditInDatabase()
@@ -232,6 +233,8 @@ namespace SpaceBook.Tests
                 Assert.Equal(editedPicture.MediaType, tempPicture.MediaType);
                 Assert.Equal(editedPicture.Title, tempPicture.Title);
                 Assert.Equal(editedPicture.Date, tempPicture.Date);
+
+                context.Database.EnsureDeleted();
 
             }
         }
