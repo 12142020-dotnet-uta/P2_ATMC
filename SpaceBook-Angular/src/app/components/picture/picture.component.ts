@@ -1,13 +1,23 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { PictureService } from '../../services/picture.service';
+import { Picture } from '../../interfaces/picture';
 
 @Component({
-  selector: 'app-picture',
+  selector: 'picture',
   templateUrl: './picture.component.html',
   styleUrls: ['./picture.component.css']
 })
 export class PictureComponent implements OnInit {
 
-  constructor() { }
+  private picture: Picture[] = [];
+
+  constructor(private picService: PictureService){ 
+  this.picService.getPicture().subscribe((res: Picture[]) => {
+
+  });
+
+  }
 
   ngOnInit(): void {
   }
