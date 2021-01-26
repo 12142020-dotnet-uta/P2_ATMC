@@ -15,7 +15,7 @@ export class UserAuthService {
   postLoginAutentication(userLogin : UserLogIn) : Observable<UserLogIn> {
     // let headers = new HttpHeaders ({
     //   'Content-Type': 'application/json',
-    //   '"Access-Control-Allow-Origin' : '*'
+    //   'Authorization' : '_tokenIthink'
     // })
 
     // let options = {headers: headers}
@@ -29,5 +29,13 @@ export class UserAuthService {
     
     return this._http.post<UserRegister>("localhost:44398/api/Authenticate/register",userRegister)
   }
+
+  setSession( LoginResult) {
+    const expiresAt = LoginResult.expiration;
+
+    localStorage.setItem('id_token', LoginResult.token);
+    localStorage.setItem("expires_at", expiresAt);
+
+}        
   //Passw0rd_1
 }

@@ -84,6 +84,10 @@ export class LogInComponent implements OnInit {
         .subscribe( ( userAutenticated ) => {
           console.log(userAutenticated);
 
+          this._userAuthService.setSession(userAutenticated);
+
+          console.log(localStorage.getItem('id_token'))
+
         } )
   }
 

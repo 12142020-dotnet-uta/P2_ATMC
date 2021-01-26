@@ -77,7 +77,7 @@ import { MatIconModule } from "@angular/material/icon";
     MatButtonModule,
     MatIconModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   exports: [NgbRating],
   providers: [HeroimageService],
