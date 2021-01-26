@@ -1,0 +1,23 @@
+.MessageContent{
+    background-color: #492e3a;
+    border-radius: .7em;
+}
+
+.UserComment{
+    margin-left: 1em;
+}
+
+.UserSubComment{
+    background-color: #301f26;
+    margin-left: .5em;
+    padding-left: 2em;
+    border-radius: 1em;
+}
+div  a{
+    text-decoration: none;
+    color: white;;
+}
+
+div a:hover{
+    color: #794d60;
+}

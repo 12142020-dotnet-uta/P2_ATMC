@@ -6,10 +6,14 @@
             <img src="" alt="">
 
         </div>
-
+        
         <span>Rating: 0</span>
         <br>
-        <button>Fav It</button>
+        <!-- <button>Fav It</button> -->
+        <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon" class="myHeartReaction">
+            <mat-icon>favorite</mat-icon>
+        </button>
+
         <span>Favorites: #</span>
     </div>
     <div class="col-md-5">
@@ -18,15 +22,29 @@
         <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure quasi quae assumenda maxime ducimus reprehenderit deleniti neque minus quod, impedit vero porro vel mollitia deserunt accusamus qui. Qui, quo inventore?</p>
 
         <p>Date: 24/1/2021</p>
+
+        <h3>Rate picture</h3>
+        <ngb-rating style="display: block;" [(rate)]="currentRate" [max]='5'></ngb-rating>
     </div>
     <div class="col-md-1"></div>
 </div>
 
+<p class="text-center">Comments: </p>
+<div class="row">
+    <div class="col-sm-8 form-group ">
+        <input type="text" class="form-control" >
+    </div>
+    <div class="col-sm-4">
+        <button class="btn btn-primary btn-block"> Comment</button>
+
+    </div>
+</div>
 <div class="row">
     <div class="col-sm-12">
-        <input type="text" class="form-group">
-        <button class="btn btn-primary"> Comment</button>
-        <div class="MessageContent">
+        
+        <app-picture-comment >
+        </app-picture-comment>
+        <!-- <div class="MessageContent">
             <div class="UserComment">
                 <p><strong>UserName1: </strong> User comment 1 <span>Date: 24/01/2020</span></p>
                 <div>
@@ -36,11 +54,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="MessageContent">
-            <div class="UserComment">
-                <p><strong>UserName2: </strong>User comment 2  <span>Date: 24/01/2020</span></p>
-            </div>
-        </div>
+        </div> -->
     </div>
 </div>

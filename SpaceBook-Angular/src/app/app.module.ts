@@ -16,6 +16,12 @@ import { DirectMessagingComponent } from './components/direct-messaging/direct-m
 import { PictureDetailComponent } from "./components/picture/picture-detail/picture-detail.component";
 import { UploadPictureComponent } from "./components/picture/upload-picture/upload-picture.component";
 import { LogInComponent } from './components/user/log-in/log-in.component';
+import { PictureComponent } from './components/picture/picture.component';
+import { FollowingComponent } from './components/user/following/following.component';
+import { ProfileComponent } from './components/user/profile/profile.component';
+import { PictureCommentComponent } from './components/picture/picture-comment/picture-comment.component';
+import { PictureSubCommentComponent } from './components/picture/picture-comment/picture-sub-comment/picture-sub-comment.component';
+
 import { HeroImageComponent } from './components/hero-image/hero-image.component';
 
 
@@ -41,9 +47,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
  /* Material Design Modules */
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
-import { PictureComponent } from './components/picture/picture.component';
-import { FollowingComponent } from './components/user/following/following.component';
-import { ProfileComponent } from './components/user/profile/profile.component';
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
 
  
 @NgModule({
@@ -58,7 +63,9 @@ import { ProfileComponent } from './components/user/profile/profile.component';
     LogInComponent,
     PictureComponent,
     FollowingComponent,
-    ProfileComponent
+    ProfileComponent,
+    PictureCommentComponent,
+    PictureSubCommentComponent
 
   ],
   imports: [
@@ -67,6 +74,8 @@ import { ProfileComponent } from './components/user/profile/profile.component';
     NgbModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
+    MatButtonModule,
+    MatIconModule,
     FormsModule,
     HttpClientModule
   ],

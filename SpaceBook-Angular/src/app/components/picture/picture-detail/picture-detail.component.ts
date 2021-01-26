@@ -7,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PictureDetailComponent implements OnInit {
 
-  constructor() { }
+  currentRate:number = 0;
 
+  
+  constructor() { }
   ngOnInit(): void {
   }
 
