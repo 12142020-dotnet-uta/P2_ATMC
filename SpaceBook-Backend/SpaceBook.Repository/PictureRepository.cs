@@ -158,7 +158,7 @@ namespace SpaceBook.Repository
         public async Task<Picture> IsPictureOfTheDayInDBAsync()
         {
             //Picture picture= await _dbContext.Pictures.AsQueryable().FirstOrDefaultAsync( x => x.Date.ToString() == DateTime.Now.ToString("dd-MM-yy") + " 00:00:00");
-            Picture picture = await _dbContext.Pictures.OrderBy(x => x.Date).FirstOrDefaultAsync();
+            Picture picture = await _dbContext.Pictures.OrderByDescending(x => x.Date).FirstOrDefaultAsync();
             try
             {
                 if (picture.Date.ToString("dd-MM-yy") == DateTime.Now.ToString("dd-MM-yy"))
