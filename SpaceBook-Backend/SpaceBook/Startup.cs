@@ -79,6 +79,8 @@ namespace SpaceBook
             services.AddScoped<UserPictureRepository>();
             services.AddScoped<PictureBusinessLogic>();
             services.AddScoped<ApplicationDbContext>();
+            services.AddScoped<Mapper>();
+            services.AddHttpClient();
 
         }
 

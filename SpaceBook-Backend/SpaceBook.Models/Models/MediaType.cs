@@ -6,7 +6,7 @@ namespace SpaceBook.Models
 {
     public enum MediaType
     {
-        Image,
-        Video
+        image,
+        video
     }
 }

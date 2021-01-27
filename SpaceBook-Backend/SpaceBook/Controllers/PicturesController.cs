@@ -24,8 +24,8 @@ namespace SpaceBook.Controllers
         public async Task<IActionResult> GetDailyPicture()
         {
             //will get daily pictures in the future; just gets picture 1 for now
-            //TODO: actually get picture of the day from nasa api; probably do it in business layer
-            Picture picture = await _pictureBusinessLogic.GetPicture(1);
+            //TODO: actually get picture of the day from nasa api; probably do it in business layer await _pictureBusinessLogic.GetPicture(1);
+            Picture picture = await _pictureBusinessLogic.GetPictureOfTheDay();
             if (picture != null)
             {
                 return Ok(picture);
