@@ -18,7 +18,8 @@ namespace SpaceBook.Business
         private readonly CommentRepository _commentRepository;
         private readonly HttpClient _client;
         private readonly Mapper _mapper;
-        private const string API_KEY = "71wMNdfgtD6jcpVBtmULKEqxPjbhhXLSit3mQqXu";
+        private const string API_KEY = "api_key=71wMNdfgtD6jcpVBtmULKEqxPjbhhXLSit3mQqXu";
+        private const string APOD_NASA_API = "https://api.nasa.gov/planetary/apod?";
 
         public PictureBusinessLogic(PictureRepository pictureRepository, ApplicationUserRepository userRepository,UserPictureRepository userPictureRepository, RatingRepository ratingRepository,CommentRepository commentRepository, HttpClient httpClient, Mapper mapper)
         {
@@ -61,7 +62,7 @@ namespace SpaceBook.Business
         {
             try
             {
-                string responseBody = await _client.GetStringAsync($"https://api.nasa.gov/planetary/apod?api_key={API_KEY}");
+                string responseBody = await _client.GetStringAsync( APOD_NASA_API + API_KEY );
                 //Convert the response into Picture Object
                 APOD_PictureViewModel pictureViewModel = JsonSerializer.Deserialize<APOD_PictureViewModel>(responseBody);
                 //Mapper Class or DeserializeObject from JSON class
@@ -75,6 +76,39 @@ namespace SpaceBook.Business
             {
                 throw new Exception("There was a problem while accessing the photo of the day. " + ex.Message);
             }
+        }
+
+        private async Task<IEnumerable<Picture>> GetPicturesFromAPOD_Async()
+        {
+                string strQueryDate = $"start_date={DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")}&end_date={DateTime.Now.ToString("yyyy-MM-dd")}&";
+            try
+            {
+                string responseBody = await _client.GetStringAsync(APOD_NASA_API + strQueryDate + API_KEY);
+                //Convert the response into Picture Object
+                //IEnumerable<APOD_PictureViewModel> picturesViewModel = JsonSerializer.Deserialize<IEnumerable<APOD_PictureViewModel>>(responseBody);
+                //Mapper Class or DeserializeObject from JSON class
+                IEnumerable<Picture> pictures = ConvertEnumerableAPOD_PictureIntoEnumerablePicture( JsonSerializer.Deserialize<IEnumerable<APOD_PictureViewModel>>(responseBody) );
+
+                //ConvertObjectIntoPictureModel
+                return pictures;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("There was a problem while accessing the photo of the day. " + ex.Message);
+            }
+        }
+
+        private List<Picture> ConvertEnumerableAPOD_PictureIntoEnumerablePicture(IEnumerable<APOD_PictureViewModel> picturesViewModel)
+        {
+            List<Picture> pictures = new List<Picture>();
+            foreach (APOD_PictureViewModel pictureVM in picturesViewModel)
+            {
+                Picture picture = _mapper.ConvertAPOD_PictureViewModelIntoPictureModel(pictureVM);
+                Task<bool> AttemptAddPicture = _pictureRepository.AttemptAddPictureToDb(picture);
+                pictures.Add( picture );
+                AttemptAddPicture.Wait();
+            }
+            return pictures;
         }
 
 
