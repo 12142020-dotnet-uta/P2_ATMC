@@ -151,6 +151,24 @@ namespace SpaceBook.Repository
             return await _dbContext.Favorites.Include(x => x.Picture).Where(x => x.UserId == userId).Select(x => x.Picture).ToListAsync();
         }
 
+        /// <summary>
+        /// Search in the DB if exists the photo of the day, if exists, it returns the Picture, otherwise, it returns null
+        /// </summary>
+        /// <returns>Returns a async Task of Picture if exists in the DB, else is null.</returns>
+        public async Task<Picture> IsPictureOfTheDayInDBAsync()
+        {
+            //Picture picture= await _dbContext.Pictures.AsQueryable().FirstOrDefaultAsync( x => x.Date.ToString() == DateTime.Now.ToString("dd-MM-yy") + " 00:00:00");
+            Picture picture = await _dbContext.Pictures.OrderByDescending(x => x.Date).FirstOrDefaultAsync();
+            try
+            {
+                if (picture.Date.ToString("dd-MM-yy") == DateTime.Now.ToString("dd-MM-yy"))
+                    return picture;
+                else
+                    return null;
+            }
+            catch {return null;}
+
+        }
     }
 
 }

@@ -1,7 +1,10 @@
 ﻿using SpaceBook.Models;
+using SpaceBook.Models.ViewModels;
 using SpaceBook.Repository;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace SpaceBook.Business
@@ -13,13 +16,19 @@ namespace SpaceBook.Business
         private readonly ApplicationUserRepository _userRepository;
         private readonly RatingRepository _ratingRepository;
         private readonly CommentRepository _commentRepository;
-        public PictureBusinessLogic(PictureRepository pictureRepository, ApplicationUserRepository userRepository,UserPictureRepository userPictureRepository, RatingRepository ratingRepository,CommentRepository commentRepository )
+        private readonly HttpClient _client;
+        private readonly Mapper _mapper;
+        private const string API_KEY = "71wMNdfgtD6jcpVBtmULKEqxPjbhhXLSit3mQqXu";
+
+        public PictureBusinessLogic(PictureRepository pictureRepository, ApplicationUserRepository userRepository,UserPictureRepository userPictureRepository, RatingRepository ratingRepository,CommentRepository commentRepository, HttpClient httpClient, Mapper mapper)
         {
             _pictureRepository = pictureRepository;
             _userRepository = userRepository;
             _userPictureRepository = userPictureRepository;
             _ratingRepository = ratingRepository;
             _commentRepository = commentRepository;
+            _client = httpClient;
+            _mapper = mapper;
         }
 
         public async Task<Picture> GetPicture(int pictureId)
@@ -31,6 +40,44 @@ namespace SpaceBook.Business
         {
             return await _pictureRepository.GetAllPictures();
         }
+
+        /// <summary>
+        /// As the name implies, it get The Picture of the day from the NASA API, and compare to the DB for adding /*API?*/
+        /// </summary>
+        /// <returns>Returns a List of Pictures  from the DB and the API</returns>
+        public async Task<Picture> GetPictureOfTheDay()
+        {
+            Picture picture = await _pictureRepository.IsPictureOfTheDayInDBAsync();
+            //Verify if we have it already in the DB...
+            if ( picture == null )
+            {
+                picture = await GetPictureOfTheDayAsync();
+            }
+            return picture;
+        }
+
+        //Get the Pictures from the APOD API
+        private async Task<Picture> GetPictureOfTheDayAsync()
+        {
+            try
+            {
+                string responseBody = await _client.GetStringAsync($"https://api.nasa.gov/planetary/apod?api_key={API_KEY}");
+                //Convert the response into Picture Object
+                APOD_PictureViewModel pictureViewModel = JsonSerializer.Deserialize<APOD_PictureViewModel>(responseBody);
+                //Mapper Class or DeserializeObject from JSON class
+                Picture picture = _mapper.ConvertAPOD_PictureViewModelIntoPictureModel(pictureViewModel);
+
+                await _pictureRepository.AttemptAddPictureToDb(picture);
+                //ConvertObjectIntoPictureModel
+                return picture;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("There was a problem while accessing the photo of the day. " + ex.Message);
+            }
+        }
+
+
         #region User Pictures
         public async Task<bool> CreateUserPicture(Picture picture, string username)
         {
