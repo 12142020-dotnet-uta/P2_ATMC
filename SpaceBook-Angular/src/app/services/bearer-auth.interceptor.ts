@@ -21,6 +21,7 @@ export class BearerAuthInterceptor implements HttpInterceptor {
           headers: request.headers.set("Authorization",
               "Bearer " + idToken)
       });
+      console.log('added token to request: '+idToken);
 
       return next.handle(cloned);
   }
