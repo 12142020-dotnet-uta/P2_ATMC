@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SpaceBook.Business;
+using SpaceBook.Controllers.Filter;
+using SpaceBook.Controllers.Pagination;
+using SpaceBook.Controllers.Services;
+using SpaceBook.Controllers.Wrappers;
 using SpaceBook.Models;
 using System;
 using System.Collections.Generic;
@@ -15,9 +19,12 @@ namespace SpaceBook.Controllers
     public class PicturesController : ControllerBase
     {
         PictureBusinessLogic _pictureBusinessLogic;
-        public PicturesController(PictureBusinessLogic pictureBusinessLogic)
+        UriPaginationInterface _uriService;
+
+        public PicturesController(PictureBusinessLogic pictureBusinessLogic, UriPaginationInterface uriService)
         {
             _pictureBusinessLogic = pictureBusinessLogic;
+            _uriService = uriService;
         }
 
         [HttpGet("daily")]
@@ -37,6 +44,8 @@ namespace SpaceBook.Controllers
 
         }
 
+
+        
         [HttpGet("{pictureId}")]
         public async Task<IActionResult> GetPicture(int pictureId)
         {
@@ -44,8 +53,8 @@ namespace SpaceBook.Controllers
             Picture picture = await _pictureBusinessLogic.GetPicture(pictureId);
             if (picture != null)
             {
-                return Ok(picture);
-            }
+                return Ok(new Response<Picture>(picture));
+            } 
             else
             {
                 return NotFound();
@@ -74,12 +83,22 @@ namespace SpaceBook.Controllers
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> GetAllPictures()
+        public async Task<IActionResult> GetAllPictures([FromQuery] PaginationFilter filter)
         {
+            var route = Request.Path.Value;
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var pagedData = (await _pictureBusinessLogic.GetAllPictures())
+                .Skip((validFilter.PageNumber - 1)
+                * validFilter.PageSize)
+                .Take((validFilter.PageSize))
+                .ToList();
             var pictures = await _pictureBusinessLogic.GetAllPictures();
             if (pictures == null) { return NotFound(); }
-            return Ok(pictures);
+            return Ok(new PagedResponse<List<Picture>>(pagedData, validFilter.PageNumber, validFilter.PageSize));
         }
+
+  
+
 
         [Authorize]
         [HttpPost]
