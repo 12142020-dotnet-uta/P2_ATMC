@@ -22,11 +22,18 @@ namespace SpaceBook.Models
         [DataType(DataType.ImageUrl)]
         public string ImageURL { get; set; }
 
+        [Required]
+        [DataType(DataType.ImageUrl)]
+        public string ImageHDURL { get; set; }
+
+
         [DataType(DataType.Text)]
         [Required]
         public string Description { get; set; }
         [Required]
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
+
+        public bool isUserPicture { get; set; } = false;
     }
 }

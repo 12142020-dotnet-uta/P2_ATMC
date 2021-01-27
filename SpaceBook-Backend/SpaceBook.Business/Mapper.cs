@@ -18,9 +18,10 @@ namespace SpaceBook.Business
             {
                 Date = pictureViewModel.date,
                 Description = pictureViewModel.explanation,
-                ImageURL = pictureViewModel.hdurl,
+                ImageURL = pictureViewModel.url,
+                ImageHDURL = pictureViewModel.hdurl,
                 MediaType = mediaType,
-                Title = pictureViewModel.title
+                Title = pictureViewModel.title,
             };
             return picture;
         }
