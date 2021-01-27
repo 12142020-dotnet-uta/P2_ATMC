@@ -37,8 +37,10 @@ namespace SpaceBook.Business
             return await _pictureRepository.GetPictureById(pictureId);
         }
 
-        public async Task<IEnumerable<Picture>> GetAllPictures()
+        public async Task<IEnumerable<Picture>> GetAllPictures(int PageNumber = 1, int PageSize = 20)
         {
+            //TODO: When calling to the DB, if the count of pictures is to 20, return the Pictures, else, call the APOD API.
+
             return await _pictureRepository.GetAllPictures();
         }
 

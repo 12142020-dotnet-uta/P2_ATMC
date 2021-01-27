@@ -29,8 +29,8 @@ namespace SpaceBook.Tests
             {
                 Date = DateTime.Now,
                 Description = "something descriptive",
-                ImageURL = "www.imageurl.com/thisimage",
-                MediaType = MediaType.Image,
+                ImageURL = "www.ImageURL.com/thisimage",
+                MediaType = MediaType.image,
                 Title = "The Test Picture"
             };
             Rating testRating = new Rating();
@@ -83,8 +83,8 @@ namespace SpaceBook.Tests
             {
                 Date = DateTime.Now,
                 Description = "something descriptive",
-                ImageURL = "www.imageurl.com/thisimage",
-                MediaType = MediaType.Image,
+                ImageURL = "www.ImageURL.com/thisimage",
+                MediaType = MediaType.image,
                 Title = "The Test Picture"
             };
             Rating testRating = new Rating();
@@ -130,8 +130,8 @@ namespace SpaceBook.Tests
             {
                 Date = DateTime.Now,
                 Description = "something descriptive",
-                ImageURL = "www.imageurl.com/thisimage",
-                MediaType = MediaType.Image,
+                ImageURL = "www.ImageURL.com/thisimage",
+                MediaType = MediaType.image,
                 Title = "The Test Picture"
             };
             Rating testRating = new Rating();
@@ -180,8 +180,8 @@ namespace SpaceBook.Tests
             {
                 Date = DateTime.Now,
                 Description = "something descriptive",
-                ImageURL = "www.imageurl.com/thisimage",
-                MediaType = MediaType.Image,
+                ImageURL = "www.ImageURL.com/thisimage",
+                MediaType = MediaType.image,
                 Title = "The Test Picture"
             };
             Rating testRating = new Rating();
@@ -229,8 +229,8 @@ namespace SpaceBook.Tests
             {
                 Date = DateTime.Now,
                 Description = "something descriptive",
-                ImageURL = "www.imageurl.com/thisimage",
-                MediaType = MediaType.Image,
+                ImageURL = "www.ImageURL.com/thisimage",
+                MediaType = MediaType.image,
                 Title = "The Test Picture"
             };
             Rating testRating = new Rating();
@@ -275,8 +275,8 @@ namespace SpaceBook.Tests
             {
                 Date = DateTime.Now,
                 Description = "something descriptive",
-                ImageURL = "www.imageurl.com/thisimage",
-                MediaType = MediaType.Image,
+                ImageURL = "www.ImageURL.com/thisimage",
+                MediaType = MediaType.image,
                 Title = "The Test Picture"
             };
             Rating testRating = new Rating();
@@ -327,8 +327,8 @@ namespace SpaceBook.Tests
             {
                 Date = DateTime.Now,
                 Description = "something descriptive",
-                ImageURL = "www.imageurl.com/thisimage",
-                MediaType = MediaType.Image,
+                ImageURL = "www.ImageURL.com/thisimage",
+                MediaType = MediaType.image,
                 Title = "The Test Picture"
             };
             Rating testRating = new Rating();

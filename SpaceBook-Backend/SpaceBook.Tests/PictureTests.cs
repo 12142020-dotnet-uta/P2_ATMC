@@ -20,8 +20,8 @@ namespace SpaceBook.Tests
             {
                 Date = DateTime.Now,
                 Description = "something descriptive",
-                ImageURL = "www.imageurl.com/thisimage",
-                MediaType = MediaType.Image,
+                ImageURL = "www.ImageURL.com/thisimage",
+                MediaType = MediaType.image,
                 Title = "The Test Picture"
             };
 
@@ -67,25 +67,25 @@ namespace SpaceBook.Tests
             {
                 Date = DateTime.Now,
                 Description = "something descriptive",
-                ImageURL = "www.imageurl.com/thisimage",
-                MediaType = MediaType.Image,
+                ImageURL = "www.ImageURL.com/thisimage",
+                MediaType = MediaType.image,
                 Title = "The Test Picture"
             };
             Picture testPicture2 = new Picture()
             {
                 Date = DateTime.Now,
                 Description = "something else descriptive",
-                ImageURL = "www.imageurl.com/thatimage",
-                MediaType = MediaType.Image,
+                ImageURL = "www.ImageURL.com/thatimage",
+                MediaType = MediaType.image,
                 Title = "Another Test Picture"
             };
             Picture testPicture3 = new Picture()
             {
                 Date = DateTime.Now,
                 Description = "something else descriptive",
-                ImageURL = "www.imageurl.com/notanimage",
-                MediaType = MediaType.Video,
-                Title = "The Test Video"
+                ImageURL = "www.ImageURL.com/notanimage",
+                MediaType = MediaType.video,
+                Title = "The Test video"
             };
 
             using (var context = new ApplicationDbContext(options))
@@ -129,8 +129,8 @@ namespace SpaceBook.Tests
             {
                 Date = DateTime.Now,
                 Description = "something descriptive",
-                ImageURL = "www.imageurl.com/thisimage",
-                MediaType = MediaType.Image,
+                ImageURL = "www.ImageURL.com/thisimage",
+                MediaType = MediaType.image,
                 Title = "The Test Picture"
             };
 
@@ -174,8 +174,8 @@ namespace SpaceBook.Tests
             {
                 Date = DateTime.Now,
                 Description = "something descriptive",
-                ImageURL = "www.imageurl.com/thisimage",
-                MediaType = MediaType.Image,
+                ImageURL = "www.ImageURL.com/thisimage",
+                MediaType = MediaType.image,
                 Title = "The Test Picture"
             };
 
@@ -184,8 +184,8 @@ namespace SpaceBook.Tests
                 PictureID = testPicture.PictureID,
                 Date = DateTime.Now,
                 Description = "something even more descriptive",
-                ImageURL = "www.imageurl.com/thatimage",
-                MediaType = MediaType.Image,
+                ImageURL = "www.ImageURL.com/thatimage",
+                MediaType = MediaType.image,
                 Title = "The New Test Picture"
             };
 
