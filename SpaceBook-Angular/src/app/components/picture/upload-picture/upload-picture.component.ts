@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { UserPictureViewModel } from 'src/app/interfaces/user-picture-view-model';
 import { Picture } from "../../../interfaces/picture";
+
+// Maximum file size allowed to be uploaded = 1MB
+const MAX_SIZE: number = 1048576;
 
 @Component({
   selector: 'app-upload-picture',
@@ -8,12 +12,15 @@ import { Picture } from "../../../interfaces/picture";
 })
 export class UploadPictureComponent implements OnInit {
 
-  strTitle:string;
-  strImageURL:string;
-  strDescription:string;
-  Date:Date;
+  pictureToUpload: UserPictureViewModel = new UserPictureViewModel();
+
+  // strTitle:string;
+  // strImageURL:string;
+  // strDescription:string;
+  // Date:Date;
 
   fileToUpload:File;
+  lblImage:string = "Image file";
 
   constructor() { }
 
@@ -25,13 +32,48 @@ export class UploadPictureComponent implements OnInit {
      return;
 
     this.fileToUpload = <File>files[0];
-    console.log(this.fileToUpload, this.fileToUpload.name.split(".")[1])
+    // console.log(this.fileToUpload, this.fileToUpload.name.split(".")[1])
 
-    if(this.fileToUpload.name.split(".")[1] == "jpg")
+    let fileExtension:string = this.fileToUpload.name.split(".")[1]
+
+    if( fileExtension == "jpg" || fileExtension == "jpeg" || fileExtension == "png"  ) // Accepts other pictures formats.
     {
-      //Upload the photo
+      // Don't allow file sizes over the MAX_SIZE
+      if( this.fileToUpload.size < MAX_SIZE )
+      {
+         this.lblImage = this.fileToUpload.name;
+      }
+      else
+      {
+        alert("This file is too big, add other smaller picture!");
+      }
+    }
+    else
+    {
+      alert("This file is not valid!");
     }
 
+
+  }
+
+  UploadUserPicture() : void{
+    console.log("upload");
+    let reader = new FileReader();
+
+    reader.onload = () => {
+
+      // let PictureViewModel: any;
+      // PictureViewModel.
+      // let strImageBase64 = reader.result.toString();
+      this.pictureToUpload.fileAsBase64 = reader.result.toString();
+
+      console.log(this.pictureToUpload);
+      // Send to the API Picture endpoint.
+
+      
+    };
+    
+    reader.readAsDataURL(this.fileToUpload);
 
   }
 
