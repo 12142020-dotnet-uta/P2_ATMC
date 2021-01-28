@@ -14,21 +14,32 @@ variables:
   angularFolder: './SpaceBook-Angular'
 
 steps:
+
+- task: AzureAppServiceManage@0
+  inputs:
+    azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
+    Action: 'Stop Azure App Service'
+    WebAppName: 'space-book'
+
 - task: NodeTool@0
   inputs:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
-
+# - script: |
+#     npm install
+#     npm run build
+#   displayName: 'npm install and build'
+- task: Npm@1
+  displayName: 'NPM Install'
+  inputs:
+    command: 'install'
+    workingDir: '$(angularFolder)/'
 
 - task: Npm@1
   displayName: 'Restore Angular Dependencies'
   inputs:
-    workingDir: $(angularFolder)
+    workingDir: $(angularFolder)/
     verbose: true
 
 # - task: Npm@1
@@ -48,9 +59,15 @@ steps:
 #     publishRegistry: 'useFeed'
 #     publishFeed: '0afcca8a-a29e-463f-b238-27cf1b8b59db'
 - task: Npm@1
+  displayName: 'NPM Install Angular CLI'
   inputs:
     command: 'custom'
-    workingDir: '$(angularFolder)'
+    workingDir: '$(angularFolder)/'
+    customCommand: 'install -g @angular/cli@latest'
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: '$(angularFolder)/'
     customCommand: 'run ng build --prod'
 
 - task: ArchiveFiles@2
