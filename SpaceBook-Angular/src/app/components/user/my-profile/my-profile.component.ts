@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { User } from '../../../interfaces/user'
 import { UserProfileService } from '../../../services/user-profile.service'
 import { Subscription } from 'rxjs';
+import { Picture } from 'src/app/interfaces/picture';
 
 @Component({
   selector: 'app-my-profile',
@@ -13,18 +14,38 @@ import { Subscription } from 'rxjs';
 })
 export class MyProfileComponent implements OnInit {
   user: User;
+  public followers: User[] = new Array<User>();
+
+  public followerUserNames: string[];
+  public followed: User[] = new Array<User>();
+
+  public favorites: Picture[] = new Array<Picture>();
+  
   constructor(private _userProfileService: UserProfileService, private route: ActivatedRoute) { 
   }
 
-  ngOnInit(): void {
-    this.getUser();
+  async ngOnInit(){
+   this.user = await this.getLoggedIn();
+   this.followers = await this.getFollowers(this.user.id);
+   this.followed = await this.getFollowed(this.user.id);
+   this.favorites = await this.getFavorites(this.user.id);
   }
   
-  getUser(): void {
-    const username: string = this.route.snapshot.paramMap.get('username');
+  getLoggedIn(){
+    return this._userProfileService.getLoggedIn().toPromise();
+  }
 
-    this._userProfileService.getUser(username)
-      .subscribe(user => this.user = user);
+
+  getFollowers(id: string){
+    return this._userProfileService.getFollowers(id).toPromise();
+  }
+
+  getFollowed(id: string){
+    return this._userProfileService.getFollowed(id).toPromise();
+  }
+
+  getFavorites(id: string){
+    return this._userProfileService.getFavorites(id).toPromise();
   }
   
 }

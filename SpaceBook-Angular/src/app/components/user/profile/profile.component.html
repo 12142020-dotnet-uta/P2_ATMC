@@ -11,10 +11,10 @@
         
         <button class="btn btn-secondary">Message Me</button>   
         <ng-template [ngIf]="!followerUserNames.includes(loggedIn.userName)">
-            <button class="btn btn-primary"(click)="postFollow(user.id, loggedIn.id)" [routerLink]="['../../user/', user.userName]" routerLinkActive="on">Follow</button>
+            <button class="btn btn-primary"(click)="postFollow(user.id, loggedIn.id)">Follow</button>
         </ng-template>
         <ng-template [ngIf]="followerUserNames.includes(loggedIn.userName)">
-            <button class="btn btn-danger" (click)="deleteFollow(user.id)" [routerLink]="['../../user/', user.userName]" routerLinkActive="on">Unfollow</button>
+            <button class="btn btn-danger" (click)="deleteFollow(user.id)">Unfollow</button>
         </ng-template>
 
     </div>
@@ -30,8 +30,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let follower of followers">
-                            <td><a  [routerLink]="['../../user/', follower.userName]" routerLinkActive="on">{{follower.userName}}</a></td>
+                        <tr *ngFor="let follower of followers.slice(0,5)">
+                            <td><a  [routerLink]="['/', 'user', follower.userName]">{{follower.userName}}</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -41,13 +41,13 @@
                     <thead>
                         <tr class="text-center">
                             <th>
-                                Following: {{followed.length}}
+                                Following: {{following.length}}
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let followed of followed">
-                            <td><a  [routerLink]="['../../user/', followed.userName]" routerLinkActive="on">{{followed.userName}}</a></td>
+                        <tr *ngFor="let followed of following.slice(0,5)">
+                            <td><a  [routerLink]="['/', 'user', followed.userName]">{{followed.userName}}</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -61,7 +61,7 @@
     <div class="col-md-1"></div>
     <div class="col-md-10">
         <h3>Favorites</h3>
-        <app-gallery [pictures]="favorites"></app-gallery>
+        <app-favorites [pictures]="favorites"></app-favorites>
     </div>
     <div class="col-md-1"></div>
 </div>

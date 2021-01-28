@@ -4,7 +4,7 @@ import { HeroimageService } from '../../services/heroimage.service';
 import { HeroImg } from '../../interfaces/hero-image';
 
 @Component({
-  selector: 'photos',
+  selector: 'app-hero-image',
   templateUrl: './hero-image.component.html',
   styleUrls: ['./hero-image.component.css']
 })

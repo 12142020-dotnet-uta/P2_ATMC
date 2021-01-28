@@ -51,6 +51,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { BearerAuthInterceptor } from './services/bearer-auth.interceptor';
 import { MyProfileComponent } from './components/user/my-profile/my-profile.component';
+import { FavoritesComponent } from './components/user/favorites/favorites.component';
 
 
 @NgModule({
@@ -58,7 +59,7 @@ import { MyProfileComponent } from './components/user/my-profile/my-profile.comp
     AppComponent,
     GalleryComponent,
     DashboardComponent,
-
+    HeroImageComponent,
     UploadPictureComponent,
     PictureDetailComponent,
     DirectMessagingComponent,
@@ -68,7 +69,8 @@ import { MyProfileComponent } from './components/user/my-profile/my-profile.comp
     ProfileComponent,
     PictureCommentComponent,
     PictureSubCommentComponent,
-    MyProfileComponent
+    MyProfileComponent,
+    FavoritesComponent
 
   ],
   imports: [

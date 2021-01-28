@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { User } from '../../../interfaces/user'
 import { Follow } from '../../../interfaces/follow'
@@ -15,17 +15,18 @@ import { Subscription } from 'rxjs';
 })
 export class ProfileComponent implements OnInit {
   
-  mySubscription: any;
-  user: User = new User();
+  public user: User = new User();
   loggedIn: User = new User();
+
   followers: User[] = new Array<User>();
+
   followerUserNames: string[] = new Array<string>();
-  followed: User[] = new Array<User>();
+  following: User[] = new Array<User>();
 
   favorites: Picture[] = new Array<Picture>();
   username:string;
 
-  constructor(private _userProfileService: UserProfileService, private route: ActivatedRoute) { 
+  constructor(private _userProfileService: UserProfileService, private router: Router, private route: ActivatedRoute) { 
     
   }
 
@@ -35,7 +36,6 @@ export class ProfileComponent implements OnInit {
          this.username = params["username"]; this.getUser(this.username);
       });
       this.getLoggedIn();
-
   }
 
 
@@ -50,17 +50,22 @@ export class ProfileComponent implements OnInit {
 
   getFollow(id: string): void{
     this._userProfileService.getFollowers(id).subscribe(followers => {this.followers = followers; this.followers.forEach(follower => this.followerUserNames.push(follower.userName)) });
-    this._userProfileService.getFollowed(id).subscribe(followed=> {this.followed = followed; this} );
+    this._userProfileService.getFollowed(id).subscribe(followed=> {this.following = followed; this} );
   }
 
   deleteFollow(id:string):void{
     this._userProfileService.deleteFollow(id).subscribe();
+    let deleteuserindex = this.followers.indexOf(this.loggedIn);
+    let loggedinusernameindex = this.followerUserNames.indexOf(this.loggedIn.userName);
+    //console.log(deleteuserindex);
+    console.log(loggedinusernameindex);
     window.location.reload();
   }
 
   postFollow(id:string, loggedInId: string){
     this._userProfileService.postFollow(id, loggedInId).subscribe();
-    window.location.reload();
+    this.followers.push(this.loggedIn);
+    this.followerUserNames.push(this.loggedIn.userName);
   }
 
   getFavorites(id: string): void{
