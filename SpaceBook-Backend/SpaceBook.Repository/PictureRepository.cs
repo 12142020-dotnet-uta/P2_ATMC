@@ -171,8 +171,8 @@ namespace SpaceBook.Repository
         {
             //Picture picture= await _dbContext.Pictures.AsQueryable().FirstOrDefaultAsync( x => x.Date.ToString() == DateTime.Now.ToString("dd-MM-yy") + " 00:00:00");
             Picture picture = await _dbContext.Pictures
-                .Where( x => x.isUserPicture == false )
-                .OrderByDescending(x => x.Date).Take(5)
+                .Where(picture => picture.isUserPicture == false )
+                .OrderByDescending(picture => picture.Date).Take(5)
                 .FirstOrDefaultAsync();
             try
             {

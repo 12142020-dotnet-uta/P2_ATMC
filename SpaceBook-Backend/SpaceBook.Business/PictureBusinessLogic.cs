@@ -3,6 +3,7 @@ using SpaceBook.Models.ViewModels;
 using SpaceBook.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -42,11 +43,13 @@ namespace SpaceBook.Business
             //TODO: When calling to the DB, if the count of pictures is to 20, return the Pictures, else, call the APOD API.
             List<Picture> pictures = (List<Picture>) await _pictureRepository.GetAllPictures(PageNumber, PageSize);
 
-            if (pictures.Count < (PageSize * PageNumber ))
+            if (pictures.Where( picture => picture.isUserPicture == false ).Count() < (PageSize * PageNumber ))
             {
                 //  
-                int PaginationDays = (PageNumber * (PageSize )) ;
-                pictures.AddRange( (List<Picture>)await GetPicturesFromAPOD_Async(PaginationDays, PageNumber, PageSize, pictures.Count) );
+                int PaginationDays = (PageNumber * (PageSize )) ;// x
+                int DaysToQuery = PaginationDays - pictures.Count;// y
+
+                pictures.AddRange( (List<Picture>)await GetPicturesFromAPOD_Async(PaginationDays, DaysToQuery) );
             }
 
             return pictures;//await _pictureRepository.GetAllPictures(PageNumber, PageSize);
@@ -74,9 +77,9 @@ namespace SpaceBook.Business
             {
                 string responseBody = await _client.GetStringAsync( APOD_NASA_API + API_KEY );
                 //Convert the response into Picture Object
-                APOD_PictureViewModel pictureViewModel = JsonSerializer.Deserialize<APOD_PictureViewModel>(responseBody);
+                //APOD_PictureViewModel pictureViewModel = JsonSerializer.Deserialize<APOD_PictureViewModel>(responseBody);
                 //Mapper Class or DeserializeObject from JSON class
-                Picture picture = _mapper.ConvertAPOD_PictureViewModelIntoPictureModel(pictureViewModel);
+                Picture picture = _mapper.ConvertAPOD_PictureViewModelIntoPictureModel(JsonSerializer.Deserialize<APOD_PictureViewModel>(responseBody) );
 
                 await _pictureRepository.AttemptAddPictureToDb(picture);
                 //ConvertObjectIntoPictureModel
@@ -94,9 +97,9 @@ namespace SpaceBook.Business
         /// <param name="PaginationDays">The number of days to navigate througth the API</param>
         /// <param name="PageSize">Optional parameter, is the total amount of resources for our List.</param>
         /// <returns>Returns a async Enumerable of Pictures</returns>
-        private async Task<IEnumerable<Picture>> GetPicturesFromAPOD_Async(int PaginationDays,  int PageNumber = 1, int PageSize = 20, int pictureCount = 0)
+        private async Task<IEnumerable<Picture>> GetPicturesFromAPOD_Async(int PaginationDays,int DaysToQuery)
         {
-            string strQueryDate = $"start_date={DateTime.Now.AddDays(( PaginationDays * -1 ) + pictureCount).ToString("yyyy-MM-dd")}&end_date={DateTime.Now.AddDays( (PaginationDays * -1 * PageNumber) + PageSize).ToString("yyyy-MM-dd")}&";
+            string strQueryDate = $"start_date={DateTime.Now.AddDays(( PaginationDays * -1 )).ToString("yyyy-MM-dd")}&end_date={DateTime.Now.AddDays( (PaginationDays * -1 ) + DaysToQuery).ToString("yyyy-MM-dd")}&";
             try
             {
                 string responseBody = await _client.GetStringAsync(APOD_NASA_API + strQueryDate + API_KEY);

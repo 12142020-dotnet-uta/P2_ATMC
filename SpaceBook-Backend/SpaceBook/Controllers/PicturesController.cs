@@ -83,11 +83,11 @@ namespace SpaceBook.Controllers
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> GetAllPictures([FromQuery] PaginationFilter filter)
+        public async Task<IActionResult> GetAllPictures(int pageNumber = 1, int pageSize = 20) //[FromQuery] PaginationFilter filter
         {
             var route = Request.Path.Value;
-            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-            var pagedData = (await _pictureBusinessLogic.GetAllPictures(filter.PageNumber, filter.PageSize))
+            var validFilter = new PaginationFilter(pageNumber, pageSize);
+            var pagedData = (await _pictureBusinessLogic.GetAllPictures(pageNumber, pageSize))
                 .Skip((validFilter.PageNumber - 1)
                 * validFilter.PageSize)
                 .Take((validFilter.PageSize))
