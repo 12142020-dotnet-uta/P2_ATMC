@@ -31,13 +31,13 @@ steps:
     workingDir: $(angularFolder)
     verbose: true
 
-- task: Npm@1
-  displayName: 'Build Angular'
-  inputs:
-    command: custom
-    workingDir: $(angularFolder)
-    verbose: true
-    customCommand: 'run build'
+# - task: Npm@1
+#   displayName: 'Build Angular'
+#   inputs:
+#     command: custom
+#     workingDir: $(angularFolder)
+#     verbose: true
+#     customCommand: 'run build'
 
 # - task: Npm@1
 #   displayName: 'Publish Angular'
@@ -48,15 +48,23 @@ steps:
 #     publishRegistry: 'useFeed'
 #     publishFeed: '0afcca8a-a29e-463f-b238-27cf1b8b59db'
 - task: Npm@1
-  displayName: 'NPM Build Angular'
   inputs:
     command: 'custom'
     workingDir: '$(angularFolder)'
     customCommand: 'run ng build --prod'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(angularFolder)/dist'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
     appType: 'webApp'
     WebAppName: 'ATMCSpaceBook'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
