@@ -40,8 +40,16 @@ namespace SpaceBook.Business
         public async Task<IEnumerable<Picture>> GetAllPictures(int PageNumber = 1, int PageSize = 20)
         {
             //TODO: When calling to the DB, if the count of pictures is to 20, return the Pictures, else, call the APOD API.
+            List<Picture> pictures = (List<Picture>) await _pictureRepository.GetAllPictures(PageNumber, PageSize);
 
-            return await _pictureRepository.GetAllPictures();
+            if (pictures.Count < (PageSize * PageNumber ))
+            {
+                //  
+                int PaginationDays = (PageNumber * (PageSize )) ;// -1
+                pictures.AddRange( (List<Picture>)await GetPicturesFromAPOD_Async(PaginationDays, PageNumber, PageSize, pictures.Count) );
+            }
+
+            return pictures;//await _pictureRepository.GetAllPictures(PageNumber, PageSize);
         }
 
         /// <summary>
@@ -80,9 +88,15 @@ namespace SpaceBook.Business
             }
         }
 
-        private async Task<IEnumerable<Picture>> GetPicturesFromAPOD_Async()
+        /// <summary>
+        /// Get a list of pictures througth the APOD API, sending the amount of days to request the API the beggining date and a optional PageSize to determine the size of the request.
+        /// </summary>
+        /// <param name="PaginationDays">The number of days to navigate througth the API</param>
+        /// <param name="PageSize">Optional parameter, is the total amount of resources for our List.</param>
+        /// <returns>Returns a async Enumerable of Pictures</returns>
+        private async Task<IEnumerable<Picture>> GetPicturesFromAPOD_Async(int PaginationDays,  int PageNumber = 1, int PageSize = 20, int pictureCount = 0)
         {
-                string strQueryDate = $"start_date={DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")}&end_date={DateTime.Now.ToString("yyyy-MM-dd")}&";
+            string strQueryDate = $"start_date={DateTime.Now.AddDays(( PaginationDays * -1 ) + pictureCount).ToString("yyyy-MM-dd")}&end_date={DateTime.Now.AddDays( (PaginationDays * -1 * PageNumber) + PageSize).ToString("yyyy-MM-dd")}&";
             try
             {
                 string responseBody = await _client.GetStringAsync(APOD_NASA_API + strQueryDate + API_KEY);

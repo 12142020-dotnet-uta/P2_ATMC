@@ -87,7 +87,7 @@ namespace SpaceBook.Controllers
         {
             var route = Request.Path.Value;
             var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-            var pagedData = (await _pictureBusinessLogic.GetAllPictures())
+            var pagedData = (await _pictureBusinessLogic.GetAllPictures(filter.PageNumber, filter.PageSize))
                 .Skip((validFilter.PageNumber - 1)
                 * validFilter.PageSize)
                 .Take((validFilter.PageSize))

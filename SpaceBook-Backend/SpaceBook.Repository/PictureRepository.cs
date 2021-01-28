@@ -28,12 +28,24 @@ namespace SpaceBook.Repository
         }
 
         /// <summary>
-        /// Returns a list of all pictures in the Db
+        /// This method have the optional parameters PageNumber and PageSize to the default value, if the PageNumber is default, it returns the Complete List of Pictures, else it returns
+        /// with pagination the elements in the DB.
         /// </summary>
-        /// <returns></returns>
-        public async Task<IEnumerable<Picture>> GetAllPictures()
+        /// <returns>Returns a async Enumerable of Pictures.</returns>
+        public async Task<IEnumerable<Picture>> GetAllPictures(int PageNumber = 1, int PageSize = 20)
         {
-            return await _dbContext.Pictures.ToListAsync();
+            //If Default Value, return All Pictures
+            if (PageNumber == 1)
+            {
+                return await _dbContext.Pictures.ToListAsync();
+            }
+            else
+            {
+                return await _dbContext.Pictures
+                    .Skip( (PageNumber -1 ) * PageSize  )
+                    .Take(PageSize).ToListAsync();
+
+            }
         }
 
         /// <summary>
@@ -56,7 +68,7 @@ namespace SpaceBook.Repository
         /// <returns></returns>
         public async Task<bool> AttemptAddPictureToDb(Picture picture)
         {
-            if (await IsPictureInDb(picture.PictureID))
+            if (await IsPictureInDb(picture.PictureID) )
             {
                 //fail if picture is already in db
                 return false;
