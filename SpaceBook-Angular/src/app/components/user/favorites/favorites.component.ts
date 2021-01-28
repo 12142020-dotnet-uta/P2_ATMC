@@ -7,9 +7,8 @@ import { Picture } from 'src/app/interfaces/picture';
   styleUrls: ['./favorites.component.css']
 })
 export class FavoritesComponent implements OnInit {
-  @Input() pictures: Picture[] = new Array<Picture>();
-  
-  constructor() { console.log(this.pictures); }
+  @Input() pictures: Picture[];
+  constructor() { }
 
   ngOnInit(): void {
   }
