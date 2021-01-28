@@ -13,6 +13,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  angularFolder: './SpaceBook-Angular/'
 
 
 
@@ -41,20 +42,6 @@ steps:
     projects: '**/*Tests/*.csproj'
     arguments: --configuration $(buildConfiguration) --collect "Code Coverage"
 
-- task: Npm@1
-  displayName: 'Restore Angular Dependencies'
-  inputs:
-    workingDir: './SpaceBook-Angular/'
-    verbose: false
-
-- task: Npm@1
-  displayName: 'Build Angular'
-  inputs:
-    command: custom
-    workingDir: './SpaceBook-Angular/'
-    verbose: false
-    customCommand: 'run build'
-
 - task: PublishCodeCoverageResults@1
   displayName: publish code coverage
   inputs:
@@ -80,3 +67,30 @@ steps:
     WebAppName: 'ATMCSpaceBook'
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 
+
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+- task: Npm@1
+  displayName: 'NPM Install'
+  inputs:
+    command: 'install'
+    workingDir: '$(angularFolder)/'
+
+- task: Npm@1
+  displayName: 'Restore Angular Dependencies'
+  inputs:
+    workingDir: $(angularFolder)/
+    verbose: true
+- task: Npm@1
+  displayName: 'NPM Install Angular CLI'
+  inputs:
+    command: 'custom'
+    workingDir: '$(angularFolder)/'
+    customCommand: 'install -g @angular/cli@latest'
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: '$(angularFolder)/'
+    customCommand: 'run ng build --prod'

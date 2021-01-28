@@ -11,24 +11,25 @@ import { UserAuthService } from "../../../services/user-auth.service";
   styleUrls: ['./log-in.component.css']
 })
 export class LogInComponent implements OnInit {
-
+  public userRegister: UserRegister = new UserRegister();
+  public userLogin: UserLogIn = new UserLogIn();
   constructor( private _userAuthService: UserAuthService ) { }
 
   ngOnInit(): void {
-    
+
   }
 
   boolLogIn = true;
   boolRegister = false;
 
-  strFirstName:string;
-  strLastName:string;
-  strLogInUserName:string;
-  strLogInPassword:string;
-  strEmail: string;
+  // strFirstName:string;
+  // strLastName:string;
+  // strLogInUserName:string;
+  // strLogInPassword:string;
+  // strEmail: string;
   
-  strUserName:string;
-  strPassword:string;
+  // strUserName:string;
+  // strPassword:string;
 
   /* The user object that will be used over here */
 
@@ -44,21 +45,21 @@ export class LogInComponent implements OnInit {
 
     event.preventDefault();
     //
-    const FIRSTNAME = event.target.querySelector('#txtFirstName').value;
-    const LASTNAME = event.target.querySelector('#txtLastName').value;
-    const USERNAME = event.target.querySelector('#txtUserNameLog').value;
-    const PASSWORD = event.target.querySelector('#txtPasswordLog').value;
-    const EMAIL = event.target.querySelector('#txtEmail').value;
+    // const FIRSTNAME = event.target.querySelector('#txtFirstName').value;
+    // const LASTNAME = event.target.querySelector('#txtLastName').value;
+    // const USERNAME = event.target.querySelector('#txtUserName').value;
+    // const PASSWORD = event.target.querySelector('#txtPassword').value;
+    // const EMAIL = event.target.querySelector('#txtEmail').value;
     
-    let userRegister: UserRegister = {
-      UserID : '',
-      UserName : USERNAME,
-      Password : PASSWORD,
-      FirstName : FIRSTNAME,
-      LastName : LASTNAME,
-      Email: EMAIL
-    }
-    console.log( userRegister );
+    // let userRegister: UserRegister = {
+    //   firstName : FIRSTNAME,
+    //   lastName : LASTNAME,
+    //   username : USERNAME,
+    //   email: EMAIL,
+    //   password : PASSWORD,
+    // }
+    this._userAuthService.postRegisterAutentication(this.userRegister).subscribe();
+    console.log( this.userRegister );
     
   }
 
@@ -66,21 +67,18 @@ export class LogInComponent implements OnInit {
   {
     event.preventDefault();
 
-    const USERNAME = event.target.querySelector('#txtUserNameLog').value;
-    const PASSWORD = event.target.querySelector('#txtPasswordLog').value;
+    // const USERNAME = event.target.querySelector('#txtUserNameLog').value;
+    // const PASSWORD = event.target.querySelector('#txtPasswordLog').value;
 
 
-    let userLogIn: UserLogIn = {
-      UserID : '',
-      UserName : USERNAME,
-      Password : PASSWORD,
-      FirstName : this.strPassword,
-      LastName : this.strLastName
-    }
+    // let userLogIn: UserLogIn = {
+    //   username : USERNAME,
+    //   password : PASSWORD
+    // }
 
-    console.log( userLogIn );
+    console.log( this.userLogin );
 
-    let result :any = this._userAuthService.postLoginAutentication(userLogIn)
+    let result :any = this._userAuthService.postLoginAutentication(this.userLogin)
         .subscribe( ( userAutenticated ) => {
           console.log(userAutenticated);
 

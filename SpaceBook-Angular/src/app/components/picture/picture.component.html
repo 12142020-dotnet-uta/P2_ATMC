@@ -1,13 +1,15 @@
 <div class="card mb-3">
-    <a routerLink='/picture/1'>
-        <img src="..." class="card-img-top" alt="...">
-    </a>    
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-      <ngb-rating style="display: block;" [(rate)]="currentRate" [max]='5'></ngb-rating>
-      <a href="#" class="btn btn-primary">Add to my collection</a>
-    </div>
+  <!-- <div *ngIf="isPicture"> -->
+    <a (click)="goToPictureDetails()">
+          <img src={{picture.imageURL}} class="card-img-top" alt="...">
+    </a>
+  <!-- </div> -->
+  <div class="card-body">
+    <h5 class="card-title">{{picture.title}}</h5>
+    <!-- <p class="card-text">{{}}</p> -->
+    <ngb-rating style="display: block;" [(rate)]="currentRate" [max]='5'></ngb-rating>
+    <a href="#" class="btn btn-primary">Add to my collection</a>
   </div>
+</div>
 
   <!-- <pre>Rate: <b>{{currentRate}}</b></pre> -->

@@ -1,28 +1,52 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #553643 }
-
-a{
-    color:#794d60;
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #553643;
 }
 
-a:hover{
-    color: #794d60;
+a {
+  color: #794d60;
 }
 
-h5, h4, h3 h2, p ,label, span {
-    color: #FFFFFF;
+a {
+  color: #794d60;
 }
 
-.card{
-    background-color: #794d60;
+a:hover {
+  color: #794d60;
 }
 
-html, body { height: 100%; }
+h5,
+h4,
+h3 h2,
+p,
+label,
+span {
+  color: #ffffff;
+}
 
-html, body { height: 100%; }
+.card {
+  background-color: #794d60;
+}
 
-html, body { height: 100%; }
+html,
+body {
+  height: 100%;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html,
+body {
+  height: 100%;
+}
 /* body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
-

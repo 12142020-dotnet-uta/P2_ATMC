@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 //services
 import { HeroimageService } from '../app/services/heroimage.service';
@@ -49,8 +49,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
+import { BearerAuthInterceptor } from './services/bearer-auth.interceptor';
+import { MyProfileComponent } from './components/user/my-profile/my-profile.component';
 
- 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,7 +67,8 @@ import { MatIconModule } from "@angular/material/icon";
     FollowingComponent,
     ProfileComponent,
     PictureCommentComponent,
-    PictureSubCommentComponent
+    PictureSubCommentComponent,
+    MyProfileComponent
 
   ],
   imports: [
@@ -80,7 +83,7 @@ import { MatIconModule } from "@angular/material/icon";
     HttpClientModule,
   ],
   exports: [NgbRating],
-  providers: [HeroimageService],
+  providers: [HeroimageService,{ provide: HTTP_INTERCEPTORS, useClass: BearerAuthInterceptor, multi: true }],
   bootstrap: [AppComponent, NgbRating]
 })
 export class AppModule { }
