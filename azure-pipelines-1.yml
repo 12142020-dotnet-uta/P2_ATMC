@@ -15,11 +15,11 @@ variables:
 
 steps:
 
-- task: AzureAppServiceManage@0
-  inputs:
-    azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
-    Action: 'Stop Azure App Service'
-    WebAppName: 'space-book'
+# - task: AzureAppServiceManage@0
+#   inputs:
+#     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
+#     Action: 'Stop Azure App Service'
+#     WebAppName: 'space-book'
 
 - task: NodeTool@0
   inputs:
@@ -78,6 +78,13 @@ steps:
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
 
+# - task: AzureRmWebAppDeployment@4
+#   inputs:
+#     ConnectionType: 'AzureRM'
+#     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
+#     appType: 'webApp'
+#     WebAppName: 'space-book'
+#     packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
@@ -85,9 +92,16 @@ steps:
     appType: 'webApp'
     WebAppName: 'space-book'
     packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-
+    enableCustomDeployment: true
+    DeploymentType: 'webDeploy'
+    RemoveAdditionalFilesFlag: true
 - task: AzureAppServiceManage@0
   inputs:
     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
-    Action: 'Start Azure App Service'
+    Action: 'Restart Azure App Service'
     WebAppName: 'space-book'
+# - task: AzureAppServiceManage@0
+#   inputs:
+#     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
+#     Action: 'Start Azure App Service'
+#     WebAppName: 'space-book'
