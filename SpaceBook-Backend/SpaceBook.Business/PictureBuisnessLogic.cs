@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace SpaceBook.Business
@@ -15,6 +16,7 @@ namespace SpaceBook.Business
 
         private readonly PictureRepository _pictureRepository;
         private readonly HttpClient _client;
+        private const string API_KEY = "71wMNdfgtD6jcpVBtmULKEqxPjbhhXLSit3mQqXu";
 
         public PictureBuisnessLogic(PictureRepository pictureRepository)
         {
@@ -45,9 +47,11 @@ namespace SpaceBook.Business
 
             try
             {
-                string responseBody = await _client.GetStringAsync("");
+                string responseBody = await _client.GetStringAsync($"https://api.nasa.gov/planetary/apod?api_key={API_KEY}");
 
                 //Convert the response into Picture Object
+                Picture picture = JsonSerializer.Deserialize<Picture>(responseBody);
+
                 //Mapper Class or DeserializeObject from JSON class
 
             }
@@ -60,7 +64,9 @@ namespace SpaceBook.Business
 
         }
 
-        
+
+
+
 
 
     }

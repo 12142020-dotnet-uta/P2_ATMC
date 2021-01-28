@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SpaceBook.Business;
+using SpaceBook.Controllers.Filter;
+using SpaceBook.Controllers.Pagination;
+using SpaceBook.Controllers.Services;
+using SpaceBook.Controllers.Wrappers;
 using SpaceBook.Models;
 using System;
 using System.Collections.Generic;
@@ -15,17 +19,20 @@ namespace SpaceBook.Controllers
     public class PicturesController : ControllerBase
     {
         PictureBusinessLogic _pictureBusinessLogic;
-        public PicturesController(PictureBusinessLogic pictureBusinessLogic)
+        UriPaginationInterface _uriService;
+
+        public PicturesController(PictureBusinessLogic pictureBusinessLogic, UriPaginationInterface uriService)
         {
             _pictureBusinessLogic = pictureBusinessLogic;
+            _uriService = uriService;
         }
 
         [HttpGet("daily")]
         public async Task<IActionResult> GetDailyPicture()
         {
             //will get daily pictures in the future; just gets picture 1 for now
-            //TODO: actually get picture of the day from nasa api; probably do it in business layer
-            Picture picture = await _pictureBusinessLogic.GetPicture(1);
+            //TODO: actually get picture of the day from nasa api; probably do it in business layer await _pictureBusinessLogic.GetPicture(1);
+            Picture picture = await _pictureBusinessLogic.GetPictureOfTheDay();
             if (picture != null)
             {
                 return Ok(picture);
@@ -37,6 +44,8 @@ namespace SpaceBook.Controllers
 
         }
 
+
+        
         [HttpGet("{pictureId}")]
         public async Task<IActionResult> GetPicture(int pictureId)
         {
@@ -44,8 +53,8 @@ namespace SpaceBook.Controllers
             Picture picture = await _pictureBusinessLogic.GetPicture(pictureId);
             if (picture != null)
             {
-                return Ok(picture);
-            }
+                return Ok(new Response<Picture>(picture));
+            } 
             else
             {
                 return NotFound();
@@ -74,12 +83,22 @@ namespace SpaceBook.Controllers
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> GetAllPictures()
+        public async Task<IActionResult> GetAllPictures(int pageNumber = 1, int pageSize = 20) //[FromQuery] PaginationFilter filter
         {
+            var route = Request.Path.Value;
+            var validFilter = new PaginationFilter(pageNumber, pageSize);
+            var pagedData = (await _pictureBusinessLogic.GetAllPictures(pageNumber, pageSize))
+                .Skip((validFilter.PageNumber - 1)
+                * validFilter.PageSize)
+                .Take((validFilter.PageSize))
+                .ToList();
             var pictures = await _pictureBusinessLogic.GetAllPictures();
             if (pictures == null) { return NotFound(); }
-            return Ok(pictures);
+            return Ok(new PagedResponse<List<Picture>>(pagedData, validFilter.PageNumber, validFilter.PageSize));
         }
+
+  
+
 
         [Authorize]
         [HttpPost]

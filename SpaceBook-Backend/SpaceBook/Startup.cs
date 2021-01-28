@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SpaceBook.Business;
+using SpaceBook.Controllers.Services;
 using SpaceBook.Models;
 using SpaceBook.Repository;
 using System;
@@ -67,6 +69,17 @@ namespace SpaceBook
                  };
              });
 
+            //services for pagination
+            services.AddHttpContextAccessor();
+            services.AddSingleton<UriPaginationInterface>(x =>
+            {
+                var accessor = x.GetRequiredService<IHttpContextAccessor>();
+                var req = accessor.HttpContext.Request;
+                var uri = string.Concat(req.Scheme, "://", req.Host.ToUriComponent());
+                return new UriService(uri);
+            });
+
+
             //services.AddScoped<ApplicationDbContext>();
             services.AddScoped<ApplicationUserRepository>();
             services.AddScoped<FavoriteRepository>();
@@ -79,6 +92,8 @@ namespace SpaceBook
             services.AddScoped<UserPictureRepository>();
             services.AddScoped<PictureBusinessLogic>();
             services.AddScoped<ApplicationDbContext>();
+            services.AddScoped<Mapper>();
+            services.AddHttpClient();
 
         }
 

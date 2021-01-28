@@ -18,5 +18,10 @@ namespace SpaceBook.Models
 
         public int PictureId { get; set; }
 
+        public UserPicture()
+        {
+            Picture.isUserPicture = true;
+        }
+
     }
 }
