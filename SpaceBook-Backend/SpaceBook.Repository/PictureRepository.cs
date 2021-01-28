@@ -35,17 +35,17 @@ namespace SpaceBook.Repository
         public async Task<IEnumerable<Picture>> GetAllPictures(int PageNumber = 1, int PageSize = 20)
         {
             //If Default Value, return All Pictures
-            if (PageNumber == 1)
-            {
+            //if (PageNumber == 1)
+            //{
                 return await _dbContext.Pictures.ToListAsync();
-            }
-            else
-            {
-                return await _dbContext.Pictures
-                    .Skip( (PageNumber -1 ) * PageSize  )
-                    .Take(PageSize).ToListAsync();
+            //}
+            //else
+            //{
+            //    return await _dbContext.Pictures
+            //        .Skip( (PageNumber -1 ) * PageSize  )
+            //        .Take(PageSize).ToListAsync();
 
-            }
+            //}
         }
 
         /// <summary>
