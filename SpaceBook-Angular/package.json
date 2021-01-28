@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@azure/ng-deploy": "0.2.3",
     "@angular/animations": "~11.0.9",
