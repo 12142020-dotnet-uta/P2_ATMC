@@ -1,4 +1,5 @@
 # Node.js
+
 # Build a general Node.js project with npm.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
@@ -22,6 +23,14 @@ steps:
     npm install
     npm run build
   displayName: 'npm install and build'
+
+- script: |
+    export CI=1
+    export CLIENT_ID=$(CLIENT_ID)
+    export CLIENT_SECRET=$(CLIENT_SECRET)
+    export TENANT_ID=$(TENANT_ID)
+    export AZURE_SUBSCRIPTION_ID=$(AZURE_SUBSCRIPTION_ID)
+  displayName: attempt authentication
 
 - task: Npm@1
   displayName: 'Restore Angular Dependencies'
