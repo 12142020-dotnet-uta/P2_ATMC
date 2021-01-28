@@ -28,7 +28,7 @@ namespace SpaceBook.Tests
                     Date = DateTime.Now,
                     Description = "something descriptive",
                     ImageURL = "www.imageurl.com/thisimage",
-                    MediaType = MediaType.Image,
+                    MediaType = MediaType.image,
                     Title = "The Test Picture"
                 };
 
@@ -76,7 +76,7 @@ namespace SpaceBook.Tests
                 Date = DateTime.Now,
                 Description = "something descriptive",
                 ImageURL = "www.imageurl.com/thisimage",
-                MediaType = MediaType.Image,
+                MediaType = MediaType.image,
                 Title = "The Test Picture"
             };
 
@@ -126,7 +126,7 @@ namespace SpaceBook.Tests
                 Date = DateTime.Now,
                 Description = "something descriptive",
                 ImageURL = "www.imageurl.com/thisimage",
-                MediaType = MediaType.Image,
+                MediaType = MediaType.image,
                 Title = "The Test Picture"
             };
 
@@ -183,7 +183,7 @@ namespace SpaceBook.Tests
                 Date = DateTime.Now,
                 Description = "something descriptive",
                 ImageURL = "www.imageurl.com/thisimage",
-                MediaType = MediaType.Image,
+                MediaType = MediaType.image,
                 Title = "The Test Picture"
             };
 
@@ -192,7 +192,7 @@ namespace SpaceBook.Tests
                 Date = DateTime.Now,
                 Description = "something descriptive",
                 ImageURL = "www.imageurl.com/thatimage",
-                MediaType = MediaType.Image,
+                MediaType = MediaType.image,
                 Title = "The Test Picture"
             };
 

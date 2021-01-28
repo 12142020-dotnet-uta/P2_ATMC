@@ -69,7 +69,7 @@ namespace SpaceBook.Tests
         [Fact]
         public void CheckAddToDatabaseFomAPOD_API()
         {
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb").Options;
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb1").Options;
 
             Mapper mapper = new Mapper();
             List<Picture> pictures = new List<Picture>();
@@ -127,7 +127,7 @@ namespace SpaceBook.Tests
         [Fact]
         public void CheckGetAllFromDatabase()
         {
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb").Options;
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb2").Options;
 
             //create a picture to add
             Picture testPicture = new Picture()
@@ -190,7 +190,7 @@ namespace SpaceBook.Tests
         [Fact]
         public void CheckGetAllFromAPI()
         {
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb").Options;
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb3").Options;
 
             //create a picture to add
             Picture testPicture = new Picture()
@@ -252,7 +252,7 @@ namespace SpaceBook.Tests
         [Fact]
         public void CheckRemoveFromDatabase()
         {
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb").Options;
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb4").Options;
 
             //create a picture to add
             Picture testPicture = new Picture()
@@ -297,7 +297,7 @@ namespace SpaceBook.Tests
         [Fact]
         public void CheckEditInDatabase()
         {
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb").Options;
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "TestDb5").Options;
 
             //create a picture to add
             Picture testPicture = new Picture()

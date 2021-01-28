@@ -206,7 +206,7 @@ namespace SpaceBook.Tests
                 follows.Add(follow);
 
                 //Check to see that the List of follow you created is the same as the list retrieved from the db 
-                Assert.Equal(follows, followRepo.GetFollowedOfUser(follower.Id).Result);
+                Assert.Equal(follows.Select(x=>x.Followed), followRepo.GetFollowedOfUser(follower.Id).Result);
                 context.Database.EnsureDeleted();
             }
 
@@ -255,7 +255,7 @@ namespace SpaceBook.Tests
                 follows.Add(follow);
 
                 //Check to see that the List of follow you created is the same as the list retrieved from the db 
-                Assert.Equal(follows, followRepo.GetFollowersOfUser(followed.Id).Result);
+                Assert.Equal(follows.Select(x => x.Follower), followRepo.GetFollowersOfUser(followed.Id).Result);
                 context.Database.EnsureDeleted();
             }
 
