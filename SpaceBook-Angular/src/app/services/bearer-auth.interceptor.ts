@@ -14,6 +14,7 @@ export class BearerAuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const idToken = localStorage.getItem('id_token');
+    console.log("Http request: "+request.url);
 
     if (idToken) {
       //if token exists, add authorization header

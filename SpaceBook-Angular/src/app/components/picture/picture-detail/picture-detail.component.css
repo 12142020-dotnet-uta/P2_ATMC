@@ -1,8 +1,13 @@
 .imgContainer{
+  display: table-cell;
+  vertical-align: middle;
+  margin: 0 auto;
+
     width: 90%;
     height: 400px;
     max-height: 500px;
-    background-color: black;
+    /* background-color: black; */
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .myHeartReaction{

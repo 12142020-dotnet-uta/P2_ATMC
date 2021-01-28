@@ -3,10 +3,10 @@
     <div class="col-md-1"></div>
     <div class="col-md-5">
         <div class="imgContainer">
-            <img src="" alt="">
+            <img src="{{picture.imageURL}}" alt="" class="img-fluid">
 
         </div>
-        
+
         <span>Rating: 0</span>
         <br>
         <!-- <button>Fav It</button> -->
@@ -17,11 +17,11 @@
         <span>Favorites: #</span>
     </div>
     <div class="col-md-5">
-        <h2>Title of the picture</h2>
+        <h2>{{picture.title}}</h2>
 
-        <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure quasi quae assumenda maxime ducimus reprehenderit deleniti neque minus quod, impedit vero porro vel mollitia deserunt accusamus qui. Qui, quo inventore?</p>
+        <p class="text-justify">{{picture.description}}</p>
 
-        <p>Date: 24/1/2021</p>
+        <p>Date: {{picture.date}}</p>
 
         <h3>Rate picture</h3>
         <ngb-rating style="display: block;" [(rate)]="currentRate" [max]='5'></ngb-rating>
@@ -41,7 +41,7 @@
 </div>
 <div class="row">
     <div class="col-sm-12">
-        
+
         <app-picture-comment >
         </app-picture-comment>
         <!-- <div class="MessageContent">
