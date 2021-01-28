@@ -6,9 +6,12 @@ using SpaceBook.Controllers.Pagination;
 using SpaceBook.Controllers.Services;
 using SpaceBook.Controllers.Wrappers;
 using SpaceBook.Models;
+using SpaceBook.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -103,7 +106,7 @@ namespace SpaceBook.Controllers
         [Authorize]
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> CreatePicture([FromBody] Picture userPicture)
+        public async Task<IActionResult> CreatePicture([FromBody] UserPictureViewModel userPicture)
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             //make sure user is logged in
@@ -112,14 +115,37 @@ namespace SpaceBook.Controllers
             var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
             var username = claim.Value;
 
-            if (await _pictureBusinessLogic.CreateUserPicture(userPicture,username))
+
+            var folderName = Path.Combine("Resources", "Images");
+            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+            if (userPicture.fileAsBase64.Length > 0)
             {
-                return Accepted(userPicture);
+                var fileName = userPicture.title + "_" + DateTime.Now.ToString("yyyy-MM-dd HH-mm");
+                var fullPath = Path.Combine(pathToSave, fileName);
+                var dbPath = Path.Combine(folderName, fileName);
+                //using (var stream = new FileStream(fullPath, FileMode.Create))
+                //{
+                    System.IO.File.WriteAllBytes(fullPath, userPicture.fileAsBase64);
+                //}
+                return Ok(new { dbPath });
             }
-            else
-            {
-                return BadRequest(userPicture);
-            }
+
+            //Task SavePictureAsync = System.IO.File.WriteAllBytesAsync( Environment.CurrentDirectory, userPicture.fileAsBase64);
+
+
+            return Accepted("Sure why not.");
+
+
+            //For having now the picture
+            //if (await _pictureBusinessLogic.CreateUserPicture(userPicture,username))
+            //{
+            //    return Accepted(userPicture);
+            //}
+            //else
+            //{
+            //    return BadRequest(userPicture);
+            //}
         }
         #region Ratings
         [HttpGet("{pictureId}/Ratings")]
