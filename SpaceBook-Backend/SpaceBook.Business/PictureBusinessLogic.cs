@@ -45,7 +45,7 @@ namespace SpaceBook.Business
             if (pictures.Count < (PageSize * PageNumber ))
             {
                 //  
-                int PaginationDays = (PageNumber * (PageSize )) ;// -1
+                int PaginationDays = (PageNumber * (PageSize )) ;
                 pictures.AddRange( (List<Picture>)await GetPicturesFromAPOD_Async(PaginationDays, PageNumber, PageSize, pictures.Count) );
             }
 
