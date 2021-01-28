@@ -5,8 +5,7 @@
         <h5>Register&nbsp;&nbsp;</h5>
         <mat-slide-toggle
           [checked]='boolLogIn'
-          (change)='onChangingSection()'
-        >
+          (change)='onChangingSection()'>
       </mat-slide-toggle>
       <h5>&nbsp;&nbsp; Log In</h5>
       </div>
@@ -14,13 +13,9 @@
         <hr />
         <div class="form-group">
           <label for="txtUserNameLog">UserName</label>
-          <input type="text" class="form-control" id="txtUserNameLog" placeholder="UserName"> 
-          {{strLogInUserName}}
-          <!-- [userLogIn.UserName] -->
+          <input type="text" class="form-control" required [(ngModel)]="userLogin.username" name="username" placeholder="UserName"> 
           <label for="txtPasswordLog">Password</label>
-          <input type="password" class="form-control" id="txtPasswordLog" placeholder="Password">
-          <!-- [(ngModel)]="strPassword" -->
-          {{strLogInPassword}}
+          <input type="password" class="form-control" required [(ngModel)]="userLogin.password" name="password" placeholder="Password">
         </div>
         <br>
         <div class="row ">
@@ -36,36 +31,26 @@
           <hr />
           <div class="row">
             <div class="form-group col-md-6">
-              <label for="txtFirstName" >First Name</label>
-              <input type="text" class="form-control" id="txtFirstName" required placeholder="First Name">
-              <!-- [(ngModel)]="strFirstName" -->
-              <!-- {{strFirstName}} -->
+              <label>First Name</label>
+              <input type="text" class="form-control" required [(ngModel)]="userRegister.firstName" name="firstname" required placeholder="First Name">
             </div>
             <div class="form-group col-md-6">
-              <label for="txtLastName">Last Name</label>
-              <input type="text" class="form-control" id="txtLastName" placeholder="Last Name">
-              <!-- [(ngModel)]="strLastName" -->
-              <!-- {{strLastName}} -->
+              <label>Last Name</label>
+              <input type="text" class="form-control" required [(ngModel)]="userRegister.lastName" name="lastname" placeholder="Last Name">
             </div>
           </div>
           <div class="form-group">
               <label for="txtUserName">UserName</label>
-              <input type="text" class="form-control" id="txtUserName" placeholder="UserName">
-              <!-- [(ngModel)]="strUserName" -->
-              {{strUserName}}
+              <input type="text" class="form-control" required [(ngModel)]="userRegister.username" name="username" placeholder="UserName">
               <label for="txtEmail">Email</label>
-              <input type="email" class="form-control" id="txtEmail" placeholder="Email">
-              <!-- [(ngModel)]="strEmail"  -->
-              <!-- {{strEmail}} -->
+              <input type="email" class="form-control" required [(ngModel)]="userRegister.email" name="email" placeholder="Email">
               <label for="txtPassword">Password</label>
-              <input type="password" class="form-control" id="txtPassword" placeholder="Password">
-              <!-- [(ngModel)]="strPassword"  -->
-              <!-- {{strPassword}} -->
+              <input type="password" class="form-control" required [(ngModel)]="userRegister.password" name="password" placeholder="Password">
           </div>
           <br>
           <div class="row ">
             <div class="col-md-12">
-              <button class="btn btn-light btn-block" type="submit"> Register</button>
+              <button class="btn btn-light btn-block" type="submit" > Register</button>
             </div>
           </div>
       </form>

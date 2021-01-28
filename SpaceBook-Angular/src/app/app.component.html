@@ -4,12 +4,12 @@
   <ng-container ngbNavItem>
     <a class="myTitle" ngbNavLink routerLink='/dashboard'> 
       <b>
-        {{title}}
+        <i class="fas fa-space-shuttle"></i>&nbsp;{{title}}
       </b>
     </a>
   </ng-container>
   <!-- Toggle button for responsive navbar -->        
-  <button class="navbar-toggler"
+  <button class="navbar-toggler ml-auto"
      type="button" 
      data-toggle="collapse" 
      data-target="#myNavBarItems" 
@@ -18,23 +18,34 @@
      aria-label="Toggle navigation"
      (click)="isCollapsed = !isCollapsed"
      [attr.aria-expanded]="!isCollapsed">
-    <span class="navbar-toggler-icon"></span>
+    <span class="icon material-icons">menu</span>
   </button>
   <!-- container for the collapsing routes -->
-    <div class="collapse navbar-collapse" id='myNavBarItems' [ngbCollapse]="isCollapsed">
-
-      <ng-container ngbNavItem class="nav-item nav-item2">
-        <a ngbNavLink routerLink='/user/1'>User</a>
-      </ng-container>
-      <ng-container ngbNavItem class="nav-item nav-item2">
-        <a ngbNavLink routerLink='/picture/upload'>Upload Picture</a>
-      </ng-container>
-      <ng-container ngbNavItem class="nav-item nav-item2">
-        <a ngbNavLink routerLink='/messaging'>Messaging</a>
-      </ng-container>
-      <ng-container ngbNavItem class="nav-item nav-item2">
-        <a ngbNavLink routerLink='/authentication'>Register / Log In</a>
-      </ng-container>
+    <div class="collapse navbar-collapse text-center" id='myNavBarItems' [ngbCollapse]="isCollapsed">
+      <ul class="nav navbar-nav">
+        <li>
+          <ng-container ngbNavItem class="nav-item nav-item2">
+            <a ngbNavLink routerLink='/user/'>Profile &nbsp;&nbsp;<span class="icon material-icons">account_circle</span></a>
+          </ng-container>
+        </li>
+        <li>
+          <ng-container ngbNavItem class="nav-item nav-item2">
+            <a ngbNavLink routerLink='/picture/upload'>Create Post &nbsp;&nbsp;<span class="icon material-icons">add_a_photo</span></a>
+          </ng-container>
+        </li>
+        <li>
+          <ng-container ngbNavItem class="nav-item nav-item2">
+            <a ngbNavLink routerLink='/messaging'>Messages &nbsp;&nbsp;<span class="icon material-icons">chat</span></a>
+          </ng-container>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav ml-auto">
+        <li>
+          <ng-container ngbNavItem class="nav-item nav-item2" >
+            <a ngbNavLink routerLink='/authentication'><span class="icon material-icons">login</span>&nbsp;&nbsp;Register / Login</a>
+          </ng-container>
+        </li>
+      </ul>
     </div>
   <!-- </div> -->
 </nav>
@@ -47,7 +58,7 @@
     </ng-container>
   </nav> -->
   
-<div class="container">
+<div class="container rounded">
   <router-outlet></router-outlet>
 
 </div>

@@ -46,9 +46,15 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<Follow>> GetFollowersOfUser(string userId)
+        public async Task<IEnumerable<ApplicationUser>> GetFollowersOfUser(string userId)
         {
-            return await _dbContext.Follows.Include(x=>x.Follower).Where(x => x.FollowedId == userId).AsQueryable().ToListAsync<Follow>();
+            IEnumerable<Follow> follows= await _dbContext.Follows.Include(x=>x.Follower).Where(x => x.FollowedId == userId).AsQueryable().ToListAsync<Follow>();
+            List<ApplicationUser> followers = new List<ApplicationUser>();
+            foreach(Follow follow in follows)
+            {
+                followers.Add(follow.Follower);
+            }
+            return followers;
         }
         
         /// <summary>
@@ -56,9 +62,15 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<Follow>> GetFollowedOfUser(string userId)
+        public async Task<IEnumerable<ApplicationUser>> GetFollowedOfUser(string userId)
         {
-            return await _dbContext.Follows.Include(x=>x.Followed).Where(x => x.FollowerId == userId).AsQueryable().ToListAsync<Follow>();
+            IEnumerable<Follow> follows = await _dbContext.Follows.Include(x=>x.Followed).Where(x => x.FollowerId == userId).AsQueryable().ToListAsync<Follow>();
+            List<ApplicationUser> followed = new List<ApplicationUser>();
+            foreach (Follow follow in follows)
+            {
+                followed.Add(follow.Followed);
+            }
+            return followed;
         }
 
         /// <summary>
@@ -82,7 +94,7 @@ namespace SpaceBook.Repository
         /// <returns></returns>
         public async Task<bool> AttemptAddFollow(Follow follow)
         {
-            if (await IsFollowInDb(follow.FollowID))
+            if (await IsFollowInDb(follow.FollowID) || await GetFollowByFollowerAndFollowedIds(follow.FollowerId, follow.FollowedId) != null)
             {
                 return false;
             }

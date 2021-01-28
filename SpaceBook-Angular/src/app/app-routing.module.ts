@@ -8,6 +8,8 @@ import { UploadPictureComponent } from "./components/picture/upload-picture/uplo
 import { LogInComponent } from "./components/user/log-in/log-in.component";
 import { FollowingComponent } from "./components/user/following/following.component";
 import { ProfileComponent } from "./components/user/profile/profile.component";
+import { MyProfileComponent } from "./components/user/my-profile/my-profile.component";
+
 
 import { RouterModule,Routes } from "@angular/router";
 
@@ -15,7 +17,8 @@ const routes : Routes = [
   //Default route for navigation
   {path: '', redirectTo:'/dashboard', pathMatch:'full' },
   {path: 'dashboard', component: DashboardComponent},
-  {path: 'user/:id',component:ProfileComponent},
+  {path: 'user',component:MyProfileComponent },
+  {path: 'user/:username',component:ProfileComponent},
   {path: 'messaging',component:DirectMessagingComponent},
   {path: 'picture/upload',component:UploadPictureComponent},
   {path: 'picture/:id',component:PictureDetailComponent},
@@ -27,7 +30,9 @@ const routes : Routes = [
 @NgModule({
   exports: [ RouterModule ],
   imports: [
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, {
+      onSameUrlNavigation: 'reload'
+    })
   ]
   // , 
 })

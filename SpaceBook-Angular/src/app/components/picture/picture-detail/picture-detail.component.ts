@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute} from '@angular/router';
+import { Picture } from 'src/app/interfaces/picture';
+import { PictureService } from 'src/app/services/picture.service';
 
 @Component({
   selector: 'app-picture-detail',
@@ -6,12 +9,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./picture-detail.component.css']
 })
 export class PictureDetailComponent implements OnInit {
+  picture:Picture
+
 
   currentRate:number = 0;
 
-  
-  constructor() { }
+  constructor(private pictureService:PictureService, private route:ActivatedRoute) { }
   ngOnInit(): void {
+    this.route.params.subscribe( params =>
+      {
+         this.getPicture(params["id"]);
+      });
   }
-
+  getPicture(picId):void{
+    this.pictureService.getPictureDetails(picId).subscribe(x=>this.picture = x);
+  }
 }

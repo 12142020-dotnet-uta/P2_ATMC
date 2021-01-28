@@ -11,7 +11,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 export class UserAuthService {
 
   constructor( private _http:HttpClient) { }
-
+  
   postLoginAutentication(userLogin : UserLogIn) : Observable<UserLogIn> {
     // let headers = new HttpHeaders ({
     //   'Content-Type': 'application/json',
@@ -21,13 +21,18 @@ export class UserAuthService {
     // let options = {headers: headers}
 
     return this._http.post<UserLogIn>("/api/Authenticate/login", {
-      UserName: userLogin.UserName,
-      Password: userLogin.Password  
+      UserName: userLogin.username,
+      Password: userLogin.password  
     } ) 
   }
   postRegisterAutentication(userRegister: UserRegister) : Observable<UserRegister> {
-    
-    return this._http.post<UserRegister>("localhost:44398/api/Authenticate/register",userRegister)
+        return this._http.post<UserRegister>("/api/Authenticate/register",{
+          firstName: userRegister.firstName,
+          lastName: userRegister.lastName,
+          username: userRegister.username,
+          email: userRegister.email,
+          password: userRegister.password
+        })
   }
 
   setSession( LoginResult) {

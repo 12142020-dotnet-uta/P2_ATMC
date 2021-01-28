@@ -1,44 +1,12 @@
-<!-- <h2>NASA Gallery</h2>
-<div class="card" style="width: 18rem;">
-    <img src="https://cdn.britannica.com/29/148329-050-269A9EFE/night-sky-Milky-Way-Galaxy.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">Milky Way Galaxy</h5>
-      <p class="card-text">The Milky Way is the galaxy that contains our Solar System, with the name describing the galaxy's appearance from Earth: a hazy band of light seen in the night sky formed from stars that cannot be individually distinguished by the naked eye.</p>
-      <ngb-rating style="display: block;" [(rate)]="currentRate" [max]='5'></ngb-rating>
-      <a href="#" class="btn btn-primary">Add to my collection</a>
+
+<div *ngFor="let row of pictureRows" class="row row-cols-1 row-cols-md-{{numCols}} g-4">
+  <div class="row" *ngFor="let curPic of row">
+    <div class="col">
+      <app-picture [picture] = "curPic"></app-picture>
     </div>
   </div>
-<hr> -->
-<div class="row row-cols-1 row-cols-md-2 g-4">
-  <div class="col" >
-    
-<app-picture></app-picture>
-    <!-- <div class="card">
-      <img src="..." class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-      </div>
-    </div> -->
-    
-  </div>
-  <div class="col">
-<app-picture></app-picture>
-    <!-- <div class="card">
-      <img src="..." class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-      </div>
-    </div> -->
-  </div>
-  <div class="col">
-<app-picture></app-picture>
-  </div>
-  <div class="col">
-<app-picture></app-picture>
-  </div>
 </div>
+
 
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
@@ -56,4 +24,3 @@
     </li>
   </ul>
 </nav>
-<!-- <pre>Rate: <b>{{currentRate}}</b></pre> -->
