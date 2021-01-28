@@ -62,14 +62,14 @@ steps:
 - task: Npm@1
   displayName: 'Restore Angular Dependencies'
   inputs:
-    workingDir: angularFolder
+    workingDir: $(angularFolder)
     verbose: true
 
 - task: Npm@1
   displayName: 'Build Angular'
   inputs:
     command: custom
-    workingDir: angularFolder
+    workingDir: $(angularFolder)
     verbose: true
     customCommand: 'run build'
 
@@ -77,7 +77,7 @@ steps:
   displayName: 'Publish Angular'
   inputs:
     command: 'publish'
-    workingDir: 'angularFolder'
+    workingDir: $(angularFolder)
     verbose: true
     publishRegistry: 'useFeed'
     publishFeed: '0afcca8a-a29e-463f-b238-27cf1b8b59db'
