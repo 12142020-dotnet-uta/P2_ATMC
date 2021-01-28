@@ -24,13 +24,6 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
-- script: |
-    export CI=1
-    export CLIENT_ID=$(CLIENT_ID)
-    export CLIENT_SECRET=$(CLIENT_SECRET)
-    export TENANT_ID=$(TENANT_ID)
-    export AZURE_SUBSCRIPTION_ID=$(AZURE_SUBSCRIPTION_ID)
-  displayName: attempt authentication
 
 - task: Npm@1
   displayName: 'Restore Angular Dependencies'
@@ -46,15 +39,20 @@ steps:
     verbose: true
     customCommand: 'run build'
 
+# - task: Npm@1
+#   displayName: 'Publish Angular'
+#   inputs:
+#     command: 'publish'
+#     workingDir: $(angularFolder)
+#     verbose: true
+#     publishRegistry: 'useFeed'
+#     publishFeed: '0afcca8a-a29e-463f-b238-27cf1b8b59db'
 - task: Npm@1
-  displayName: 'Publish Angular'
+  displayName: 'NPM Build Angular'
   inputs:
-    command: 'publish'
-    workingDir: $(angularFolder)
-    verbose: true
-    publishRegistry: 'useFeed'
-    publishFeed: '0afcca8a-a29e-463f-b238-27cf1b8b59db'
-
+    command: 'custom'
+    workingDir: '$(angularFolder)'
+    customCommand: 'run ng build --prod'
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
