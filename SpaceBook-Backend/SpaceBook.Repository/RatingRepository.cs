@@ -89,7 +89,7 @@ namespace SpaceBook.Repository
         /// <returns></returns>
         public async Task<bool> AttemptAddRating(Rating rating)
         {
-            if (await IsRatingInDb(rating.RatingID))
+            if (await IsRatingInDb(rating.RatingID) || await GetRatingByPictureAndUser(rating.RatedPictureId, rating.UserRatingId) != null)
             {
                 return false;
             }

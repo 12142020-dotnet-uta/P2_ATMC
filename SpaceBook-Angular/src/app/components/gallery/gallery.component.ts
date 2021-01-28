@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Picture } from 'src/app/interfaces/picture';
 
 @Component({
   selector: 'app-gallery',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./gallery.component.css']
 })
 export class GalleryComponent implements OnInit {
-
+  @Input() pictures: Array<Picture>;
   constructor() { }
 
   

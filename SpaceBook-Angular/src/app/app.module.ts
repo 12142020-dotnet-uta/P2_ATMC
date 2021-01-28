@@ -50,6 +50,7 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { BearerAuthInterceptor } from './services/bearer-auth.interceptor';
+import { MyProfileComponent } from './components/user/my-profile/my-profile.component';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { BearerAuthInterceptor } from './services/bearer-auth.interceptor';
     FollowingComponent,
     ProfileComponent,
     PictureCommentComponent,
-    PictureSubCommentComponent
+    PictureSubCommentComponent,
+    MyProfileComponent
 
   ],
   imports: [

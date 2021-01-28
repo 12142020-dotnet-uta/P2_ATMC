@@ -47,9 +47,15 @@ namespace SpaceBook.Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<Favorite>> GetFavoritesByUser(string userId)
+        public async Task<IEnumerable<Picture>> GetFavoritesByUser(string userId)
         {
-            return await _dbContext.Favorites.Include(x=>x.Picture).AsQueryable().Where(x => x.UserId == userId).ToListAsync<Favorite>();
+            IEnumerable<Favorite> favorites = await _dbContext.Favorites.Include(x=>x.Picture).AsQueryable().Where(x => x.UserId == userId).ToListAsync<Favorite>();
+            List<Picture> favoritedPictures = new List<Picture>();
+            foreach(Favorite f in favorites)
+            {
+                favoritedPictures.Add(f.Picture);
+            }
+            return favoritedPictures;
         }
 
         /// <summary>
@@ -83,7 +89,7 @@ namespace SpaceBook.Repository
         /// <returns></returns>
         public async Task<bool> AttemptAddFavorite(Favorite favorite)
         {
-            if (await IsFavoriteInDb(favorite.FavoriteID))
+            if (await IsFavoriteInDb(favorite.FavoriteID) || await GetFavoriteByUserPicture(favorite.UserId, favorite.PictureId) != null)
             {
                 return false;
             }

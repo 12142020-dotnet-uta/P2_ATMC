@@ -1,0 +1,31 @@
+<div class="text-center">
+    <h2>{{user.userName}}</h2>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <p>First Name: <span class="userinfo">{{user.firstName}}</span> </p>
+        <p>Last Name: <span class="userinfo">{{user.lastName}}</span> </p>
+        <p>Username: <span class="userinfo">{{user.userName}}</span> </p>
+        <p>Email: <span class="userinfo">{{user.email}}</span> </p>
+        <button class="btn btn-secondary">Edit Profile</button>
+
+    </div>
+    <div class="col-md-6">
+        <div class="text-center"><h3>Following</h3></div>
+        <div class="row">
+            <!-- *ngFor -->
+            <app-following></app-following>
+        </div>
+    </div>
+    
+</div>
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <h3>Favorites</h3>
+        <!-- *ngFor -->
+        <app-picture></app-picture>
+    </div>
+    <div class="col-md-1"></div>
+</div>

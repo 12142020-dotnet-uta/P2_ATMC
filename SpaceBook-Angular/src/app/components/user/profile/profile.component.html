@@ -1,25 +1,57 @@
 <div class="text-center">
-    <h2>Welcome _name</h2>
+    <h2>{{user.userName}}</h2>
 </div>
 <div class="row">
     <div class="col-md-6">
-        <p> First Name: </p>
-        <p> Last Name:  </p>
-        <p>User Name: </p>
-        <p>Email: </p>
-        <p>Change password</p>
+        <p>First Name: <span class="userinfo">{{user.firstName}}</span> </p>
+        <p>Last Name: <span class="userinfo">{{user.lastName}}</span> </p>
+        <p>Username: <span class="userinfo">{{user.userName}}</span> </p>
+        <p>Email: <span class="userinfo">{{user.email}}</span> </p>
 
-        <!-- ngIf the user logged in is viewing their profile, don't show  MessageMe button and Follow Me -->
-        <button class="btn btn-secondary">Message Me</button>
-        <button class="btn btn-primary">Follow Me</button>
+        
+        <button class="btn btn-secondary">Message Me</button>   
+        <ng-template [ngIf]="!followerUserNames.includes(loggedIn.userName)">
+            <button class="btn btn-primary"(click)="postFollow(user.id, loggedIn.id)" [routerLink]="['../../user/', user.userName]" routerLinkActive="on">Follow</button>
+        </ng-template>
+        <ng-template [ngIf]="followerUserNames.includes(loggedIn.userName)">
+            <button class="btn btn-danger" (click)="deleteFollow(user.id)" [routerLink]="['../../user/', user.userName]" routerLinkActive="on">Unfollow</button>
+        </ng-template>
 
     </div>
-    <div class="col-md-6">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus enim assumenda odit nesciunt at cum quasi ratione dicta suscipit dolor eum deleniti dolorem facilis nisi praesentium, libero illum soluta pariatur. </p>
-        <div class="text-center"><h2>Following</h2></div>
-        <div class="row">
-            <!-- *ngFor -->
-            <app-following></app-following>
+    <div class="container col-6">
+        <div class="row container ">
+            <div class="col-6 container">
+                <table class="table table-striped table-dark rounded" style="width: 100%;">
+                    <thead>
+                        <tr class="text-center">
+                            <th>
+                                Followers: {{followers.length}}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let follower of followers">
+                            <td><a  [routerLink]="['../../user/', follower.userName]" routerLinkActive="on">{{follower.userName}}</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-6 container">
+                <table class="table table-striped table-dark rounded" style="width: 100%;">
+                    <thead>
+                        <tr class="text-center">
+                            <th>
+                                Following: {{followed.length}}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let followed of followed">
+                            <td><a  [routerLink]="['../../user/', followed.userName]" routerLinkActive="on">{{followed.userName}}</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     
@@ -28,9 +60,8 @@
 <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
-        <h2>Favorites</h2>
-        <!-- *ngFor -->
-        <app-picture></app-picture>
+        <h3>Favorites</h3>
+        <app-gallery [pictures]="favorites"></app-gallery>
     </div>
     <div class="col-md-1"></div>
 </div>
