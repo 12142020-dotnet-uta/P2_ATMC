@@ -111,7 +111,6 @@ namespace SpaceBook.Controllers
             //get logged in user
             var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
             var username = claim.Value;
-
             if (await _pictureBusinessLogic.CreateUserPicture(userPicture,username))
             {
                 return Accepted(userPicture);

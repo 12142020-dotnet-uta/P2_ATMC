@@ -211,7 +211,7 @@ namespace SpaceBook.Tests
                 favorites.Add(favorite);
 
                 //Check to see that the List of favorites you created is the same as the list retrieved from the db
-                Assert.Equal(favorites, favoriteRepo.GetFavoritesByUser(user.Id).Result);
+                Assert.Equal(favorites.Select(x=>x.Picture), favoriteRepo.GetFavoritesByUser(user.Id).Result);
                 context.Database.EnsureDeleted();
             }
 
