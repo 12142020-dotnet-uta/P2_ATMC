@@ -1,0 +1,55 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  angularFolder: './SpaceBook-Angular/'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install
+    npm run build
+  displayName: 'npm install and build'
+
+- task: Npm@1
+  displayName: 'Restore Angular Dependencies'
+  inputs:
+    workingDir: $(angularFolder)
+    verbose: true
+
+- task: Npm@1
+  displayName: 'Build Angular'
+  inputs:
+    command: custom
+    workingDir: $(angularFolder)
+    verbose: true
+    customCommand: 'run build'
+
+- task: Npm@1
+  displayName: 'Publish Angular'
+  inputs:
+    command: 'publish'
+    workingDir: $(angularFolder)
+    verbose: true
+    publishRegistry: 'useFeed'
+    publishFeed: '0afcca8a-a29e-463f-b238-27cf1b8b59db'
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
+    appType: 'webApp'
+    WebAppName: 'ATMCSpaceBook'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/space-book-angular.zip'
