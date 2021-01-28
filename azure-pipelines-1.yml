@@ -11,7 +11,7 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  angularFolder: './SpaceBook-Angular/'
+  angularFolder: './SpaceBook-Angular'
 
 steps:
 - task: NodeTool@0
