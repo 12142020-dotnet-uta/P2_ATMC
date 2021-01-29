@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HeroimageService } from '../../services/heroimage.service'; 
+import { HeroimageService } from '../../services/heroimage.service';
 import { HeroImg } from '../../interfaces/hero-image';
 
 @Component({
@@ -11,7 +11,7 @@ import { HeroImg } from '../../interfaces/hero-image';
 export class HeroImageComponent implements OnInit {
 s
 
-  private photos: HeroImg[] = [];
+  photos: HeroImg[] = [];
 
   constructor(private heroService: HeroimageService) {
     this.heroService.getDailyPhoto().subscribe((res : HeroImg[])=>{
