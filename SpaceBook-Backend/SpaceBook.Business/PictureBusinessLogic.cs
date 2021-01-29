@@ -132,9 +132,27 @@ namespace SpaceBook.Business
 
 
         #region User Pictures
-        public async Task<bool> CreateUserPicture(Picture picture, string username)
+        public async Task<bool> CreateUserPicture(UserPictureViewModel pictureVM, string username, string urlImage)
         {
-            var user =  await _userRepository.GetUserByUsername(username);
+            var user = await _userRepository.GetUserByUsername(username);
+            //Task<ApplicationUser> user = _userRepository.GetUserByUsername(username);
+            //user.Wait();
+
+            Picture picture = new Picture()
+            {
+                Title = pictureVM.title,
+                Description = pictureVM.description,
+                isUserPicture = true,
+                /* ----- */
+                MediaType = MediaType.image,
+                /* ----- */
+                ImageURL = urlImage,
+                ImageHDURL = urlImage,
+                Date = DateTime.Now.Date,
+            };
+
+            //Save the picture first, then we link the user to the picture
+            await _pictureRepository.AttemptAddPictureToDb(picture);
 
             UserPicture userPicture = new UserPicture()
             {
@@ -144,8 +162,6 @@ namespace SpaceBook.Business
                 UploadedBy = user,
             };
 
-            //do checks on picture before adding?
-            //like make sure user is logged in?
             return await _userPictureRepository.AttemptAddUserPictureToDb(userPicture);
         }
 

@@ -43,6 +43,7 @@ export class UploadPictureComponent implements OnInit {
       if( this.fileToUpload.size < MAX_SIZE )
       {
          this.lblImage = this.fileToUpload.name;
+         this.pictureToUpload.fileExtension = fileExtension;
       }
       else
       {

@@ -62,27 +62,45 @@ namespace SpaceBook.Repository
         }
 
         /// <summary>
-        /// Attempts to add a new picture to the db; Returns false if the picture already exists in the db or it is not added to the db
+        /// Attempts to add a new picture to the db and receive an optional UserPicture; Returns false if the picture already exists in the db or it is not added to the db
         /// </summary>
         /// <param name="picture"></param>
         /// <returns></returns>
-        public async Task<bool> AttemptAddPictureToDb(Picture picture)
+        public async Task<bool> AttemptAddPictureToDb(Picture picture, UserPicture userPicture = null)
         {
             if (await IsPictureInDb(picture.PictureID) )
             {
                 //fail if picture is already in db
                 return false;
             }
-            //attempt to add picture to db
-            _dbContext.Pictures.Add(picture);
-            await _dbContext.SaveChangesAsync();
-            if (await IsPictureInDb(picture.PictureID))
-            {
-                //success if picture is now in db
-                return true;
-            }
-            //something must have gone wrong
-            return false;
+            //if(userPicture == null)
+            //{
+                //attempt to add picture to db
+                _dbContext.Pictures.Add(picture);
+                await _dbContext.SaveChangesAsync();
+                if (await IsPictureInDb(picture.PictureID))
+                {
+                    //success if picture is now in db
+                    return true;
+                }
+                //something must have gone wrong
+                return false;
+            //}
+            //else
+            //{
+            //    //attempt to add picture and userPicture to db
+            //    _dbContext.Pictures.Add(picture);
+            //    _dbContext.UserPictures.Add(userPicture);
+
+            //    await _dbContext.SaveChangesAsync();
+            //    if (await IsPictureInDb(picture.PictureID))
+            //    {
+            //        //success if picture is now in db
+            //        return true;
+            //    }
+            //    //something must have gone wrong
+            //    return false;
+            //}
         }
 
         /// <summary>

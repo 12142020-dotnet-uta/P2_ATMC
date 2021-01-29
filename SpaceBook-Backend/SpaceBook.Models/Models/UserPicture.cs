@@ -20,7 +20,7 @@ namespace SpaceBook.Models
 
         public UserPicture()
         {
-            Picture.isUserPicture = true;
+            //Picture.isUserPicture = true;
         }
 
     }
