@@ -3,9 +3,9 @@
 }
 
 /**/
-.nav-item2 {
+/* .nav-item2 {
   margin-bottom: -4px;
-}
+} */
 .icon {
   display: inline-flex;
   vertical-align: middle;
@@ -19,9 +19,9 @@ nav > a:hover {
   border-color: #0c080a #0c080a #6d4556 #0c080a;
 }
 
-#myNavBarItems ul {
+/* #myNavBarItems ul {
   bottom: 0;
-}
+} */
 .nav-tabs .nav-item.show .nav-link:hover,
 .nav-tabs .nav-link.active:hover > .icon {
   color: black;

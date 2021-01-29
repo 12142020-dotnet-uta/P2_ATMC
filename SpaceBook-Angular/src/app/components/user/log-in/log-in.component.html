@@ -9,16 +9,26 @@
       </mat-slide-toggle>
       <h5>&nbsp;&nbsp; Log In</h5>
       </div>
-      <form *ngIf="boolLogIn" (submit)="LogIngUser($event)"> <!--(submit)="LogIn($event)" *ngIf="checkInicioSession"-->
+      <form #loginForm="ngForm" *ngIf="boolLogIn" (submit)="LogIngUser($event)"> <!--(submit)="LogIn($event)" *ngIf="checkInicioSession"-->
         <hr />
         <div class="form-group">
-          <label for="txtUserNameLog">UserName</label>
-          <input type="text" class="form-control" required [(ngModel)]="userLogin.username" name="username" placeholder="UserName"> 
-          <label for="txtPasswordLog">Password</label>
-          <input type="password" class="form-control" required [(ngModel)]="userLogin.password" name="password" placeholder="Password">
+          <label for="txtUserNameLog">Username</label>
+          <input type="text" #username="ngModel" class="form-control" required [(ngModel)]="userLogin.username" name="username" placeholder="UserName">
+          <div *ngIf="username.invalid && (username.dirty)" class="alert alert-danger">
+            <div *ngIf="username.errors.required">
+              Username is required.
+            </div>
+          </div> 
+          <label class="pt-2" for="txtPasswordLog">Password</label>
+          <input type="password" #password="ngModel" class="form-control" required [(ngModel)]="userLogin.password" name="password" placeholder="Password">
+          <div *ngIf="password.invalid && (password.dirty)" class="alert alert-danger">
+            <div *ngIf="password.errors.required">
+              Password is required.
+            </div>
+          </div>
         </div>
         <br>
-        <div class="row ">
+        <div class="row " *ngIf="!loginForm.form.invalid">
           <div class="col-md-12">
             <button class="btn btn-primary btn-block" type="submit">Log In</button>
             <!-- (click)='LogIngUser()' -->
@@ -27,28 +37,69 @@
       </form>
 
       
-      <form class="form-signin" (submit)="RegisteringUser($event)" *ngIf="boolRegister"> <!--(submit)="RegistroManual($event)" *ngIf="checkRegistro"-->
+      <form class="form-signin" #registerForm="ngForm" (submit)="RegisteringUser($event)" *ngIf="boolRegister"> <!--(submit)="RegistroManual($event)" *ngIf="checkRegistro"-->
           <hr />
           <div class="row">
             <div class="form-group col-md-6">
               <label>First Name</label>
-              <input type="text" class="form-control" required [(ngModel)]="userRegister.firstName" name="firstname" required placeholder="First Name">
+              <input type="text" class="form-control" required minlength="2" [(ngModel)]="userRegister.firstName" name="firstname" #firstname="ngModel" placeholder="First Name">
+              <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="alert alert-danger">
+                <div *ngIf="firstname.errors.required">
+                  First name is required.
+                </div>
+                <div *ngIf="firstname.errors.minlength">
+                  Name must be at least 2 characters long.
+                </div>
+            </div>
             </div>
             <div class="form-group col-md-6">
               <label>Last Name</label>
-              <input type="text" class="form-control" required [(ngModel)]="userRegister.lastName" name="lastname" placeholder="Last Name">
+              <input type="text" class="form-control" required minlength="2" [(ngModel)]="userRegister.lastName" name="lastname" #lastname="ngModel" placeholder="Last Name">
+              <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="alert alert-danger">
+                <div *ngIf="lastname.errors.required">
+                  Last name is required.
+                </div>
+                <div *ngIf="lastname.errors.minlength">
+                  Name must be at least 2 characters long.
+                </div>
+              </div>
             </div>
           </div>
           <div class="form-group">
-              <label for="txtUserName">UserName</label>
-              <input type="text" class="form-control" required [(ngModel)]="userRegister.username" name="username" placeholder="UserName">
+              <label for="txtUserName">Username</label>
+              <input type="text" class="form-control" required minlength="4" [(ngModel)]="userRegister.username" name="username" #username="ngModel" placeholder="UserName">
+              <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
+                <div *ngIf="username.errors.required">
+                  Username is required.
+                </div>
+                <div *ngIf="username.errors.minlength">
+                  Name must be at least 4 characters long.
+                </div>
+              </div>
               <label for="txtEmail">Email</label>
-              <input type="email" class="form-control" required [(ngModel)]="userRegister.email" name="email" placeholder="Email">
+              <input type="email" class="form-control" required minlength="8"  [(ngModel)]="userRegister.email" name="email" #email="ngModel" placeholder="Email">
+              <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+                <div *ngIf="email.errors.required">
+                  Email is required.
+                </div>
+                <div *ngIf="email.errors.minlength">
+                  Email must be at least 8 characters long
+                </div>
+              </div>
               <label for="txtPassword">Password</label>
-              <input type="password" class="form-control" required [(ngModel)]="userRegister.password" name="password" placeholder="Password">
+              <input type="password" class="form-control" required minlength="6" [(ngModel)]="userRegister.password" name="password" #password="ngModel" placeholder="Password">
+              <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+                <div *ngIf="password.errors.required">
+                  Password is required.
+                </div>
+                <div *ngIf="password.errors.minlength">
+                  Password must be at least 6 characters long.
+                </div>
+              </div>
           </div>
+
           <br>
-          <div class="row ">
+          <div *ngIf="!registerForm.form.invalid" class="row ">
             <div class="col-md-12">
               <button class="btn btn-success btn-block" type="submit" > Register</button>
             </div>

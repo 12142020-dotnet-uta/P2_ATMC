@@ -80,15 +80,16 @@ export class LogInComponent implements OnInit {
     // }
 
     console.log( this.userLogin );
-    this.router.navigate(['']).then(() => {
-      window.location.reload()});
+    
     let result :any = this._userAuthService.postLoginAutentication(this.userLogin)
         .subscribe( ( userAutenticated ) => {
           console.log(userAutenticated);
 
           this._userAuthService.setSession(userAutenticated);
 
-          console.log(localStorage.getItem('id_token'))
+          console.log(localStorage.getItem('id_token'));
+          this.router.navigate(['']).then(() => {
+            window.location.reload()});
 
         } )
   }
