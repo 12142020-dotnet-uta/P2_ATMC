@@ -52,6 +52,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { BearerAuthInterceptor } from './services/bearer-auth.interceptor';
 import { MyProfileComponent } from './components/user/my-profile/my-profile.component';
 import { FavoritesComponent } from './components/user/favorites/favorites.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -81,6 +82,7 @@ import { FavoritesComponent } from './components/user/favorites/favorites.compon
     MatSlideToggleModule,
     MatButtonModule,
     MatIconModule,
+    MatDialogModule,
     FormsModule,
     HttpClientModule,
   ],
