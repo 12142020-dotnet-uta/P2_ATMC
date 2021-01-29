@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PagedResponse } from 'src/app/interfaces/paged-response';
 import { Picture } from 'src/app/interfaces/picture';
 import { PictureService } from 'src/app/services/picture.service';
 
@@ -9,9 +10,12 @@ import { PictureService } from 'src/app/services/picture.service';
 })
 export class GalleryComponent implements OnInit {
   @Input() pictures:Picture[]
+  pagedResponse:PagedResponse;
+
   pictureRows: Picture[][];
   numRows:number = 5;
   numCols:number = 4;
+  currentPage:number;
   constructor(private _pictureService:PictureService) { }
 
 
@@ -21,11 +25,17 @@ export class GalleryComponent implements OnInit {
       this.makePictureArrays(this.pictures);
     }
     else{
-      this.getPictures();
+      this.getPictures(1);
     }
   }
-  getPictures():void{
-    this._pictureService.getPictures().subscribe(x=>this.makePictureArrays(x))
+  getPictures(page:number):void{
+    this._pictureService.getPictures(page,this.numRows*this.numCols).subscribe(x=>{this.updateFromPagedResponse(x);console.log('response total pages: '+x.totalPages)})
+  }
+  updateFromPagedResponse(response:PagedResponse){
+    this.pagedResponse=response;
+    this.pictures=response.data;
+    this.makePictureArrays(this.pictures);
+
   }
   makePictureArrays(pics:Picture[]):void{
     this.pictureRows = [];

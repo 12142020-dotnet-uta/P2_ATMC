@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { PagedResponse } from '../interfaces/paged-response';
 import { Picture } from '../interfaces/picture';
 
 @Injectable({
@@ -10,10 +11,11 @@ export class PictureService {
 
   constructor(private _http:HttpClient) { }
 
-  getPictures():Observable<Picture[]>{
-    return this._http.get<Picture[]>('api/pictures');
+  getPictures(page:number,pageSize:number):Observable<PagedResponse>{
+    return this._http.get<PagedResponse>('api/pictures?pageNumber='+page+'&pageSize='+pageSize);
   }
-  getPictureDetails(pictureId:number):Observable<Picture>{
-    return this._http.get<Picture>('/api/pictures/'+pictureId);
+  getPictureDetails(pictureId:number):Observable<any>{
+    console.log('sending a request for picture '+pictureId)
+    return this._http.get<any>('/api/pictures/'+pictureId);
   }
 }
