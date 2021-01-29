@@ -78,6 +78,7 @@ steps:
 #     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
 #     replaceExistingArchive: true
 - task: ArchiveFiles@2
+
   inputs:
     rootFolderOrFile: '$(angularFolder)/dist/SpaceBook-Angular/'
     includeRootFolder: false
@@ -92,16 +93,16 @@ steps:
 #     appType: 'webApp'
 #     WebAppName: 'space-book'
 #     packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
-    appType: 'webApp'
-    WebAppName: 'space-book'
-    packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    enableCustomDeployment: true
-    DeploymentType: 'webDeploy'
-    RemoveAdditionalFilesFlag: true
+# - task: AzureRmWebAppDeployment@4
+#   inputs:
+#     ConnectionType: 'AzureRM'
+#     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
+#     appType: 'webApp'
+#     WebAppName: 'space-book'
+#     packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+#     enableCustomDeployment: true
+#     DeploymentType: 'webDeploy'
+#     RemoveAdditionalFilesFlag: true
 # - task: AzureAppServiceManage@0
 #   inputs:
 #     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
@@ -112,3 +113,14 @@ steps:
 #     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
 #     Action: 'Start Azure App Service'
 #     WebAppName: 'space-book'
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
+    appType: 'webApp'
+    WebAppName: 'space-book'
+    deployToSlotOrASE: true
+    ResourceGroupName: 'ATMC'
+    SlotName: 'production'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    # AppSettings: '-WEBSITE_TIME_ZONE "Eastern Standard Time"'
