@@ -78,10 +78,15 @@ export class UploadPictureComponent implements OnInit {
         .subscribe( result => {
 
           console.log(result);
+          if ( result )
+          {
+            alert("Picture was added successfully");
+          }
           
         },
         error => {
           console.log("error: ",error);
+          alert("There was an error, " + error.statusText)
         });
       
     };

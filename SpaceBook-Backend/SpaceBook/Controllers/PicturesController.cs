@@ -140,27 +140,10 @@ namespace SpaceBook.Controllers
                 //Save picture into the DB.
                 await _pictureBusinessLogic.CreateUserPicture(userPicture, username, dbPath);
 
-
+                return Accepted(true);
                 //return something
             }
-            // Add the Picture to the DB with the UserPicture
-
-
-            //Task SavePictureAsync = System.IO.File.WriteAllBytesAsync( Environment.CurrentDirectory, userPicture.fileAsBase64);
-
-
-            return Accepted("Sure why not.");
-
-
-            //For having now the picture
-            //if (await _pictureBusinessLogic.CreateUserPicture(userPicture,username))
-            //{
-            //    return Accepted(userPicture);
-            //}
-            //else
-            //{
-            //    return BadRequest(userPicture);
-            //}
+            return BadRequest(false);
         }
         #region Ratings
         [HttpGet("{pictureId}/Ratings")]
