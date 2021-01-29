@@ -1,8 +1,11 @@
-﻿using SpaceBook.Models;
+﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using SpaceBook.Models;
 using SpaceBook.Models.ViewModels;
 using SpaceBook.Repository;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
@@ -21,6 +24,7 @@ namespace SpaceBook.Business
         private readonly Mapper _mapper;
         private const string API_KEY = "api_key=71wMNdfgtD6jcpVBtmULKEqxPjbhhXLSit3mQqXu";
         private const string APOD_NASA_API = "https://api.nasa.gov/planetary/apod?";
+        private const string AZURE_BLOB = "DefaultEndpointsProtocol=https;AccountName=spacebookfiles;AccountKey=obDHJ6p5CFX/0H9UdUcQYgMjiiAQAbj5sZ0TwObhtmg9Tr4veXrK8jgkJTj8CPF7KPr6+9qYbUkttyS/WXVtYw==;EndpointSuffix=core.windows.net";
 
         public PictureBusinessLogic(PictureRepository pictureRepository, ApplicationUserRepository userRepository,UserPictureRepository userPictureRepository, RatingRepository ratingRepository,CommentRepository commentRepository, HttpClient httpClient, Mapper mapper)
         {
@@ -132,8 +136,31 @@ namespace SpaceBook.Business
 
 
         #region User Pictures
-        public async Task<bool> CreateUserPicture(UserPictureViewModel pictureVM, string username, string urlImage)
+        public async Task<bool> CreateUserPicture(UserPictureViewModel pictureVM, string username)
         {
+
+            //Check to ensure the file type is there: 
+            if (pictureVM.fileAsBase64.Contains(","))
+            {
+                pictureVM.fileAsBase64 = pictureVM.fileAsBase64.Substring(pictureVM.fileAsBase64.IndexOf(",") + 1);
+            }
+            //Convert to binary array
+            pictureVM.fileAsByteArray = Convert.FromBase64String(pictureVM.fileAsBase64);
+            
+            string fileName = $"{pictureVM.title}_{DateTime.Now.ToString("yyyy-MM-dd_HH-mm")}.{pictureVM.fileExtension}";
+
+            BlobContainerClient blobContainer = new BlobContainerClient(AZURE_BLOB, "images");
+            blobContainer.CreateIfNotExists(PublicAccessType.Blob);
+
+            BlobClient blockBlob = blobContainer.GetBlobClient(fileName);
+            //using (var fileStream = new FileStream())
+            using (Stream stream = new MemoryStream(pictureVM.fileAsByteArray))
+            {
+
+                blockBlob.Upload(stream);
+            }
+            string urlImage = blockBlob.Uri.AbsoluteUri;
+
             var user = await _userRepository.GetUserByUsername(username);
             //Task<ApplicationUser> user = _userRepository.GetUserByUsername(username);
             //user.Wait();
@@ -145,7 +172,7 @@ namespace SpaceBook.Business
                 isUserPicture = true,
                 /* ----- */
                 MediaType = MediaType.image,
-                /* ----- */
+                /* -----    */
                 ImageURL = urlImage,
                 ImageHDURL = urlImage,
                 Date = DateTime.Now.Date,
