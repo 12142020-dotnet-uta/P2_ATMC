@@ -6,11 +6,11 @@
             <label for="txtTitle">Title</label>
             <input type="text" class="form-control" id="txtTitle" placeholder="Title of the picture" [(ngModel)]="pictureToUpload.title">
             <!-- [(ngModel)]="pictureToUpload.txtTitle" -->
-            {{pictureToUpload.title}}
+            <!-- {{pictureToUpload.title}} -->
             <label for="txtDescription">Description</label>
             <textarea class="form-control" id="txtDescription" placeholder="Description of the picture" rows="5" [(ngModel)]="pictureToUpload.description"></textarea>
             <!-- [(ngModel)]="pictureToUpload.txtDescription" -->
-            {{pictureToUpload.description}}
+            <!-- {{pictureToUpload.description}} -->
             <br>
             <div class="custom-file">
                 <input type="file" #file class="custom-file-input " id="Image" (change)='uploadFile(file.files)' > <!--(change)='uploadFile(file.files)'-->

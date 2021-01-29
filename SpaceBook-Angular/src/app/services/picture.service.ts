@@ -22,8 +22,8 @@ export class PictureService {
   }
 
 
-  PostUserPicture(userPicture: UserPictureViewModel ) : Observable<Picture> {
-    return this._http.post<Picture>("url", userPicture);
+  PostUserPicture(userPicture: UserPictureViewModel ) : Observable<any> {
+    return this._http.post<any>("/api/pictures", userPicture);
   }
 }
 

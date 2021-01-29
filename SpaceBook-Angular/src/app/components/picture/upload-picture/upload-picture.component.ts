@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserPictureViewModel } from 'src/app/interfaces/user-picture-view-model';
+import { PictureService } from 'src/app/services/picture.service';
 import { Picture } from "../../../interfaces/picture";
 
 // Maximum file size allowed to be uploaded = 1MB
@@ -22,7 +23,7 @@ export class UploadPictureComponent implements OnInit {
   fileToUpload:File;
   lblImage:string = "Image file";
 
-  constructor() { }
+  constructor( private _pictureService: PictureService ) { }
 
   ngOnInit(): void {
   }
@@ -68,8 +69,19 @@ export class UploadPictureComponent implements OnInit {
       this.pictureToUpload.fileAsBase64 = reader.result.toString();
 
       console.log(this.pictureToUpload);
+
+      // reader.readAsArrayBuffer
       // Send to the API Picture endpoint.
 
+      this._pictureService.PostUserPicture(this.pictureToUpload)
+        .subscribe( result => {
+
+          console.log(result);
+          
+        },
+        error => {
+          console.log("error: ",error);
+        });
       
     };
     

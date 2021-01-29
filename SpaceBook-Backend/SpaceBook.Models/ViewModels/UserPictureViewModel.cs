@@ -8,10 +8,10 @@ namespace SpaceBook.Models.ViewModels
 {
     public class UserPictureViewModel
     {
-        public string username { get; set; }
+        //public string username { get; set; }
         public string title { get; set; }
         public string description { get; set; }
-        public byte[] fileAsBase64 { get; set; }
+        public string fileAsBase64 { get; set; }
 
 
     }

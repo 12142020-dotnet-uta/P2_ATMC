@@ -115,21 +115,25 @@ namespace SpaceBook.Controllers
             var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
             var username = claim.Value;
 
-            var folderName = Path.Combine("Resources", "Images");
-            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
 
+
+            //Save the User Picture
+            string folderName = Path.Combine("Resources", "Images");
+            string pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
             if (userPicture.fileAsBase64.Length > 0)
-
             {
-                var fileName = userPicture.title + "_" + DateTime.Now.ToString("yyyy-MM-dd HH-mm");
-                var fullPath = Path.Combine(pathToSave, fileName);
-                var dbPath = Path.Combine(folderName, fileName);
-                //using (var stream = new FileStream(fullPath, FileMode.Create))
-                //{
-                    System.IO.File.WriteAllBytes(fullPath, userPicture.fileAsBase64);
-                //}
-                return Ok(new { dbPath });
+
+                string fileName = userPicture.title + "_" + DateTime.Now.ToString("yyyy-MM-dd HH-mm"); //Get the format of picture...
+                string fullPath = Path.Combine(pathToSave, fileName);
+                string dbPath = Path.Combine(folderName, fileName);
+                //Convert into base64Encod
+                byte[] plainTextBytes = System.Text.Encoding.UTF8.GetBytes(userPicture.fileAsBase64);
+
+                System.IO.File.WriteAllBytes(fullPath, plainTextBytes);
+                //return Ok(new { dbPath });
             }
+            // Add the Picture to the DB with the UserPicture
+
 
             //Task SavePictureAsync = System.IO.File.WriteAllBytesAsync( Environment.CurrentDirectory, userPicture.fileAsBase64);
 
