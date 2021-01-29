@@ -28,6 +28,7 @@ nav > a:hover {
 }
 .nav-tabs .nav-item.show .nav-link:hover,
 .nav-tabs .nav-link.active:hover {
+  border-color: #794d60 #794d60 #6d4556 #794d60;
   color: black;
 }
 .nav-tabs .nav-item.show .nav-link,
