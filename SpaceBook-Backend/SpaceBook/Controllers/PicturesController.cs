@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SpaceBook.Controllers
@@ -115,22 +116,32 @@ namespace SpaceBook.Controllers
             var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
             var username = claim.Value;
 
-
+            //Check to ensure the file type is there: 
+            if (userPicture.fileAsBase64.Contains(","))
+            {
+                userPicture.fileAsBase64 = userPicture.fileAsBase64.Substring(userPicture.fileAsBase64.IndexOf(",") + 1);
+            }
+            //Convert to binary array
+            userPicture.fileAsByteArray = Convert.FromBase64String(userPicture.fileAsBase64);
 
             //Save the User Picture
             string folderName = Path.Combine("Resources", "Images");
             string pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
             if (userPicture.fileAsBase64.Length > 0)
             {
-
-                string fileName = userPicture.title + "_" + DateTime.Now.ToString("yyyy-MM-dd HH-mm"); //Get the format of picture...
+                string fileName = $"{userPicture.title}_{DateTime.Now.ToString("yyyy-MM-dd_HH-mm")}.{userPicture.fileExtension}"; //Get the format of picture...
                 string fullPath = Path.Combine(pathToSave, fileName);
                 string dbPath = Path.Combine(folderName, fileName);
-                //Convert into base64Encod
-                byte[] plainTextBytes = System.Text.Encoding.UTF8.GetBytes(userPicture.fileAsBase64);
+                using (var fs = new FileStream(fullPath, FileMode.CreateNew))
+                {
+                    fs.Write(userPicture.fileAsByteArray, 0, userPicture.fileAsByteArray.Length);
+                }
 
-                System.IO.File.WriteAllBytes(fullPath, plainTextBytes);
-                //return Ok(new { dbPath });
+                //Save picture into the DB.
+                await _pictureBusinessLogic.CreateUserPicture(userPicture, username, dbPath);
+
+
+                //return something
             }
             // Add the Picture to the DB with the UserPicture
 

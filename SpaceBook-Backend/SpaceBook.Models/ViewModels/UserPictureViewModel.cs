@@ -12,7 +12,10 @@ namespace SpaceBook.Models.ViewModels
         public string title { get; set; }
         public string description { get; set; }
         public string fileAsBase64 { get; set; }
+        public string fileExtension { get; set; }
+        public byte[] fileAsByteArray { get; set; }
 
+        
 
     }
 }
