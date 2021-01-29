@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
 import { User } from '../../../interfaces/user'
 import { UserProfileService } from '../../../services/user-profile.service'
-import { Subscription } from 'rxjs';
 import { Picture } from 'src/app/interfaces/picture';
+
 
 @Component({
   selector: 'app-my-profile',
@@ -47,5 +46,13 @@ export class MyProfileComponent implements OnInit {
   getFavorites(id: string){
     return this._userProfileService.getFavorites(id).toPromise();
   }
-  
+
+  // openEditUser(){
+  //   this.dialog.open(EditUserDialog, {
+  //     data: {
+  //       animal: 'panda'
+  //     }
+  //   });
+  // }
+
 }

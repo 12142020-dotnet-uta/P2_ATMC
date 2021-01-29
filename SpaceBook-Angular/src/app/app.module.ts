@@ -70,7 +70,7 @@ import { FavoritesComponent } from './components/user/favorites/favorites.compon
     PictureCommentComponent,
     PictureSubCommentComponent,
     MyProfileComponent,
-    FavoritesComponent
+    FavoritesComponent,
 
   ],
   imports: [
