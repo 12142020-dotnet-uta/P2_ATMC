@@ -4,7 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { User } from '../../../interfaces/user'
 import { UserProfileService } from '../../../services/user-profile.service'
 import { Picture } from 'src/app/interfaces/picture';
-
+import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.component';
+import { DialogUserEdit } from '../../../interfaces/dialog-user-edit';
 
 @Component({
   selector: 'app-my-profile',
@@ -20,7 +23,8 @@ export class MyProfileComponent implements OnInit {
 
   public favorites: Picture[] = new Array<Picture>();
   
-  constructor(private _userProfileService: UserProfileService, private route: ActivatedRoute) { 
+  editUser: DialogUserEdit;
+  constructor(private _userProfileService: UserProfileService, private route: ActivatedRoute, private dialog: MatDialog) {
   }
 
   async ngOnInit(){
@@ -55,4 +59,40 @@ export class MyProfileComponent implements OnInit {
   //   });
   // }
 
+  openDialog() : void{
+    const dialogRef = this.dialog.open(EditUserDialogComponent, {
+      width: '500px',
+      data: {
+        firstName: this.user.firstName, 
+        lastName: this.user.lastName, 
+        id: this.user.id, 
+        email: this.user.email,
+        oldPassword: '',
+        newPassword: '',
+      },
+      restoreFocus:false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+      this.editUser = result;
+      
+      //Edit the user:
+      this._userProfileService.putUser(this.editUser).subscribe( result =>{
+        
+        if(result)
+        {
+          alert("User updaded!");
+          this.getUser()
+        }
+        else{
+          alert("Invalid information.");
+        }
+
+      } )
+      
+    });
+  }
+  
 }

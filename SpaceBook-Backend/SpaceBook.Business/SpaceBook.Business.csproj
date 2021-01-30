@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SpaceBook.Models\SpaceBook.Models.csproj" />
     <ProjectReference Include="..\SpaceBook.Repository\SpaceBook.Repository.csproj" />
   </ItemGroup>

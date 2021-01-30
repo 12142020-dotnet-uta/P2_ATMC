@@ -4,6 +4,10 @@ import { Observable } from 'rxjs';
 import { PagedResponse } from '../interfaces/paged-response';
 import { Picture } from '../interfaces/picture';
 
+import { UserPictureViewModel } from "../interfaces/user-picture-view-model";
+
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,4 +22,11 @@ export class PictureService {
     console.log('sending a request for picture '+pictureId)
     return this._http.get<any>('/api/pictures/'+pictureId);
   }
+
+
+  PostUserPicture(userPicture: UserPictureViewModel ) : Observable<boolean> {
+    return this._http.post<boolean>("/api/pictures", userPicture);
+  }
 }
+
+

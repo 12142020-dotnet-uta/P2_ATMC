@@ -49,10 +49,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
+import { MatDialogModule } from "@angular/material/dialog";
 import { BearerAuthInterceptor } from './services/bearer-auth.interceptor';
 import { MyProfileComponent } from './components/user/my-profile/my-profile.component';
 import { FavoritesComponent } from './components/user/favorites/favorites.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import { EditUserDialogComponent } from './components/user/my-profile/edit-user-dialog/edit-user-dialog.component';
 
 
 @NgModule({
@@ -72,6 +73,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     PictureSubCommentComponent,
     MyProfileComponent,
     FavoritesComponent,
+    EditUserDialogComponent
 
   ],
   imports: [

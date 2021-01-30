@@ -6,9 +6,10 @@ using SpaceBook.Controllers.Pagination;
 using SpaceBook.Controllers.Services;
 using SpaceBook.Controllers.Wrappers;
 using SpaceBook.Models;
-using System;
+using SpaceBook.Models.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -107,7 +108,7 @@ namespace SpaceBook.Controllers
         [Authorize]
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> CreatePicture([FromBody] Picture userPicture)
+        public async Task<IActionResult> CreatePicture([FromBody] UserPictureViewModel userPicture)
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             //make sure user is logged in
@@ -115,14 +116,15 @@ namespace SpaceBook.Controllers
             //get logged in user
             var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
             var username = claim.Value;
-            if (await _pictureBusinessLogic.CreateUserPicture(userPicture,username))
-            {
-                return Accepted(userPicture);
-            }
+
+
+            bool result = await _pictureBusinessLogic.CreateUserPicture(userPicture, username);
+
+            if(result)
+                return Accepted(result);
             else
-            {
-                return BadRequest(userPicture);
-            }
+                return BadRequest(result);
+
         }
         #region Ratings
         [HttpGet("{pictureId}/Ratings")]
