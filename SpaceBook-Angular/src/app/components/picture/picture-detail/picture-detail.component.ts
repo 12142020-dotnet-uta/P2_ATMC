@@ -14,7 +14,7 @@ export class PictureDetailComponent implements OnInit {
 
   currentRate:number = 0;
 
-  constructor(private pictureService:PictureService, private route:ActivatedRoute) { }
+  constructor(private _pictureService:PictureService, private route:ActivatedRoute) { }
   ngOnInit(): void {
     this.route.params.subscribe( params =>
       {
@@ -23,6 +23,6 @@ export class PictureDetailComponent implements OnInit {
       });
   }
   getPicture(picId:number):void{
-    this.pictureService.getPictureDetails(picId).subscribe(x=>{this.picture = x;console.log('returned picture with id: ',x)});
+    this._pictureService.getPictureDetails(picId).subscribe(x=>{this.picture = x;console.log('returned picture with id: ',x)});
   }
 }
