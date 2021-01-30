@@ -9,7 +9,7 @@
         <p>Email: <span class="userinfo">{{user.email}}</span> </p>
 
         
-        <button class="btn btn-secondary" (click)="openDialog()">Message Me</button>   
+        <button class="btn btn-secondary" (click)="openMessageDialog()">Message Me</button>   
         <ng-template [ngIf]="!followerUserNames.includes(loggedIn.userName)">
             <button class="btn btn-primary"(click)="postFollow(user.id, loggedIn.id)">Follow</button>
         </ng-template>
@@ -22,7 +22,7 @@
         <div class="row container ">
             <div class="col-6 container">
                 <table class="table table-striped table-dark rounded" style="width: 100%;">
-                    <thead>
+                    <thead (click)="openFollowerDialog()">
                         <tr class="text-center">
                             <th>
                                Followers: {{followers.length}}
@@ -38,7 +38,7 @@
             </div>
             <div class="col-6 container">
                 <table class="table table-striped table-dark rounded" style="width: 100%;">
-                    <thead>
+                    <thead (click)="openFollowingDialog()" >
                         <tr class="text-center">
                             <th>
                                 Following: {{following.length}}

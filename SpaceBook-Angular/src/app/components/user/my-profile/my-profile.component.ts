@@ -7,6 +7,8 @@ import { Subscription } from 'rxjs';
 import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.component';
 import { DialogUserEdit } from '../../../interfaces/dialog-user-edit';
 import { MatDialog } from '@angular/material/dialog';
+import { FollowingDialogComponent } from '../following-dialog/following-dialog.component';
+import { FollowersDialogComponent } from '../followers-dialog/followers-dialog.component';
 
 @Component({
   selector: 'app-my-profile',
@@ -94,6 +96,28 @@ export class MyProfileComponent implements OnInit {
 
         } )
       
+    });
+  }
+
+  openFollowingDialog() : void{
+    const dialogRef = this.dialog.open(FollowingDialogComponent, {
+      width: '500px',
+      data: {
+        user: this.user,
+        following: this.followed
+      },
+      restoreFocus:false
+    });
+  }
+
+  openFollowerDialog() : void{
+    const dialogRef = this.dialog.open(FollowersDialogComponent, {
+      width: '500px',
+      data: {
+        user: this.user,
+        followers: this.followers
+      },
+      restoreFocus:false
     });
   }
   

@@ -11,6 +11,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MessageUserDialogComponent } from './message-user-dialog/message-user-dialog.component';
 import { DialogMessageUser } from 'src/app/interfaces/dialog-message-user';
 import { MessageService } from 'src/app/services/message.service';
+import { FollowingDialogComponent } from '../following-dialog/following-dialog.component';
+import { FollowersDialogComponent } from '../followers-dialog/followers-dialog.component';
 
 @Component({
   selector: 'app-profile',
@@ -75,7 +77,7 @@ export class ProfileComponent implements OnInit {
     this._userProfileService.getFavorites(id).subscribe(favorites => this.favorites = favorites);
   }
 
-  openDialog() : void{
+  openMessageDialog() : void{
     const dialogRef = this.dialog.open(MessageUserDialogComponent, {
       width: '500px',
       data: {
@@ -105,6 +107,27 @@ export class ProfileComponent implements OnInit {
 
       } )
       
+    });
+  }
+  openFollowingDialog() : void{
+    const dialogRef = this.dialog.open(FollowingDialogComponent, {
+      width: '500px',
+      data: {
+        user: this.user,
+        following: this.following
+      },
+      restoreFocus:false
+    });
+  }
+
+  openFollowerDialog() : void{
+    const dialogRef = this.dialog.open(FollowersDialogComponent, {
+      width: '500px',
+      data: {
+        user: this.user,
+        followers: this.followers
+      },
+      restoreFocus:false
     });
   }
     
