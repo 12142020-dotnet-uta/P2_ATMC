@@ -88,7 +88,7 @@ export class LogInComponent implements OnInit {
           this._userAuthService.setSession(userAutenticated);
 
           console.log(localStorage.getItem('id_token'));
-          this.router.navigate(['']).then(() => {
+          this.router.navigateByUrl('').then(() => {
             window.location.reload()});
 
         } )
