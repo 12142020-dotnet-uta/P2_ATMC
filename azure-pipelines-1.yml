@@ -14,9 +14,6 @@ variables:
   angularFolder: './SpaceBook-Angular'
 
 steps:
-
-
-
 - task: NodeTool@0
   inputs:
     versionSpec: '10.x'
@@ -54,12 +51,14 @@ steps:
 #     verbose: true
 #     publishRegistry: 'useFeed'
 #     publishFeed: '0afcca8a-a29e-463f-b238-27cf1b8b59db'
+
 - task: Npm@1
   displayName: 'NPM Install Angular CLI'
   inputs:
     command: 'custom'
     workingDir: '$(angularFolder)/'
     customCommand: 'install -g @angular/cli@latest'
+
 - task: Npm@1
   inputs:
     command: 'custom'
@@ -73,22 +72,16 @@ steps:
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
-- task: ArchiveFiles@2
 
-  inputs:
-    rootFolderOrFile: '$(angularFolder)/dist/SpaceBook-Angular/'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-    verbose: true
-# - task: AzureRmWebAppDeployment@4
+# - task: ArchiveFiles@2
 #   inputs:
-#     ConnectionType: 'AzureRM'
-#     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
-#     appType: 'webApp'
-#     WebAppName: 'space-book'
-#     packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+#     rootFolderOrFile: '$(angularFolder)/dist/SpaceBook-Angular/'
+#     includeRootFolder: false
+#     archiveType: 'zip'
+#     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+#     replaceExistingArchive: true
+#     verbose: true
+
 # - task: AzureRmWebAppDeployment@4
 #   inputs:
 #     ConnectionType: 'AzureRM'
@@ -119,9 +112,15 @@ steps:
     deployToSlotOrASE: true
     ResourceGroupName: 'ATMC'
     SlotName: 'production'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     # AppSettings: '-WEBSITE_TIME_ZONE "Eastern Standard Time"'
-
+# - task: AzureRmWebAppDeployment@4
+#   inputs:
+#     ConnectionType: 'AzureRM'
+#     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
+#     appType: 'webApp'
+#     WebAppName: 'space-book'
+#     packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
 - task: AzureAppServiceManage@0
   inputs:
     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
