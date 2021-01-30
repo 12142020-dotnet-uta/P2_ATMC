@@ -9,7 +9,7 @@
         <p>Email: <span class="userinfo">{{user.email}}</span> </p>
 
         
-        <button class="btn btn-secondary">Message Me</button>   
+        <button class="btn btn-secondary" (click)="openDialog()">Message Me</button>   
         <ng-template [ngIf]="!followerUserNames.includes(loggedIn.userName)">
             <button class="btn btn-primary"(click)="postFollow(user.id, loggedIn.id)">Follow</button>
         </ng-template>

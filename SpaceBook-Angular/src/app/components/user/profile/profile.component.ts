@@ -7,6 +7,10 @@ import { Follow } from '../../../interfaces/follow'
 import { Picture } from '../../../interfaces/picture'
 import { UserProfileService } from '../../../services/user-profile.service'
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageUserDialogComponent } from './message-user-dialog/message-user-dialog.component';
+import { DialogMessageUser } from 'src/app/interfaces/dialog-message-user';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-profile',
@@ -25,8 +29,7 @@ export class ProfileComponent implements OnInit {
 
   favorites: Picture[] = new Array<Picture>();
   username:string;
-
-  constructor(private _userProfileService: UserProfileService, private router: Router, private route: ActivatedRoute) { 
+  constructor(private _userProfileService: UserProfileService, private _messageService: MessageService, private router: Router, private route: ActivatedRoute, private dialog: MatDialog) { 
     
   }
 
@@ -70,6 +73,38 @@ export class ProfileComponent implements OnInit {
 
   getFavorites(id: string): void{
     this._userProfileService.getFavorites(id).subscribe(favorites => this.favorites = favorites);
+  }
+
+  openDialog() : void{
+    const dialogRef = this.dialog.open(MessageUserDialogComponent, {
+      width: '500px',
+      data: {
+        text: '',
+        recipient: this.user
+      },
+      restoreFocus:false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+      var messagebody = result.text;
+      console.log(messagebody);
+      //Edit the user:
+      this._messageService.postMessageToUser(this.user.id, result.text).subscribe( result =>{
+        
+        if(result)
+        {
+          alert("Message sent!");
+          this.getLoggedIn();
+        }
+        else{
+          alert("Invalid information.");
+        }
+
+      } )
+      
+    });
   }
     
       

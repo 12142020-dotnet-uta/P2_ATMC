@@ -54,6 +54,7 @@ import { BearerAuthInterceptor } from './services/bearer-auth.interceptor';
 import { MyProfileComponent } from './components/user/my-profile/my-profile.component';
 import { FavoritesComponent } from './components/user/favorites/favorites.component';
 import { EditUserDialogComponent } from './components/user/my-profile/edit-user-dialog/edit-user-dialog.component';
+import { MessageUserDialogComponent } from './components/user/profile/message-user-dialog/message-user-dialog.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { EditUserDialogComponent } from './components/user/my-profile/edit-user-
     PictureSubCommentComponent,
     MyProfileComponent,
     FavoritesComponent,
-    EditUserDialogComponent
+    EditUserDialogComponent,
+    MessageUserDialogComponent
 
   ],
   imports: [
