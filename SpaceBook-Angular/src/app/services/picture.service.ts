@@ -19,11 +19,12 @@ export class PictureService {
   constructor(private _http:HttpClient) { }
 
   getPictures(page:number,pageSize:number):Observable<PagedResponse>{
-    return this._http.get<PagedResponse>('https://atmcspacebook.azurewebsites.net/api/pictures?pageNumber='+page+'&pageSize='+pageSize);
+    // return this._http.get<PagedResponse>('api/pictures?pageNumber='+page+'&pageSize='+pageSize);
+    return this._http.get<PagedResponse>(this.baseURL + '?pageNumber='+page+'&pageSize='+pageSize);
   }
   getPictureDetails(pictureId:number):Observable<Picture>{
     console.log('sending a request for picture '+pictureId)
-    return this._http.get<Picture>(this.baseURL+pictureId);
+    return this._http.get<Picture>( this.baseURL +`/${pictureId}`);
   }
 
 
@@ -32,21 +33,21 @@ export class PictureService {
   }
 
   getPictureGeneralRating(pictureid: number):Observable<number>{
-    return this._http.get<number>(`api/pictures/${pictureid}/Ratings`);
+    return this._http.get<number>(this.baseURL +`/${pictureid}/Ratings`);
   }
 
   getPictureUserRating(pictureid:number):Observable<number>{
-    return this._http.get<number>(`api/pictures/${pictureid}/Ratings/User`)
+    return this._http.get<number>(this.baseURL + `/${pictureid}/Ratings/User`)
   }
 
   postPictureUserRating(pictureId: number, rating:number): Observable<number>
   {
-    return this._http.post<number>(`api/pictures/${pictureId}/Ratings`, rating);
+    return this._http.post<number>(this.baseURL + `/${pictureId}/Ratings`, rating);
   }
 
   putPictureUserRating(pictureId:number, rating:number): Observable<number>
   {
-    return this._http.put<number>(`api/pictures/${pictureId}/Ratings`,rating);
+    return this._http.put<number>(this.baseURL + `/${pictureId}/Ratings`,rating);
   }
 
 }

@@ -17,7 +17,6 @@ import { PictureDetailComponent } from "./components/picture/picture-detail/pict
 import { UploadPictureComponent } from "./components/picture/upload-picture/upload-picture.component";
 import { LogInComponent } from './components/user/log-in/log-in.component';
 import { PictureComponent } from './components/picture/picture.component';
-import { FollowingComponent } from './components/user/following/following.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { PictureCommentComponent } from './components/picture/picture-comment/picture-comment.component';
 import { PictureSubCommentComponent } from './components/picture/picture-comment/picture-sub-comment/picture-sub-comment.component';
@@ -55,6 +54,8 @@ import { MyProfileComponent } from './components/user/my-profile/my-profile.comp
 import { FavoritesComponent } from './components/user/favorites/favorites.component';
 import { EditUserDialogComponent } from './components/user/my-profile/edit-user-dialog/edit-user-dialog.component';
 import { MessageUserDialogComponent } from './components/user/profile/message-user-dialog/message-user-dialog.component';
+import { FollowersDialogComponent } from './components/user/followers-dialog/followers-dialog.component';
+import { FollowingDialogComponent } from './components/user/following-dialog/following-dialog.component';
 
 
 @NgModule({
@@ -68,14 +69,15 @@ import { MessageUserDialogComponent } from './components/user/profile/message-us
     DirectMessagingComponent,
     LogInComponent,
     PictureComponent,
-    FollowingComponent,
     ProfileComponent,
     PictureCommentComponent,
     PictureSubCommentComponent,
     MyProfileComponent,
     FavoritesComponent,
     EditUserDialogComponent,
-    MessageUserDialogComponent
+    MessageUserDialogComponent,
+    FollowersDialogComponent,
+    FollowingDialogComponent,
 
   ],
   imports: [

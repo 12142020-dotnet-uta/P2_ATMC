@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>{{data.user.userName}} Following: {{data.following.length}}</h1>
+<div mat-dialog-content>
+    <table class="table table-striped table-dark rounded" style="width: 100%;">
+        <tbody>
+            <tr *ngFor="let followed of data.following">
+                <td><a  [routerLink]="['../user', followed.userName]">{{followed.userName}}</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()" class="btn btn-secondary">Return</button>
+</div>
