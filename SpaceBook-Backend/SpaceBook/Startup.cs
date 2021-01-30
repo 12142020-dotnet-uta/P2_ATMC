@@ -56,7 +56,7 @@ namespace SpaceBook
                         builder.WithOrigins("http://localhost:4200")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
-                        builder.WithOrigins("https://space-book.azurewebsites.net/")
+                        builder.WithOrigins("https://space-book.azurewebsites.net")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                     });
