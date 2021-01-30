@@ -15,11 +15,7 @@ variables:
 
 steps:
 
-# - task: AzureAppServiceManage@0
-#   inputs:
-#     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
-#     Action: 'Stop Azure App Service'
-#     WebAppName: 'space-book'
+
 
 - task: NodeTool@0
   inputs:
@@ -70,13 +66,13 @@ steps:
     workingDir: '$(angularFolder)/'
     customCommand: 'run ng build --prod'
 
-# - task: ArchiveFiles@2
-#   inputs:
-#     rootFolderOrFile: '$(angularFolder)/dist/SpaceBook-Angular/'
-#     includeRootFolder: true
-#     archiveType: 'zip'
-#     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-#     replaceExistingArchive: true
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(angularFolder)/dist/SpaceBook-Angular/'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
 - task: ArchiveFiles@2
 
   inputs:
@@ -108,11 +104,12 @@ steps:
 #     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
 #     Action: 'Restart Azure App Service'
 #     WebAppName: 'space-book'
-# - task: AzureAppServiceManage@0
-#   inputs:
-#     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
-#     Action: 'Start Azure App Service'
-#     WebAppName: 'space-book'
+- task: AzureAppServiceManage@0
+  inputs:
+    azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
+    Action: 'Stop Azure App Service'
+    WebAppName: 'space-book'
+
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
@@ -124,3 +121,9 @@ steps:
     SlotName: 'production'
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
     # AppSettings: '-WEBSITE_TIME_ZONE "Eastern Standard Time"'
+
+- task: AzureAppServiceManage@0
+  inputs:
+    azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
+    Action: 'Start Azure App Service'
+    WebAppName: 'space-book'
