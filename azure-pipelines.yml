@@ -70,58 +70,58 @@ steps:
 
 # front-end
 
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+# - task: NodeTool@0
+#   inputs:
+#     versionSpec: '10.x'
+#   displayName: 'Install Node.js'
 
-- task: Npm@1
-  displayName: 'NPM Install'
-  inputs:
-    command: 'install'
-    workingDir: '$(angularFolder)/'
+# - task: Npm@1
+#   displayName: 'NPM Install'
+#   inputs:
+#     command: 'install'
+#     workingDir: '$(angularFolder)/'
 
-- task: Npm@1
-  displayName: 'NPM Install Angular CLI'
-  inputs:
-    command: 'custom'
-    workingDir: '$(angularFolder)/'
-    customCommand: 'install -g @angular/cli@latest'
+# - task: Npm@1
+#   displayName: 'NPM Install Angular CLI'
+#   inputs:
+#     command: 'custom'
+#     workingDir: '$(angularFolder)/'
+#     customCommand: 'install -g @angular/cli@latest'
 
-- task: Npm@1
-  inputs:
-    command: 'custom'
-    workingDir: '$(angularFolder)/'
-    customCommand: 'run ng build --prod'
+# - task: Npm@1
+#   inputs:
+#     command: 'custom'
+#     workingDir: '$(angularFolder)/'
+#     customCommand: 'run ng build --prod'
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(angularFolder)/dist/SpaceBook-Angular/'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+# - task: ArchiveFiles@2
+#   inputs:
+#     rootFolderOrFile: '$(angularFolder)/dist/SpaceBook-Angular/'
+#     includeRootFolder: true
+#     archiveType: 'zip'
+#     archiveFile: '$(Build.ArtifactStagingDirectory)/frontend.zip'
+#     replaceExistingArchive: true
 
-- task: AzureAppServiceManage@0
-  inputs:
-    azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
-    Action: 'Stop Azure App Service'
-    WebAppName: 'ATMCSpaceBook'
+# - task: AzureAppServiceManage@0
+#   inputs:
+#     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
+#     Action: 'Stop Azure App Service'
+#     WebAppName: 'ATMCSpaceBook'
 
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
-    appType: 'webApp'
-    WebAppName: 'ATMCSpaceBook'
-    ResourceGroupName: 'ATMC'
-    packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+# - task: AzureRmWebAppDeployment@4
+#   inputs:
+#     ConnectionType: 'AzureRM'
+#     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
+#     appType: 'webApp'
+#     WebAppName: 'ATMCSpaceBook'
+#     ResourceGroupName: 'ATMC'
+#     packageForLinux: '$(Build.ArtifactStagingDirectory)/frontend.zip'
 
-- task: AzureAppServiceManage@0
-  inputs:
-    azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
-    Action: 'Start Azure App Service'
-    WebAppName: 'ATMCSpaceBook'
+# - task: AzureAppServiceManage@0
+#   inputs:
+#     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
+#     Action: 'Start Azure App Service'
+#     WebAppName: 'ATMCSpaceBook'
 
 
 
