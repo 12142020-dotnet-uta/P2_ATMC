@@ -52,6 +52,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatDialogModule } from "@angular/material/dialog";
 import { BearerAuthInterceptor } from './services/bearer-auth.interceptor';
 import { MyProfileComponent } from './components/user/my-profile/my-profile.component';
+import { FavoritesComponent } from './components/user/favorites/favorites.component';
 import { EditUserDialogComponent } from './components/user/my-profile/edit-user-dialog/edit-user-dialog.component';
 
 
@@ -60,7 +61,7 @@ import { EditUserDialogComponent } from './components/user/my-profile/edit-user-
     AppComponent,
     GalleryComponent,
     DashboardComponent,
-
+    HeroImageComponent,
     UploadPictureComponent,
     PictureDetailComponent,
     DirectMessagingComponent,
@@ -71,6 +72,7 @@ import { EditUserDialogComponent } from './components/user/my-profile/edit-user-
     PictureCommentComponent,
     PictureSubCommentComponent,
     MyProfileComponent,
+    FavoritesComponent,
     EditUserDialogComponent
 
   ],

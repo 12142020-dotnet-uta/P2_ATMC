@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
 import { User } from '../../../interfaces/user'
 import { UserProfileService } from '../../../services/user-profile.service'
+import { Picture } from 'src/app/interfaces/picture';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.component';
@@ -16,20 +16,48 @@ import { DialogUserEdit } from '../../../interfaces/dialog-user-edit';
 })
 export class MyProfileComponent implements OnInit {
   user: User;
+  public followers: User[] = new Array<User>();
+
+  public followerUserNames: string[];
+  public followed: User[] = new Array<User>();
+
+  public favorites: Picture[] = new Array<Picture>();
+  
   editUser: DialogUserEdit;
-  constructor(private _userProfileService: UserProfileService, private route: ActivatedRoute, private dialog: MatDialog) { 
+  constructor(private _userProfileService: UserProfileService, private route: ActivatedRoute, private dialog: MatDialog) {
   }
 
-  ngOnInit(): void {
-    this.getUser();
+  async ngOnInit(){
+   this.user = await this.getLoggedIn();
+   this.followers = await this.getFollowers(this.user.id);
+   this.followed = await this.getFollowed(this.user.id);
+   this.favorites = await this.getFavorites(this.user.id);
   }
   
-  getUser(): void {
-    const username: string = this.route.snapshot.paramMap.get('username');
-
-    this._userProfileService.getUser(username)
-      .subscribe(user => this.user = user);
+  getLoggedIn(){
+    return this._userProfileService.getLoggedIn().toPromise();
   }
+
+
+  getFollowers(id: string){
+    return this._userProfileService.getFollowers(id).toPromise();
+  }
+
+  getFollowed(id: string){
+    return this._userProfileService.getFollowed(id).toPromise();
+  }
+
+  getFavorites(id: string){
+    return this._userProfileService.getFavorites(id).toPromise();
+  }
+
+  // openEditUser(){
+  //   this.dialog.open(EditUserDialog, {
+  //     data: {
+  //       animal: 'panda'
+  //     }
+  //   });
+  // }
 
   openDialog() : void{
     const dialogRef = this.dialog.open(EditUserDialogComponent, {

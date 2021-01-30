@@ -3,13 +3,33 @@
 }
 
 /**/
-.nav-item2 {
+/* .nav-item2 {
   margin-bottom: -4px;
-}
+} */
 .icon {
   display: inline-flex;
   vertical-align: middle;
   color: #794d60;
+}
+ul li .nav-item:hover .icon {
+  color: #553643;
+}
+nav > a:hover {
+  color: #553643;
+  border-color: #0c080a #0c080a #6d4556 #0c080a;
+}
+
+/* #myNavBarItems ul {
+  bottom: 0;
+} */
+.nav-tabs .nav-item.show .nav-link:hover,
+.nav-tabs .nav-link.active:hover > .icon {
+  color: black;
+}
+.nav-tabs .nav-item.show .nav-link:hover,
+.nav-tabs .nav-link.active:hover {
+  border-color: #794d60 #794d60 #6d4556 #794d60;
+  color: black;
 }
 .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active > .icon {
@@ -24,23 +44,24 @@ ul li a {
   color: #794d60;
 }
 
-ul li a:hover {
-  color: #794d60;
-}
-
 .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active {
   color: #180f13;
   background-color: #6d4556;
-  border-color: #794d60 #6d4556 #794d60;
+  border-color: #794d60 #794d60 #6d4556 #794d60;
+  border-width: thin thin 2px thin;
+  margin-bottom: -2px;
 }
 
 .nav-tabs {
   border-bottom: 1px solid #794d60;
 }
 
-.nav-tabs:hover {
-  border-color: #794d60;
+ul li .nav-item:hover {
+  color: #553643;
+  border-color: #0c080a #0c080a #6d4556 #0c080a;
+  border-width: thin thin 2px thin;
+  margin-bottom: -2px;
 }
 
 .container {

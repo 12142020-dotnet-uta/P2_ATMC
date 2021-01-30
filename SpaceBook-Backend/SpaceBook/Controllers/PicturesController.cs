@@ -54,8 +54,9 @@ namespace SpaceBook.Controllers
             Picture picture = await _pictureBusinessLogic.GetPicture(pictureId);
             if (picture != null)
             {
-                return Ok(new Response<Picture>(picture));
-            } 
+                //return Ok(new Response<Picture>(picture));
+                return Ok(picture);
+            }
             else
             {
                 return NotFound();
@@ -93,9 +94,12 @@ namespace SpaceBook.Controllers
                 * validFilter.PageSize)
                 .Take((validFilter.PageSize))
                 .ToList();
-            var pictures = await _pictureBusinessLogic.GetAllPictures();
-            if (pictures == null) { return NotFound(); }
-            return Ok(new PagedResponse<List<Picture>>(pagedData, validFilter.PageNumber, validFilter.PageSize));
+            var pictures = (await _pictureBusinessLogic.GetAllPictures()).Count() ;
+            if (pagedData == null) { return NotFound(); }
+
+            var response = Helpers.PaginationHelper.CreatePagedResponse(pagedData, validFilter, pictures, _uriService, route);
+
+            return Ok(response);
         }
 
   

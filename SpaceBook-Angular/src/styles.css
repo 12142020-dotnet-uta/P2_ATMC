@@ -45,8 +45,35 @@ body {
   height: 100%;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+th,
+nav {
+  font-family: "Bebas Neue", cursive;
+}
+
 html,
 body {
   height: 100%;
+}
+
+.page-link {
+  background-color: #0c080a;
+  border-color: black;
+  color: #794d60;
+}
+nav ul.pagination li.page-item.disabled a.page-link {
+  background-color: #794d60;
+  color: #0c080a;
+  border-color: black;
+}
+.page-link:hover {
+  background-color: #553643;
+  color: #0c080a;
+  border-color: black;
 }
 /* body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */

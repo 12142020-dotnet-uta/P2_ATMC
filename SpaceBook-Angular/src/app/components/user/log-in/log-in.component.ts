@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserLogIn } from "../../../interfaces/user-log-in";
 import { UserRegister } from "../../../interfaces/user-register";
 import { UserAuthService } from "../../../services/user-auth.service";
+import { Router } from "@angular/router"
 
 
 @Component({
@@ -13,7 +14,7 @@ import { UserAuthService } from "../../../services/user-auth.service";
 export class LogInComponent implements OnInit {
   public userRegister: UserRegister = new UserRegister();
   public userLogin: UserLogIn = new UserLogIn();
-  constructor( private _userAuthService: UserAuthService ) { }
+  constructor( private _userAuthService: UserAuthService, private router: Router ) { }
 
   ngOnInit(): void {
 
@@ -58,6 +59,8 @@ export class LogInComponent implements OnInit {
     //   email: EMAIL,
     //   password : PASSWORD,
     // }
+    this.router.navigateByUrl('/authentication').then(() => {
+      window.location.reload()});
     this._userAuthService.postRegisterAutentication(this.userRegister).subscribe();
     console.log( this.userRegister );
     
@@ -77,14 +80,16 @@ export class LogInComponent implements OnInit {
     // }
 
     console.log( this.userLogin );
-
+    
     let result :any = this._userAuthService.postLoginAutentication(this.userLogin)
         .subscribe( ( userAutenticated ) => {
           console.log(userAutenticated);
 
           this._userAuthService.setSession(userAutenticated);
 
-          console.log(localStorage.getItem('id_token'))
+          console.log(localStorage.getItem('id_token'));
+          this.router.navigate(['']).then(() => {
+            window.location.reload()});
 
         } )
   }

@@ -9,7 +9,7 @@ import { PictureService } from 'src/app/services/picture.service';
   styleUrls: ['./picture-detail.component.css']
 })
 export class PictureDetailComponent implements OnInit {
-  picture:Picture
+  picture:Picture;
 
 
   currentRate:number = 0;
@@ -19,9 +19,10 @@ export class PictureDetailComponent implements OnInit {
     this.route.params.subscribe( params =>
       {
          this.getPicture(params["id"]);
+         console.log('got '+params["id"]+' from the uri')
       });
   }
-  getPicture(picId):void{
-    this.pictureService.getPictureDetails(picId).subscribe(x=>this.picture = x);
+  getPicture(picId:number):void{
+    this.pictureService.getPictureDetails(picId).subscribe(x=>{this.picture = x;console.log('returned picture with id: ',x)});
   }
 }

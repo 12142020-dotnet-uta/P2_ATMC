@@ -2,7 +2,7 @@
 <!-- navbar-->
 <nav ngbNav #nav="ngbNav" class="nav-tabs navbar-expand-lg navbar-light ">
   <ng-container ngbNavItem>
-    <a class="myTitle" ngbNavLink routerLink='/dashboard'> 
+    <a class="myTitle link" ngbNavLink routerLink='/dashboard'> 
       <b>
         <i class="fas fa-space-shuttle"></i>&nbsp;{{title}}
       </b>
@@ -20,34 +20,35 @@
      [attr.aria-expanded]="!isCollapsed">
     <span class="icon material-icons">menu</span>
   </button>
-  <!-- container for the collapsing routes -->
-    <div class="collapse navbar-collapse text-center" id='myNavBarItems' [ngbCollapse]="isCollapsed">
-      <ul class="nav navbar-nav">
-        <li>
-          <ng-container ngbNavItem class="nav-item nav-item2">
-            <a ngbNavLink routerLink='/user/'>Profile &nbsp;&nbsp;<span class="icon material-icons">account_circle</span></a>
-          </ng-container>
-        </li>
-        <li>
-          <ng-container ngbNavItem class="nav-item nav-item2">
-            <a ngbNavLink routerLink='/picture/upload'>Create Post &nbsp;&nbsp;<span class="icon material-icons">add_a_photo</span></a>
-          </ng-container>
-        </li>
-        <li>
-          <ng-container ngbNavItem class="nav-item nav-item2">
-            <a ngbNavLink routerLink='/messaging'>Messages &nbsp;&nbsp;<span class="icon material-icons">chat</span></a>
-          </ng-container>
-        </li>
-      </ul>
-      <ul class="nav navbar-nav ml-auto">
-        <li>
-          <ng-container ngbNavItem class="nav-item nav-item2" >
-            <a ngbNavLink routerLink='/authentication'><span class="icon material-icons">login</span>&nbsp;&nbsp;Register / Login</a>
-          </ng-container>
-        </li>
-      </ul>
-    </div>
-  <!-- </div> -->
+  <div class="collapse navbar-collapse text-center" id='myNavBarItems' [ngbCollapse]="isCollapsed">
+    <ul *ngIf="loggedIn.id != undefined" class="nav navbar-nav left-nav">
+      <li>
+        <ng-container ngbNavItem class="nav-item nav-item2">
+          <a ngbNavLink routerLink='/user/'>Profile &nbsp;&nbsp;<span class="icon material-icons">account_circle</span></a>
+        </ng-container>
+      </li>
+      <li>
+        <ng-container ngbNavItem class="nav-item nav-item2">
+          <a ngbNavLink routerLink='/picture/upload'>Create Post &nbsp;&nbsp;<span class="icon material-icons">add_a_photo</span></a>
+        </ng-container>
+      </li>
+      <li>
+        <ng-container ngbNavItem class="nav-item nav-item2">
+          <a ngbNavLink routerLink='/messaging'>Messages &nbsp;&nbsp;<span class="icon material-icons">chat</span></a>
+        </ng-container>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav ml-auto">
+      <li>
+        <ng-container *ngIf="loggedIn.id != undefined" ngbNavItem class="nav-item nav-item2" >
+          <a ngbNavLink (click)="logout()"><span class="icon material-icons">logout</span>&nbsp;&nbsp;Logout</a>
+        </ng-container>
+        <ng-container *ngIf="loggedIn.id == undefined" ngbNavItem class="nav-item nav-item2" >
+          <a ngbNavLink routerLink='/authentication'><span class="icon material-icons">login</span>&nbsp;&nbsp;Register / Login</a>
+        </ng-container>
+      </li>
+    </ul>
+  </div>
 </nav>
   
   
@@ -58,7 +59,7 @@
     </ng-container>
   </nav> -->
   
-<div class="container rounded">
+<div class="container rounded" style="margin-top:-10px;">
   <router-outlet></router-outlet>
 
 </div>

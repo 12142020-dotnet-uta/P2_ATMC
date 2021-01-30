@@ -55,6 +55,9 @@ export class UserProfileService {
       return this.http.get<Picture[]>(`api/Users/Id/${id}/Favorites`);
     }
 
+    removeFavorite(userId: string, pictureId: number): Observable<any>{
+      return this.http.request('delete', `api/Users/Id/${userId}/Favorites`, { body: pictureId });
+
     putUser(editUser: DialogUserEdit): Observable<User>{
       return this.http.put<User>(`api/Users/Id/${editUser.id}`,editUser);
     }

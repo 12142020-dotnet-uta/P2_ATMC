@@ -21,11 +21,12 @@ export class PictureComponent implements OnInit {
 
   ngOnInit(): void {
     // this.isPicture =this.picture.mediaType==MediaType.Image
+    // console.log('I am a picture with id: '+this.picture.pictureID)
 
   }
   goToPictureDetails(){
-    this._pictureService.getPictureDetails(this.picture.pictureID).subscribe(x=>{this.router.navigateByUrl('/picture/'+x.pictureID);console.log('request returned picture '+x.title);})
-    console.log('going to picture details page');
+    this.router.navigateByUrl('/picture/'+this.picture.pictureID);
+    console.log('going to picture details page for '+this.picture.pictureID);
   }
   currentRate = 0;
 

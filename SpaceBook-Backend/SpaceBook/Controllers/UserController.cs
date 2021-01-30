@@ -211,7 +211,7 @@ namespace SpaceBook.Controllers
             var loggedIn = await _userRepo.GetUserByUsername(claim.Value);
 
             //FOR AUTHORIZATION: Remove followerUserId from if statement, Add loggedIn.Id 
-            if (await _userRepo.IsUserInDb(followedUserId) == false || await _userRepo.IsUserInDb(loggedIn.Id) == false)
+            if (await _userRepo.IsUserInDb(followedUserId) == false || await _userRepo.IsUserInDb(loggedIn.Id) == false || await _followRepo.GetFollowByFollowerAndFollowedIds(loggedIn.Id, followedUserId) == null)
             {
                 return NotFound();
             }

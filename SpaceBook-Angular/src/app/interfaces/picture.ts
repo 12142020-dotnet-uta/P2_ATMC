@@ -5,6 +5,8 @@ export class Picture {
     title: string;
     mediaType: MediaType;
     imageURL: string;
+    imageHDURL:string;
     description: string;
     date: Date;
+    isUserPicture:boolean
 }
