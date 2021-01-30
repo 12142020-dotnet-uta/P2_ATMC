@@ -16,10 +16,12 @@ export class PictureService {
   constructor(private _http:HttpClient) { }
 
   getPictures(page:number,pageSize:number):Observable<PagedResponse>{
-    return this._http.get<PagedResponse>('api/pictures?pageNumber='+page+'&pageSize='+pageSize);
+    // return this._http.get<PagedResponse>('api/pictures?pageNumber='+page+'&pageSize='+pageSize);
+    return this._http.get<PagedResponse>('/api/pictures?pageNumber='+page+'&pageSize='+pageSize);
   }
   getPictureDetails(pictureId:number):Observable<Picture>{
     console.log('sending a request for picture '+pictureId)
+    // return this._http.get<Picture>('/api/pictures/'+pictureId);
     return this._http.get<Picture>('/api/pictures/'+pictureId);
   }
 
