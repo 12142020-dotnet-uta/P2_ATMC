@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { HeroImg } from '../interfaces/hero-image';
+import { Picture } from '../interfaces/picture';
 
 
 @Injectable({
@@ -14,8 +14,8 @@ export class HeroimageService {
   constructor(
     private http: HttpClient) { }
 
-  getDailyPhoto(): Observable<HeroImg[]> {
-    return this.http.get<HeroImg[]>(this.UrlString);
+  getDailyPhoto(): Observable<Picture> {
+    return this.http.get<Picture>(this.UrlString);
   }
 
 

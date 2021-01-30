@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HeroimageService } from '../../services/heroimage.service';
 import { HeroImg } from '../../interfaces/hero-image';
 import { HttpClient } from '@angular/common/http';
+import { Picture } from 'src/app/interfaces/picture';
 
 @Component({
   selector: 'app-hero-image',
@@ -12,9 +13,9 @@ import { HttpClient } from '@angular/common/http';
 export class HeroImageComponent implements OnInit {
 
 
-  
 
-  photos : HeroImg[]= [];
+
+  photos : Picture;
 
 
 
@@ -22,8 +23,8 @@ export class HeroImageComponent implements OnInit {
 
   ngOnInit(){
     this.heroService.getDailyPhoto().subscribe(data => this.photos = data);
-    
+
     }
-   
+
 
 }
