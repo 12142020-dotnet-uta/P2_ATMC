@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FollowingComponent } from './following.component';
+import { FollowingDialogComponent } from './following-dialog.component';
 
-describe('FollowingComponent', () => {
-  let component: FollowingComponent;
-  let fixture: ComponentFixture<FollowingComponent>;
+describe('FollowingDialogComponent', () => {
+  let component: FollowingDialogComponent;
+  let fixture: ComponentFixture<FollowingDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FollowingComponent ]
+      declarations: [ FollowingDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FollowingComponent);
+    fixture = TestBed.createComponent(FollowingDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

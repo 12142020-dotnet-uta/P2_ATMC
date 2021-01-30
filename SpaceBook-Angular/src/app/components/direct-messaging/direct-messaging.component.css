@@ -4,3 +4,7 @@
 .UserContent{
     margin-top: .5em;
 }
+
+.messageBox {
+  border: black solid 2px;
+}

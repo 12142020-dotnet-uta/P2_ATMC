@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Picture } from '../interfaces/picture';
 
 
 @Injectable({
@@ -8,19 +9,14 @@ import { Observable } from 'rxjs';
 })
 export class HeroimageService {
 
-  private UrlString: string = "/api/Pictures/daily"
-
-  // httpOptions = {
-  //   headers: new HttpHeaders({ 'Content-Type': 'application/json'})
-  // };
+  private UrlString: string = "/api/Pictures/daily";
 
   constructor(
     private http: HttpClient) { }
 
-    getDailyPhoto(){
-      return this.http.get(this.UrlString);
-    }
-
+  getDailyPhoto(): Observable<Picture> {
+    return this.http.get<Picture>(this.UrlString);
+  }
 
 
 }
