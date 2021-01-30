@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../../../interfaces/user'
 import { UserProfileService } from '../../../services/user-profile.service'
@@ -7,6 +6,7 @@ import { Picture } from 'src/app/interfaces/picture';
 import { Subscription } from 'rxjs';
 import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.component';
 import { DialogUserEdit } from '../../../interfaces/dialog-user-edit';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-my-profile',
@@ -73,23 +73,26 @@ export class MyProfileComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
 
       this.editUser = result;
       
+      if (result !== undefined)
       //Edit the user:
-      this._userProfileService.putUser(this.editUser).subscribe( result =>{
-        
-        if(result)
-        {
-          alert("User updaded!");
-          this.getLoggedIn();
-        }
-        else{
-          alert("Invalid information.");
-        }
+        this._userProfileService.putUser(this.editUser).subscribe( result =>{
+          
+          if(result)
+          {
+            alert("User updaded!");
+            this.getLoggedIn().then( (result) => {
+              console.log(result);
+              this.user = result;
+            })
+          }
+          else{
+            alert("Invalid information.");
+          }
 
-      } )
+        } )
       
     });
   }

@@ -282,9 +282,9 @@ namespace SpaceBook.Business
             return await _ratingRepository.AttemptEditRating(retrievedRating); 
         }
 
-        public async Task<Rating> GetRating(string userId, int pictureId)
+        public async Task<Rating> GetRating(string username, int pictureId)
         {
-            var user = await _userRepository.GetUserById(userId);
+            var user = await _userRepository.GetUserByUsername(username);
             if (user == null)
             {
                 //invalid user
@@ -293,9 +293,38 @@ namespace SpaceBook.Business
             return await _ratingRepository.GetRatingByPictureAndUser(pictureId,user.Id);
         }
 
-        public async Task<IEnumerable<Rating>> GetRatingsForPicture(int pictureId)
+        //public async Task<IEnumerable<Rating>> GetRatingsForPicture(int pictureId)
+        //{
+        //    return await _ratingRepository.GetRatingsForPicture(pictureId);
+        //}
+
+        public async Task<double> GetRatingsForPicture(int pictureId)
         {
-            return await _ratingRepository.GetRatingsForPicture(pictureId);
+            List<Rating> ratings = (List<Rating>) await _ratingRepository.GetRatingsForPicture(pictureId);
+
+            return GetRatingAverageFromPicture(ratings);
+        }
+
+        private double GetRatingAverageFromPicture(List<Rating> ratings)
+        {
+
+            int star5 = GetRatingCountFromPicture(ratings, 5);
+            int star4 = GetRatingCountFromPicture(ratings, 4);
+            int star3 = GetRatingCountFromPicture(ratings, 3);
+            int star2 = GetRatingCountFromPicture(ratings, 2);
+            int star1 = GetRatingCountFromPicture(ratings, 1);
+
+            double ratingAverage = (double)(5 * star5 + 4 * star4 + 3 * star3 + 2 * star2 + 1 * star1)
+                /
+                (star1 + star2 + star3 + star4 + star5);
+
+            ratingAverage = Math.Round(ratingAverage, 1);
+            return ratingAverage;
+        }
+
+        private int GetRatingCountFromPicture(List<Rating> ratings, int value)
+        {
+            return ratings.Where(rating => rating.Value == value).Count();
         }
 
         #endregion
