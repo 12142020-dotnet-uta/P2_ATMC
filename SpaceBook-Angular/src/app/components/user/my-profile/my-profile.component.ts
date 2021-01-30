@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../../../interfaces/user'
 import { UserProfileService } from '../../../services/user-profile.service'
@@ -84,7 +83,9 @@ export class MyProfileComponent implements OnInit {
         if(result)
         {
           alert("User updaded!");
-          this.getUser()
+          this.getLoggedIn().then( (result) => {
+            console.log(result);
+          })
         }
         else{
           alert("Invalid information.");
