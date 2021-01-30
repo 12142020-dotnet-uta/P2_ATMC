@@ -2,9 +2,12 @@
   <h1 class="display-4">NASA Photo of the Day</h1>
   <div><p class="lead">{{photos.title}}</p></div>
   <hr class="my-4">
-  <div><img src={{photos.imageURL}} id="jumboImage"></div>
+  <div> <a class="btn" (click)="goToPictureDetails()"><img src={{photos.imageURL}} id="jumboImage"></a></div>
+  <hr>
   <div><p class="lead">{{photos.description}}</p></div>
-    <a class="btn btn-primary btn-lg" href="#" role="button">Add to collection</a>
+  <h3>Rate picture</h3>
+  <ngb-rating style="display: block;" [(rate)]="currentRate" (rateChange)='AddRatingToPicture()' [max]='5'></ngb-rating>
+    <!-- <a class="btn btn-primary btn-lg" href="#" role="button" >Add to collection</a> -->
 
 </div>
 

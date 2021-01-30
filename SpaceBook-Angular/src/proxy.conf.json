@@ -1,6 +1,7 @@
 {
     "/api/*": {
-        "target": "https://localhost:44398",
+        "target": "https://atmcspacebook.azurewebsites.net",
+        "changeOrigin": true,
         "secure": false,
         "logLevel": "debug"
     }
