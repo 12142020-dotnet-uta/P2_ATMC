@@ -6,15 +6,19 @@
     <mat-label>Last Name</mat-label>
     <input matInput [(ngModel)]="data.lastName">
   </mat-form-field> -->
-    <label>First Name</label>
+    <label><h5>First Name</h5></label>
     <input type="text" class="form-control" [(ngModel)]="data.firstName" name="firstname"required placeholder="First Name">
-    <label>Last Name</label>
+    <br/>
+    <label><h5>Last Name</h5></label>
     <input type="text" class="form-control" [(ngModel)]="data.lastName" name="lastname" required placeholder="Last Name">
-    <label>Email</label>
+    <br/>
+    <label><h5>Email</h5></label>
     <input type="text" class="form-control" [(ngModel)]="data.email" name="email"required placeholder="Email">
-    <label>Old Password</label>
+    <br/>
+    <label><h5>Old Password</h5></label>
     <input type="text" class="form-control" [(ngModel)]="data.oldPassword" name="password" required placeholder="******" type="password">
-    <label>New Password</label>
+    <br/>
+    <label><h5>New Password</h5></label>
     <input type="text" class="form-control" [(ngModel)]="data.newPassword" name="password" required placeholder="******" type="password">
 </div>
 <div mat-dialog-actions>

@@ -1,13 +1,23 @@
+<div class="jumbotron">
+  <h1 class="display-4">NASA Photo of the Day</h1>
+  <div><p class="lead">{{photos.title}}</p></div>
+  <hr class="my-4">
+  <div><img src={{photos.imageURL}} id="jumboImage"></div>
+  <div><p class="lead">{{photos.description}}</p></div>
+    <a class="btn btn-primary btn-lg" href="#" role="button">Add to collection</a>
+
+</div>
+
 <!-- <div class="card mb-3">
     <img src="..." class="card-img-top" alt="...">
     <div class="card-body">
       <h5 class="card-title">Card title</h5>
-      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-      <a href="#" class="btn btn-primary">Add to my collection</a>
+      <p class="card-text" *ngFor="let photo of photos">{{photo.description}}</p>
+      <a href="#" class="btn btn-primary" *ngFor="let photos of photos">{{dailyPhotos.ImageURL}}</a>
     </div>
   </div> -->
-  <ul>
-    <li *ngFor="let HeroImg of photos">
-      {{HeroImg.ImageURL}}
+  <!-- <ul>
+    <li *ngFor="let dailyPhoto of dailyPhotos">
+      {{dailyPhoto.ImageURL}}
     </li>
-  </ul>
+  </ul> -->

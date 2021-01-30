@@ -6,8 +6,6 @@
             <img src="{{picture.imageURL}}" alt="" class="img-fluid">
 
         </div>
-
-        <span>Rating: 0</span>
         <br>
         <!-- <button>Fav It</button> -->
         <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon" class="myHeartReaction">
@@ -24,7 +22,7 @@
         <p>Date: {{picture.date}}</p>
 
         <h3>Rate picture</h3>
-        <ngb-rating style="display: block;" [(rate)]="currentRate" [max]='5'></ngb-rating>
+        <ngb-rating style="display: block;" [(rate)]="currentRate" (rateChange)='AddRatingToPicture()' [max]='5'></ngb-rating>
     </div>
     <div class="col-md-1"></div>
 </div>

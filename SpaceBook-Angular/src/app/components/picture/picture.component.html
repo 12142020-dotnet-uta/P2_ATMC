@@ -9,10 +9,9 @@
   </div>
   <div class="card-footer">
     <h5 class="card-title">{{picture.title}}</h5>
-    <p class="text-muted">Add rating here?</p>
-    <!-- <ngb-rating style="display: block;" [(rate)]="currentRate" [max]='5'></ngb-rating>
-    <a href="#" class="btn btn-primary">Add to my collection</a> -->
+    <h3>Rate picture</h3>
+    <ngb-rating style="display: block;" [(rate)]="currentRate" (rateChange)='AddRatingToPicture()' [max]='5'></ngb-rating>
+    <!-- <a href="#" class="btn btn-primary">Add to my collection</a> -->
   </div>
 </div>
 
-  <!-- <pre>Rate: <b>{{currentRate}}</b></pre> -->

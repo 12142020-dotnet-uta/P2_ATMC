@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Message {{data.recipient.userName}}</h1>
+<div mat-dialog-content>
+    <label><h4>Message</h4></label>
+    <textarea rows=10  class="form-control" [(ngModel)]="data.text" name="firstname"required placeholder="Message text here"></textarea>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()" class="btn btn-secondary">Close</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial class="btn btn-success">Send</button>
+</div>

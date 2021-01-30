@@ -2,17 +2,18 @@ h1,
 h2,
 h3,
 h4,
-h5 {
+h5,
+h6 {
   font-family: "Bebas Neue", cursive;
 }
 
-input {
+textarea {
   background-color: #794d60;
   color: black;
   border-style: hidden;
 }
 
-input:focus {
+textarea:focus {
   background-color: #794d60;
   color: black;
   border-style: hidden;

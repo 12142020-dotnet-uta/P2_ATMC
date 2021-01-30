@@ -48,7 +48,19 @@ namespace SpaceBook
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy("policy1",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                        builder.WithOrigins("https://space-book.azurewebsites.net")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                    });
+            });
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -111,6 +123,7 @@ namespace SpaceBook
             //app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors("policy1");
             app.UseAuthentication();
             app.UseAuthorization();
 
