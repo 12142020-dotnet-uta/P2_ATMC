@@ -73,8 +73,7 @@ import { EditUserDialogComponent } from './components/user/my-profile/edit-user-
     PictureSubCommentComponent,
     MyProfileComponent,
     FavoritesComponent,
-    EditUserDialogComponent
-
+    EditUserDialogComponent,
   ],
   imports: [
     BrowserModule,

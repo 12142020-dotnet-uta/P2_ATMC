@@ -73,25 +73,26 @@ export class MyProfileComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
 
       this.editUser = result;
       
+      if (result !== undefined)
       //Edit the user:
-      this._userProfileService.putUser(this.editUser).subscribe( result =>{
-        
-        if(result)
-        {
-          alert("User updaded!");
-          this.getLoggedIn().then( (result) => {
-            console.log(result);
-          })
-        }
-        else{
-          alert("Invalid information.");
-        }
+        this._userProfileService.putUser(this.editUser).subscribe( result =>{
+          
+          if(result)
+          {
+            alert("User updaded!");
+            this.getLoggedIn().then( (result) => {
+              console.log(result);
+              this.user = result;
+            })
+          }
+          else{
+            alert("Invalid information.");
+          }
 
-      } )
+        } )
       
     });
   }

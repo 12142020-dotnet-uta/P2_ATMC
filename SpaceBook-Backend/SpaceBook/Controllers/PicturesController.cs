@@ -130,28 +130,45 @@ namespace SpaceBook.Controllers
         [HttpGet("{pictureId}/Ratings")]
         public async Task<IActionResult> GetAllRatings(int pictureId)
         {
-            var ratings = await _pictureBusinessLogic.GetRatingsForPicture(pictureId);
-            if (ratings==null)
+            try
             {
-                return NotFound();
-            }
-            else
-            {
-                return Ok(ratings);
-            }
-        }
+                double ratingAvg = await _pictureBusinessLogic.GetRatingsForPicture(pictureId);
 
-        [HttpGet("{pictureId}/Ratings/{userId}")]
-        public async Task<IActionResult> GetRating(int pictureId, string userId)
+                if(ratingAvg == 0 || double.IsNaN(ratingAvg) )
+                {
+                    return NotFound("The picture have not been rated yet.");
+                }
+                else
+                {
+                    return Ok(ratingAvg);
+                }
+            }
+            catch 
+            {
+                return NotFound("The picture have not been rated yet.");
+            }
+
+        }
+        [Authorize]
+        [HttpGet("{pictureId}/Ratings/User")]
+        public async Task<IActionResult> GetRating(int pictureId)
         {
-            var rating = await _pictureBusinessLogic.GetRating(userId, pictureId);
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            //make sure user is logged in
+            if (!claimsIdentity.IsAuthenticated) { return Unauthorized(); }
+            //get logged in user
+            var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
+            string username = claim.Value;
+
+            var rating = await _pictureBusinessLogic.GetRating(username, pictureId);
+
             if (rating == null)
             {
-                return NotFound();
+                return NotFound("The picture have not been rated yet by the user.");
             }
             else
             {
-                return Ok(rating);
+                return Ok(rating.Value);
             }
         }
 

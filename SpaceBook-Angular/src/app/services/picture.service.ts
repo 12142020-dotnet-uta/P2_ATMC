@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PagedResponse } from '../interfaces/paged-response';
 import { Picture } from '../interfaces/picture';
+import { Rating } from '../interfaces/rating';
 
 import { UserPictureViewModel } from "../interfaces/user-picture-view-model";
 
@@ -27,6 +28,25 @@ export class PictureService {
   PostUserPicture(userPicture: UserPictureViewModel ) : Observable<boolean> {
     return this._http.post<boolean>("/api/pictures", userPicture);
   }
+
+  getPictureGeneralRating(pictureid: number):Observable<number>{
+    return this._http.get<number>(`api/pictures/${pictureid}/Ratings`);
+  }
+
+  getPictureUserRating(pictureid:number):Observable<number>{
+    return this._http.get<number>(`api/pictures/${pictureid}/Ratings/User`)
+  }
+
+  postPictureUserRating(pictureId: number, rating:number): Observable<number>
+  {
+    return this._http.post<number>(`api/pictures/${pictureId}/Ratings`, rating);
+  }
+
+  putPictureUserRating(pictureId:number, rating:number): Observable<number>
+  {
+    return this._http.put<number>(`api/pictures/${pictureId}/Ratings`,rating);
+  }
+
 }
 
 
