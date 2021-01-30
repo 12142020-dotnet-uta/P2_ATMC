@@ -39,6 +39,37 @@ namespace SpaceBook.Controllers
         }
 
         [Authorize]
+        [HttpGet("Users")]
+        public async Task<ActionResult> GetUsersInConversationWithLoggedIn()
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.Name);
+            var loggedIn = await _userRepo.GetUserByUsername(claim.Value);
+
+            if (await _userRepo.IsUserInDb(loggedIn.Id) == false)
+            {
+                return NotFound();
+            }
+            else
+            {
+                IEnumerable<Message> messages = await _messageRepo.GetMessagesByUser(loggedIn.Id);
+                List<ApplicationUser> userList = new List<ApplicationUser>();
+                foreach(Message m in messages)
+                {
+                    if(m.Sender != loggedIn)
+                    {
+                        userList.Add(m.Sender);
+                    }
+                    else if(m.Recipient != loggedIn) {
+                        userList.Add(m.Recipient);
+                    }
+                }
+                return Ok(userList);
+            }
+
+        }
+
+        [Authorize]
         [HttpGet("User/{userId}")]
         public async Task<ActionResult> GetMessagesBetweenUser(string userId)
         {
