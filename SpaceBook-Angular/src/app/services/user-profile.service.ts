@@ -23,6 +23,10 @@ export class UserProfileService {
   constructor(
     private http: HttpClient) { }
 
+    searchUsers(searchString: string): Observable<User[]>{
+      return this.http.get<User[]>(`${this.usersUrl}/Search?query=${searchString}`)
+    }
+    
     getLoggedIn(): Observable<User>{
       return this.http.get<User>(`${this.usersUrl}/User`);
     }

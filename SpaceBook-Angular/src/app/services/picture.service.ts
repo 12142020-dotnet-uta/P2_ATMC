@@ -14,7 +14,7 @@ import { UserPictureViewModel } from "../interfaces/user-picture-view-model";
 })
 export class PictureService {
   // https://atmcspacebook.azurewebsites.net
-  readonly baseURL:string = "/api/pictures"
+  readonly baseURL:string = "/api/pictures/"
 
   constructor(private _http:HttpClient) { }
 

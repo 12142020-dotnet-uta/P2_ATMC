@@ -7,19 +7,20 @@
           [checked]='boolLogIn'
           (change)='onChangingSection()'>
       </mat-slide-toggle>
-      <h5>&nbsp;&nbsp; Log In</h5>
+      <h5>&nbsp;&nbsp;Log In</h5>
       </div>
       <form #loginForm="ngForm" *ngIf="boolLogIn" (submit)="LogIngUser($event)"> <!--(submit)="LogIn($event)" *ngIf="checkInicioSession"-->
         <hr />
         <div class="form-group">
-          <label for="txtUserNameLog">Username</label>
+          <label for="txtUserNameLog"><h5>Username</h5></label>
           <input type="text" #username="ngModel" class="form-control" required [(ngModel)]="userLogin.username" name="username" placeholder="UserName">
           <div *ngIf="username.invalid && (username.dirty)" class="alert alert-danger">
             <div *ngIf="username.errors.required">
               Username is required.
             </div>
           </div> 
-          <label class="pt-2" for="txtPasswordLog">Password</label>
+          <br/>
+          <label for="txtPasswordLog"><h5>Password</h5></label>
           <input type="password" #password="ngModel" class="form-control" required [(ngModel)]="userLogin.password" name="password" placeholder="Password">
           <div *ngIf="password.invalid && (password.dirty)" class="alert alert-danger">
             <div *ngIf="password.errors.required">
@@ -41,7 +42,7 @@
           <hr />
           <div class="row">
             <div class="form-group col-md-6">
-              <label>First Name</label>
+              <label><h5>First Name</h5></label>
               <input type="text" class="form-control" required minlength="2" [(ngModel)]="userRegister.firstName" name="firstname" #firstname="ngModel" placeholder="First Name">
               <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="alert alert-danger">
                 <div *ngIf="firstname.errors.required">
@@ -53,7 +54,7 @@
             </div>
             </div>
             <div class="form-group col-md-6">
-              <label>Last Name</label>
+              <label><h5>Last Name</h5></label>
               <input type="text" class="form-control" required minlength="2" [(ngModel)]="userRegister.lastName" name="lastname" #lastname="ngModel" placeholder="Last Name">
               <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="alert alert-danger">
                 <div *ngIf="lastname.errors.required">
@@ -65,9 +66,10 @@
               </div>
             </div>
           </div>
+          <br/>
           <div class="form-group">
-              <label for="txtUserName">Username</label>
-              <input type="text" class="form-control" required minlength="4" [(ngModel)]="userRegister.username" name="username" #username="ngModel" placeholder="UserName">
+              <label for="txtUserName"><h5>Username</h5></label>
+              <input type="text" class="form-control" required minlength="4" [(ngModel)]="userRegister.username" name="username" #username="ngModel" placeholder="Username">
               <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
                 <div *ngIf="username.errors.required">
                   Username is required.
@@ -76,7 +78,8 @@
                   Name must be at least 4 characters long.
                 </div>
               </div>
-              <label for="txtEmail">Email</label>
+              <br/>
+              <label for="txtEmail"><h5>Email</h5></label>
               <input type="email" class="form-control" required minlength="8"  [(ngModel)]="userRegister.email" name="email" #email="ngModel" placeholder="Email">
               <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
                 <div *ngIf="email.errors.required">
@@ -86,7 +89,8 @@
                   Email must be at least 8 characters long
                 </div>
               </div>
-              <label for="txtPassword">Password</label>
+              <br/>
+              <label for="txtPassword"><h5>Password</h5></label>
               <input type="password" class="form-control" required minlength="6" [(ngModel)]="userRegister.password" name="password" #password="ngModel" placeholder="Password">
               <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
                 <div *ngIf="password.errors.required">
