@@ -28,7 +28,7 @@ export class UserProfileService {
     }
 
     getUser(username?: string): Observable<User> {
- 
+
       if(username == undefined){
         return this.http.get<User>(`${this.usersUrl}/User`);
       }
@@ -56,7 +56,7 @@ export class UserProfileService {
     }
 
     removeFavorite(userId: string, pictureId: number): Observable<any>{
-      return this.http.request('delete', `api/Users/Id/${userId}/Favorites`, { body: pictureId });
+      return this.http.request('delete', `api/Users/Id/${userId}/Favorites`, { body: pictureId });}
 
     putUser(editUser: DialogUserEdit): Observable<User>{
       return this.http.put<User>(`api/Users/Id/${editUser.id}`,editUser);
