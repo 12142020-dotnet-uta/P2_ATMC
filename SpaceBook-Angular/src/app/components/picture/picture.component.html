@@ -1,14 +1,17 @@
 <div class="card mb-3  h-100">
   <!-- <div *ngIf="isPicture"> -->
-    <a (click)="goToPictureDetails()">
-          <img src={{picture.imageURL}} class="card-img-top" alt="...">
-    </a>
   <!-- </div> -->
   <div class="card-body">
-    <h5 class="card-title">{{picture.title}}</h5>
+    <a class="btn" (click)="goToPictureDetails()">
+      <img src={{picture.imageURL}} class="card-img-top btn-primary" alt="...">
+    </a>
     <!-- <p class="card-text">{{}}</p> -->
-    <ngb-rating style="display: block;" [(rate)]="currentRate" [max]='5'></ngb-rating>
-    <a class="btn btn-primary" (click)="AddToFavorites()">Add to my collection</a>
+  </div>
+  <div class="card-footer">
+    <h5 class="card-title">{{picture.title}}</h5>
+    <p class="text-muted">Add rating here?</p>
+    <!-- <ngb-rating style="display: block;" [(rate)]="currentRate" [max]='5'></ngb-rating>
+    <a href="#" class="btn btn-primary">Add to my collection</a> -->
   </div>
 </div>
 

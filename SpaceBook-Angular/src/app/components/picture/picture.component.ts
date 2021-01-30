@@ -16,19 +16,19 @@ export class PictureComponent implements OnInit {
 
   @Input() picture: Picture;
   isPicture:boolean;
+  currentRate = 0;
 
   constructor(private _pictureService:PictureService, private router:Router) { }
 
   ngOnInit(): void {
-    // this.isPicture =this.picture.mediaType==MediaType.Image
-    // console.log('I am a picture with id: '+this.picture.pictureID)
+    //set picture
+    this.isPicture = this.picture.mediaType==MediaType.Image;
 
   }
   goToPictureDetails(){
     this.router.navigateByUrl('/picture/'+this.picture.pictureID);
     console.log('going to picture details page for '+this.picture.pictureID);
   }
-  currentRate = 0;
 
   AddToFavorites():void {
     //Add the picture to your favorites...

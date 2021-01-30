@@ -28,7 +28,7 @@ export class UserProfileService {
     }
 
     getUser(username?: string): Observable<User> {
- 
+
       if(username == undefined){
         return this.http.get<User>(`${this.usersUrl}/User`);
       }

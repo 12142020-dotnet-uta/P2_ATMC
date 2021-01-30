@@ -4,9 +4,9 @@ import { User } from '../../../interfaces/user'
 import { UserProfileService } from '../../../services/user-profile.service'
 import { Picture } from 'src/app/interfaces/picture';
 import { Subscription } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
 import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.component';
 import { DialogUserEdit } from '../../../interfaces/dialog-user-edit';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-my-profile',
