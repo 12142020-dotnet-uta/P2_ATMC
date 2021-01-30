@@ -59,9 +59,9 @@ export class LogInComponent implements OnInit {
     //   email: EMAIL,
     //   password : PASSWORD,
     // }
-    this.router.navigateByUrl('/authentication').then(() => {
-      window.location.reload()});
-    this._userAuthService.postRegisterAutentication(this.userRegister).subscribe();
+    
+    this._userAuthService.postRegisterAutentication(this.userRegister)
+      .subscribe(registerUserResponse => { console.log(registerUserResponse); this.router.navigateByUrl('/authentication').then( () => { window.location.reload() } ); } );
     console.log( this.userRegister );
     
   }
