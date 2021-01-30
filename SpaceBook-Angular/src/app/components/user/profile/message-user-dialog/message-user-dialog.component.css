@@ -1,0 +1,20 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Bebas Neue", cursive;
+}
+
+textarea {
+  background-color: #794d60;
+  color: black;
+  border-style: hidden;
+}
+
+textarea:focus {
+  background-color: #794d60;
+  color: black;
+  border-style: hidden;
+}

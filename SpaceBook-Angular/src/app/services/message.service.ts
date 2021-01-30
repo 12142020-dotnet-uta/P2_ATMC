@@ -38,9 +38,7 @@ export class MessageService {
     }
 
     postMessageToUser(userId: string, message: string): Observable<any>{
-      console.log(userId);
-      console.log(message);
-      return this.http.post<any>(`${this.messageUrl}/User/${userId}`, message, this.httpOptions);
+      return this.http.post<any>(`${this.messageUrl}/User/${userId}`, `"${message}"`, this.httpOptions);
       
     }
 

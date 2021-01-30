@@ -88,8 +88,9 @@ export class ProfileComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
 
-      var messagebody = result.text;
+      var messagebody:string = result.text;
       console.log(messagebody);
+      messagebody
       //Edit the user:
       this._messageService.postMessageToUser(this.user.id, result.text).subscribe( result =>{
         

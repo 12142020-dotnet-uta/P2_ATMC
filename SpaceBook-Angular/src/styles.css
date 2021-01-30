@@ -31,6 +31,10 @@ span {
   color: #ffffff;
 }
 
+.mat-dialog-container {
+  background: #553643;
+}
+
 .card {
   background-color: #794d60;
 }
