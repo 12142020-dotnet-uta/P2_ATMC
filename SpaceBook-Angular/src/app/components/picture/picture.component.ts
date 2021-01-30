@@ -29,4 +29,7 @@ export class PictureComponent implements OnInit {
   }
   currentRate = 0;
 
+  AddToFavorites():void {
+    //Add the picture to your favorites...
+  }
 }

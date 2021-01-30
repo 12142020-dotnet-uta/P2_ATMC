@@ -7,7 +7,8 @@
         <p>Last Name: <span class="userinfo">{{user.lastName}}</span> </p>
         <p>Username: <span class="userinfo">{{user.userName}}</span> </p>
         <p>Email: <span class="userinfo">{{user.email}}</span> </p>
-        <button class="btn btn-secondary">Edit Profile</button>
+        <!-- <button class="btn btn-secondary">Edit Profile</button> -->
+        <button mat-raised-button class="btn btn-secondary" (click)="openDialog()">Edit Profile</button>
 
     </div>
     <div class="col-md-6">

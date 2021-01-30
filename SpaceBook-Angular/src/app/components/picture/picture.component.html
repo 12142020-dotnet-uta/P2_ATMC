@@ -8,7 +8,7 @@
     <h5 class="card-title">{{picture.title}}</h5>
     <!-- <p class="card-text">{{}}</p> -->
     <ngb-rating style="display: block;" [(rate)]="currentRate" [max]='5'></ngb-rating>
-    <a href="#" class="btn btn-primary">Add to my collection</a>
+    <a class="btn btn-primary" (click)="AddToFavorites()">Add to my collection</a>
   </div>
 </div>
 

@@ -49,8 +49,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
+import { MatDialogModule } from "@angular/material/dialog";
 import { BearerAuthInterceptor } from './services/bearer-auth.interceptor';
 import { MyProfileComponent } from './components/user/my-profile/my-profile.component';
+import { EditUserDialogComponent } from './components/user/my-profile/edit-user-dialog/edit-user-dialog.component';
 
 
 @NgModule({
@@ -68,7 +70,8 @@ import { MyProfileComponent } from './components/user/my-profile/my-profile.comp
     ProfileComponent,
     PictureCommentComponent,
     PictureSubCommentComponent,
-    MyProfileComponent
+    MyProfileComponent,
+    EditUserDialogComponent
 
   ],
   imports: [
@@ -79,6 +82,7 @@ import { MyProfileComponent } from './components/user/my-profile/my-profile.comp
     MatSlideToggleModule,
     MatButtonModule,
     MatIconModule,
+    MatDialogModule,
     FormsModule,
     HttpClientModule,
   ],

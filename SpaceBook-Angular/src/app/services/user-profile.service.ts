@@ -6,6 +6,7 @@ import {User} from '../interfaces/user';
 import {Follow} from '../interfaces/follow';
 import {Picture} from '../interfaces/picture';
 import { stringify } from '@angular/compiler/src/util';
+import { DialogUserEdit } from '../interfaces/dialog-user-edit';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +53,10 @@ export class UserProfileService {
 
     getFavorites(id: string): Observable<Picture[]>{
       return this.http.get<Picture[]>(`api/Users/Id/${id}/Favorites`);
+    }
+
+    putUser(editUser: DialogUserEdit): Observable<User>{
+      return this.http.put<User>(`api/Users/Id/${editUser.id}`,editUser);
     }
 
 
