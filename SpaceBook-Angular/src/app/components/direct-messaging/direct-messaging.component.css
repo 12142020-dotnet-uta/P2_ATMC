@@ -7,4 +7,40 @@
 
 .messageBox {
   border: black solid 2px;
+  border-radius: 25px;
+  text-align: center;
+  background-color: white;
+}
+
+p {
+  color: black;
+}
+
+h3 {
+  text-align: center;
+}
+
+#avatar {
+  height: 75px;
+  width: 75px;
+}
+
+.MessagingContent{
+  height: 400px;
+  width: 800px;
+  border: black solid 2px;
+  background: white;
+  margin-left: 310px;
+  /* padding-top: 200px; */
+  margin-top: -200px;
+}
+
+#chat {
+  margin-left: 310px;
+
+}
+
+#inputBox {
+  width: 800px;
+  border: black solid 1px;
 }
