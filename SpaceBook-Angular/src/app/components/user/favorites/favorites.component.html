@@ -9,7 +9,7 @@
             <div class="card-body">
               <h5 class="card-title">{{picture.title}}</h5>
             </div>
-            <div class="card-footer">
+            <div *ngIf="loggedIn == user" class="card-footer">
               <button (click)="removeFavorite(picture)" class="btn btn-danger">Remove Favorite</button>
             </div>
         </div>

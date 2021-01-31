@@ -11,10 +11,13 @@ import { UserProfileService } from 'src/app/services/user-profile.service'
 export class FavoritesComponent implements OnInit {
   @Input() pictures: Picture[];
   @Input() loggedIn: User;
+  @Input() user: User;
   pictureIds: number[] = new Array<number>();
   constructor(private _userProfileService: UserProfileService) { }
 
   ngOnInit(): void {
+    console.log("Logged In:" + this.loggedIn.userName);
+    console.log("User: " + this.user);
   }
 
   removeFavorite(picture: Picture){

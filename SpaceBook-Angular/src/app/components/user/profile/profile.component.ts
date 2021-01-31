@@ -35,14 +35,22 @@ export class ProfileComponent implements OnInit {
     
   }
 
-  ngOnInit(): void {
+  async ngOnInit(){
       this.route.params.subscribe( params => 
       {
-         this.username = params["username"]; this.getUser(this.username);
+         this.username = params["username"]; this.getUser(this.username); this.checkUser();
       });
       this.getLoggedIn();
+      
   }
 
+  async checkUser(){
+    let user2 = await this._userProfileService.getUser(this.username).toPromise();
+    let loggedin = await this._userProfileService.getLoggedIn().toPromise();
+    if(user2.userName==loggedin.userName){
+      this.router.navigateByUrl("/user");
+    }
+  }
 
   getLoggedIn(): void{
     this._userProfileService.getLoggedIn().subscribe(loggedIn => {this.loggedIn = loggedIn});
@@ -59,12 +67,7 @@ export class ProfileComponent implements OnInit {
   }
 
   deleteFollow(id:string):void{
-    this._userProfileService.deleteFollow(id).subscribe();
-    let deleteuserindex = this.followers.indexOf(this.loggedIn);
-    let loggedinusernameindex = this.followerUserNames.indexOf(this.loggedIn.userName);
-    //console.log(deleteuserindex);
-    console.log(loggedinusernameindex);
-    window.location.reload();
+    this._userProfileService.deleteFollow(id).subscribe(() => { window.location.reload()});
   }
 
   postFollow(id:string, loggedInId: string){
