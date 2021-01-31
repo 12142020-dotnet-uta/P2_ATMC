@@ -4,8 +4,12 @@
   <div><h3>{{photos.title}}</h3></div>
   <hr class="my-4">
   <div class="row">
-    <div class="col-6"><a class="btn" (click)="goToPictureDetails()"><img src={{photos.imageURL}} id="jumboImage"></a></div>
-    <div class="col-6"><p class="desc">{{photos.description}}</p></div>
+    <div class="col-lg-6">
+      <a class="btn" (click)="goToPictureDetails()"><img src={{photos.imageURL}} id="jumboImage"></a>
+    </div>
+    <div class="col-lg-6">
+      <p class="desc">{{photos.description}}</p>
+    </div>
   </div>
   <hr class="my-4">
   <h3>Rate picture</h3>
