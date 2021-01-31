@@ -8,7 +8,7 @@
         </div>
         <br>
         <!-- <button>Fav It</button> -->
-        
+
 
         <span>Favorites: {{favorites.length}}</span>
         <button mat-icon-button color="warn" (click)="postFavorite(loggedIn.id, picture.pictureID)" aria-label="Example icon button with a heart icon" class="myHeartReaction">
@@ -28,16 +28,34 @@
     <div class="col-md-1"></div>
 </div>
 
+
+
 <h3 class="text-center">Comments: </h3>
 
-<div class="row">
+<div *ngIf="currentlyCommenting; else elseBlock">
+  <!-- currently commenting -->
+  <div class="row">
+    <div class="col-sm-8 form-group ">
+      <textarea rows=2  class="form-control" [(ngModel)]="currentCommentText" required placeholder="Comment text here"></textarea>
+    </div>
+    <div class="col-sm-4">
+        <button class="btn btn-primary btn-purple" (click)="createComment()"> Comment</button>
+    </div>
+  </div>
+</div>
+<ng-template #elseBlock>
+  <button class="btn btn-primary btn-purple" (click)="startCommenting()"> Add Comment</button>
+</ng-template>
+
+
+<!-- <div class="row">
     <div class="col-sm-8 form-group ">
       <textarea rows=2  class="form-control" [(ngModel)]="currentCommentText" required placeholder="Message text here"></textarea>
     </div>
     <div class="col-sm-4">
-        <button class="btn btn-primary btn-block" (click)="createComment()"> Comment</button>
+        <button class="btn btn-primary btn-purple btn-block" (click)="createComment()"> Comment</button>
     </div>
-</div>
+</div> -->
 
 <div *ngFor="let comment of allComments">
     <div class="row"*ngIf="comment.parentCommentId==null">
