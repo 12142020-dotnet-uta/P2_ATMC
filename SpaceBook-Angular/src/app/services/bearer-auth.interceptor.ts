@@ -14,6 +14,12 @@ export class BearerAuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const idToken = localStorage.getItem('id_token');
+    if(request.url.startsWith('/api')){
+      const url = 'https://atmcspacebook.azurewebsites.net';
+      request = request.clone({
+        url:url+ request.url
+      });
+    }
     console.log("Http request: "+request.url);
 
     if (idToken) {
