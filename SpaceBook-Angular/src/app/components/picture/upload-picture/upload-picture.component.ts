@@ -22,6 +22,7 @@ export class UploadPictureComponent implements OnInit {
 
   fileToUpload:File;
   lblImage:string = "Image file";
+  isPictureUploaded:boolean = false;
 
   constructor( private _pictureService: PictureService ) { }
 
@@ -81,6 +82,7 @@ export class UploadPictureComponent implements OnInit {
           if ( result )
           {
             alert("Picture was added successfully");
+            this.isPictureUploaded = true;
           }
           
         },
