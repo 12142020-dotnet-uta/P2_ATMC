@@ -62,6 +62,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getFollow(id: string): void{
+    this.followerUserNames=[];
     this._userProfileService.getFollowers(id).subscribe(followers => {this.followers = followers; this.followers.forEach(follower => this.followerUserNames.push(follower.userName)) });
     this._userProfileService.getFollowed(id).subscribe(followed=> {this.following = followed; this} );
   }
