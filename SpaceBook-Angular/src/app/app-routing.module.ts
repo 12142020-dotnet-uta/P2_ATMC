@@ -6,7 +6,7 @@ import { DirectMessagingComponent } from "./components/direct-messaging/direct-m
 import { PictureDetailComponent } from "./components/picture/picture-detail/picture-detail.component";
 import { UploadPictureComponent } from "./components/picture/upload-picture/upload-picture.component";
 import { LogInComponent } from "./components/user/log-in/log-in.component";
-import { FollowingComponent } from "./components/user/following/following.component";
+// import { FollowingComponent } from "./components/user/following/following.component";
 import { ProfileComponent } from "./components/user/profile/profile.component";
 import { MyProfileComponent } from "./components/user/my-profile/my-profile.component";
 
