@@ -1,5 +1,5 @@
 .MessageContent{
-    background-color: #492e3a;
+    background-color: #613e4d;
     border-radius: .7em;
 }
 
@@ -7,10 +7,19 @@
     margin-left: 1em;
 }
 
-.UserSubComment{
+.UserCommentBorder{
     background-color: #301f26;
-    margin-left: .5em;
-    padding-left: 2em;
+    margin-top: .4em;
+    padding-top: .5em;
+    margin-left: .4em;
+    padding-left: .5em;
+
+    margin-bottom: .2em;
+    padding-bottom: .5em;
+    /* margin-right: .4em; */
+    padding-right: .2em;
+
+
     border-radius: 1em;
 }
 div  a{
@@ -23,6 +32,6 @@ div a:hover{
 }
 
 .btn-purple{
-  background-color:#794d60;
+  background-color:#553643;
   border-color: #180f13;
 }
