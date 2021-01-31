@@ -8,11 +8,12 @@
         </div>
         <br>
         <!-- <button>Fav It</button> -->
-        <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon" class="myHeartReaction">
+        
+
+        <span>Favorites: {{favorites.length}}</span>
+        <button mat-icon-button color="warn" (click)="postFavorite(loggedIn.id, picture.pictureID)" aria-label="Example icon button with a heart icon" class="myHeartReaction">
             <mat-icon>favorite</mat-icon>
         </button>
-
-        <span>Favorites: #</span>
     </div>
     <div class="col-md-5">
         <h2>{{picture.title}}</h2>

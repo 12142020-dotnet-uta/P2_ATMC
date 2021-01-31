@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Favorite } from '../interfaces/favorite';
 import { PagedResponse } from '../interfaces/paged-response';
 import { Picture } from '../interfaces/picture';
 import { PictureComment } from '../interfaces/picture-comment';
@@ -30,6 +31,10 @@ export class PictureService {
   getPictureDetails(pictureId:number):Observable<Picture>{
     console.log('sending a request for picture '+pictureId)
     return this._http.get<Picture>( this.baseURL +`/${pictureId}`);
+  }
+
+  getFavorites(pictureId:number):Observable<Favorite[]>{
+    return this._http.get<Favorite[]>(`${this.baseURL}/${pictureId}/Favorites`)
   }
 
 

@@ -126,6 +126,13 @@ namespace SpaceBook.Controllers
                 return BadRequest(result);
 
         }
+
+        [HttpGet("{pictureId}/Favorites")]
+        public async Task<IActionResult> GetFavoritesByPicture(int pictureId)
+        {
+            return Ok(await _pictureBusinessLogic.GetFavorites(pictureId));
+        }
+
         #region Ratings
         [HttpGet("{pictureId}/Ratings")]
         public async Task<IActionResult> GetAllRatings(int pictureId)

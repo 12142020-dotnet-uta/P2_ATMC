@@ -4,6 +4,9 @@ import { Picture } from 'src/app/interfaces/picture';
 import { PictureService } from 'src/app/services/picture.service';
 import { PictureComponent } from '../picture.component';
 import { PictureComment } from 'src/app/interfaces/picture-comment';
+import { UserProfileService } from 'src/app/services/user-profile.service';
+import { Favorite } from 'src/app/interfaces/favorite';
+import { User } from 'src/app/interfaces/user';
 
 @Component({
   selector: 'app-picture-detail',
@@ -16,12 +19,14 @@ export class PictureDetailComponent implements OnInit {
   currentCommentText:string
 
   allComments:PictureComment[]=[]
-
+  favorites:Favorite[]=[]
 
   currentRate:number = 0;
   userAlreadyRated:boolean = false;
 
-  constructor(private _pictureService:PictureService, private route:ActivatedRoute) { }
+  loggedIn:User;
+
+  constructor(private _pictureService:PictureService, private _userProfileService:UserProfileService, private route:ActivatedRoute) { }
   ngOnInit(): void {
     this.route.params.subscribe( params =>
       {
@@ -30,12 +35,19 @@ export class PictureDetailComponent implements OnInit {
 
          this.getPictureUserRating(params['id']);
          this.getCommentsForPicture(params['id']);
+         this.getFavorites(params['id']);
         });
 
+    this.getLoggedIn();
+    
   }
 
   getPicture(picId:number):void{
     this._pictureService.getPictureDetails(picId).subscribe(x=>{this.picture = x;});
+  }
+
+  getFavorites(picId:number){
+    this._pictureService.getFavorites(picId).subscribe(x=>{this.favorites = x;});
   }
 
   //#region User Rating
@@ -95,6 +107,16 @@ export class PictureDetailComponent implements OnInit {
   createComment(){
     console.log('I tried to create a comment: '+this.currentCommentText)
     this._pictureService.postPictureComment(this.picture.pictureID,this.currentCommentText).subscribe(x=>console.log(`create comment result:`,x));
+  }
+
+  getLoggedIn(): void{
+    this._userProfileService.getLoggedIn().subscribe(loggedIn => {this.loggedIn = loggedIn});
+  }
+
+  postFavorite(userId:string, picId:number){
+    this._userProfileService.postFavorite(userId, picId).subscribe();
+    let favorite: Favorite;
+    this.favorites.push(favorite);
   }
 
   //#endregion
