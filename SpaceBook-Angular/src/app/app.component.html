@@ -39,7 +39,7 @@
       </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
-      <li>
+      <li *ngIf="loggedIn.id != undefined">
         <ng-container ngbNavItem class="nav-item nav-item2">
           <a ngbNavLink routerLink='/search'><span class="icon material-icons">person_search</span>&nbsp;&nbsp;User Search</a>
         </ng-container>

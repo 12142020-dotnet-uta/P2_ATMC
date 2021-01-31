@@ -23,7 +23,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let follower of followers.slice(0,5)">
+                        <tr *ngFor="let follower of followers.slice(0,4)">
                             <td><a  [routerLink]="['../user', follower.userName]">{{follower.userName}}</a></td>
                         </tr>
                     </tbody>
@@ -39,7 +39,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let follow of followed.slice(0,5)">
+                        <tr *ngFor="let follow of followed.slice(0,4)">
                             <td><a  [routerLink]="['../user', follow.userName]">{{follow.userName}}</a></td>
                         </tr>
                     </tbody>

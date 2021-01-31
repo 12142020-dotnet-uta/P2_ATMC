@@ -52,7 +52,6 @@ namespace SpaceBook.Controllers
         {
             IEnumerable<ApplicationUser> users = await _userRepo.GetAllUsers();
             List<ApplicationUser> usersSearched = new List<ApplicationUser>();
-            StringComparison stringComparison = StringComparison.CurrentCultureIgnoreCase;
             foreach (ApplicationUser u in users)
             {
                 if (u.UserName.Contains(searchString, StringComparison.OrdinalIgnoreCase) || 

@@ -9,11 +9,11 @@
         <p>Email: <span class="userinfo">{{user.email}}</span> </p>
 
         
-        <button class="btn btn-secondary" (click)="openMessageDialog()">Message Me</button>   
-        <ng-template [ngIf]="!followerUserNames.includes(loggedIn.userName)">
+        <button class="btn btn-secondary" *ngIf="loggedIn.id!=undefined" (click)="openMessageDialog()">Message Me</button>   
+        <ng-template *ngIf="loggedIn.id!=undefined" [ngIf]="!followerUserNames.includes(loggedIn.userName)">
             <button class="btn btn-primary"(click)="postFollow(user.id, loggedIn.id)">Follow</button>
         </ng-template>
-        <ng-template [ngIf]="followerUserNames.includes(loggedIn.userName)">
+        <ng-template *ngIf="loggedIn.id!=undefined" [ngIf]="followerUserNames.includes(loggedIn.userName)">
             <button class="btn btn-danger" (click)="deleteFollow(user.id)">Unfollow</button>
         </ng-template>
 
@@ -30,7 +30,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let follower of followers.slice(0,5)">
+                        <tr *ngFor="let follower of followers.slice(0,4)">
                             <td><a  [routerLink]="['/', 'user', follower.userName]">{{follower.userName}}</a></td>
                         </tr>
                     </tbody>
@@ -46,7 +46,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let followed of following.slice(0,5)">
+                        <tr *ngFor="let followed of following.slice(0,4)">
                             <td><a  [routerLink]="['/', 'user', followed.userName]">{{followed.userName}}</a></td>
                         </tr>
                     </tbody>
