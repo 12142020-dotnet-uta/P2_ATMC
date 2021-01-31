@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { UserPictureViewModel } from 'src/app/interfaces/user-picture-view-model';
 import { PictureService } from 'src/app/services/picture.service';
 import { Picture } from "../../../interfaces/picture";
+import { UploadPictureDialogComponent } from './upload-picture-dialog/upload-picture-dialog.component';
 
 // Maximum file size allowed to be uploaded = 1MB
 const MAX_SIZE: number = 1048576;
@@ -24,7 +26,7 @@ export class UploadPictureComponent implements OnInit {
   lblImage:string = "Image file";
   isPictureUploaded:boolean = false;
 
-  constructor( private _pictureService: PictureService ) { }
+  constructor( private _pictureService: PictureService, private dialog:MatDialog ) { }
 
   ngOnInit(): void {
   }
@@ -48,12 +50,12 @@ export class UploadPictureComponent implements OnInit {
       }
       else
       {
-        alert("This file is too big, add other smaller picture!");
+        this.openDialog("This file is too big, add other smaller picture!")
       }
     }
     else
     {
-      alert("This file is not valid!");
+      this.openDialog("This file is not valid!")
     }
 
 
@@ -81,20 +83,31 @@ export class UploadPictureComponent implements OnInit {
           console.log(result);
           if ( result )
           {
-            alert("Picture was added successfully");
+            this.openDialog("Picture was added successfully")
             this.isPictureUploaded = true;
           }
           
         },
         error => {
-          console.log("error: ",error);
-          alert("There was an error, " + error.statusText)
+
+          this.openDialog(`there was an error, ${error.statusText}`);
+          // alert("There was an error, " + error.statusText)
         });
-      
     };
     
     reader.readAsDataURL(this.fileToUpload);
 
+  }
+
+  openDialog(message:string):void {
+    const dialogRef = this.dialog.open(UploadPictureDialogComponent, {
+      width: '300px',
+      data: { message: message}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 }
