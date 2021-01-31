@@ -1,8 +1,12 @@
+import { User } from "./user";
+
 export interface Message {
-    MessageID: number;
-    Text: string;
-    Date:Date;
-    SenderID: string;
-    RecipientId: string;
-    ParentMessageID?: number;
+    messageID: number;
+    text: string;
+    date:Date;
+    senderID: string;
+    recipientId: string;
+    parentMessageID?: number;
+    sender: User;
+    recipient: User;
 }

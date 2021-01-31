@@ -28,6 +28,7 @@ h3 {
 .MessagingContent{
   height: 400px;
   width: 800px;
+  overflow-y: scroll;
   border: black solid 2px;
   background: white;
   margin-left: 310px;
@@ -44,3 +45,8 @@ h3 {
   width: 800px;
   border: black solid 1px;
 }
+
+/* .talkBox {
+
+
+} */
