@@ -28,7 +28,7 @@ export class DirectMessagingComponent implements OnInit {
 
   getUsersInConversation(): void {
     this.messageService.getUsersInConversation()
-    .subscribe(data => this.user = data);
+    .subscribe(data => this.users = data);
   }
 
   getMessagesBetweenUser(userId: string): void {
