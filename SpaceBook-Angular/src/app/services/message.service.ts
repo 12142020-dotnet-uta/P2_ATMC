@@ -39,7 +39,7 @@ export class MessageService {
 
     postMessageToUser(userId: string, message: string): Observable<any>{
       return this.http.post<any>(`${this.messageUrl}/User/${userId}`, `"${message}"`, this.httpOptions);
-      
+
     }
 
 
