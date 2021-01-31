@@ -42,7 +42,7 @@ steps:
   inputs:
     command: 'custom'
     workingDir: '$(angularFolder)/'
-    customCommand: "run ng build --prod --cross-origin 'anonymous'"
+    customCommand: 'run ng build SpaceBook-Angular --prod --cross-origin anonymous'
 
 - task: ArchiveFiles@2
   inputs:
