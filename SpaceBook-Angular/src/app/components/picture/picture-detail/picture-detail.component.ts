@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute} from '@angular/router';
 import { Picture } from 'src/app/interfaces/picture';
 import { PictureService } from 'src/app/services/picture.service';
+import { PictureComponent } from '../picture.component';
+import { PictureComment } from 'src/app/interfaces/picture-comment';
 
 @Component({
   selector: 'app-picture-detail',
@@ -10,6 +12,10 @@ import { PictureService } from 'src/app/services/picture.service';
 })
 export class PictureDetailComponent implements OnInit {
   picture:Picture;
+
+  currentCommentText:string
+
+  allComments:PictureComment[]=[]
 
 
   currentRate:number = 0;
@@ -23,23 +29,26 @@ export class PictureDetailComponent implements OnInit {
          console.log('got '+params["id"]+' from the uri');
 
          this.getPictureUserRating(params['id']);
+         this.getCommentsForPicture(params['id']);
         });
-        
+
   }
+
   getPicture(picId:number):void{
-    this._pictureService.getPictureDetails(picId).subscribe(x=>{this.picture = x;console.log('returned picture with id: ',x)});
+    this._pictureService.getPictureDetails(picId).subscribe(x=>{this.picture = x;});
   }
-  
+
+  //#region User Rating
   getPictureUserRating(picId: number) :void{
     this._pictureService.getPictureUserRating(picId)
       .subscribe( dataOnSuccess => { this.currentRate = dataOnSuccess; this.userAlreadyRated= true; },
          () => {
         //If there is no userRating, load the general rating of picture
-        console.log("error")
+        console.log("I have not rated this picture.")
         this.getPictureGeneralRating(picId);
       });
   }
-  
+
   getPictureGeneralRating(picId: number) :void
   {
     console.log("Entering getPictureGeneralRating");
@@ -62,7 +71,7 @@ export class PictureDetailComponent implements OnInit {
         }, dataOnError => {
           //error handling
         });
-      
+
     }
     else{
       //Add rating to picture...
@@ -76,7 +85,18 @@ export class PictureDetailComponent implements OnInit {
         })
     }
 
-  } 
+  }
+  //#endregion
 
+  //#region Comments
+  getCommentsForPicture(picId:number){
+    this._pictureService.getPictureComments(picId).subscribe(x=>{this.allComments=x;})
+  }
+  createComment(){
+    console.log('I tried to create a comment: '+this.currentCommentText)
+    this._pictureService.postPictureComment(this.picture.pictureID,this.currentCommentText).subscribe(x=>console.log(`create comment result:`,x));
+  }
+
+  //#endregion
 
 }

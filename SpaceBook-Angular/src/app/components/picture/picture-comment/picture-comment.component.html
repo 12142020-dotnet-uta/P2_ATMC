@@ -1,21 +1,41 @@
 <div class="MessageContent">
     <div class="UserComment">
-        <p><strong><a routerLink='/user/1'>UserName1:</a> </strong> User comment 1 <span>Date: 24/01/2020</span></p>
-        <div>
-            <span>Respond to the user</span>
-            <div class="UserSubComment">
-                <!-- <p><strong>UserName1: </strong> User subcomment comment 1 <span>Date: 24/01/2020</span></p> -->
-                <app-picture-sub-comment></app-picture-sub-comment>
-            </div>
+      <p><strong><a routerLink='/user/{{user.userName}}'>{{user.userName}}:</a> </strong><br>
+          {{comment.commentText}} <br>
+          <span>Date: {{comment.date}}</span></p>
+    <div>
+
+<!-- reply button -->
+
+    <div *ngIf="currentlyReplying; else elseBlock">
+      <!-- currently replying -->
+      <div class="row">
+        <div class="col-sm-8 form-group ">
+          <textarea rows=2  class="form-control" [(ngModel)]="currentReplyText" required placeholder="Message text here"></textarea>
+        </div>
+        <div class="col-sm-4">
+            <button class="btn btn-purple" (click)="createComment()"> Reply</button>
+        </div>
+      </div>
+    </div>
+    <ng-template #elseBlock>
+      <button class="btn btn-primary btn-purple" (click)="startReplying()"> Reply</button>
+    </ng-template>
+
+    <div *ngFor="let subcomment of childComments">
+        <div class="UserSubComment">
+            <!-- <p><strong>UserName1: </strong> User subcomment comment 1 <span>Date: 24/01/2020</span></p> -->
+            <app-picture-comment [picture]="picture" [comment]="subcomment" class="UserSubComment"></app-picture-comment>
         </div>
     </div>
+  </div>
 </div>
-<div class="MessageContent">
+<!-- <div class="MessageContent">
     <div class="UserComment">
         <p><strong>UserName2: </strong>User comment 2  <span>Date: 24/01/2020</span></p>
         <span>Respond to the user</span>
             <div class="UserSubComment">
-                <!-- <app-picture-sub-comment></app-picture-sub-comment> -->
+                <app-picture-sub-comment></app-picture-sub-comment>
             </div>
     </div>
-</div>
+</div> -->

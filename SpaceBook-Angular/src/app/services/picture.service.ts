@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PagedResponse } from '../interfaces/paged-response';
 import { Picture } from '../interfaces/picture';
+import { PictureComment } from '../interfaces/picture-comment';
 import { Rating } from '../interfaces/rating';
 
 import { UserPictureViewModel } from "../interfaces/user-picture-view-model";
@@ -14,7 +15,11 @@ import { UserPictureViewModel } from "../interfaces/user-picture-view-model";
 })
 export class PictureService {
   // https://atmcspacebook.azurewebsites.net
-  readonly baseURL:string = "/api/pictures/"
+  readonly baseURL:string = "/api/pictures"
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   constructor(private _http:HttpClient) { }
 
@@ -48,6 +53,20 @@ export class PictureService {
   putPictureUserRating(pictureId:number, rating:number): Observable<number>
   {
     return this._http.put<number>(this.baseURL + `/${pictureId}/Ratings`,rating);
+  }
+
+
+  getPictureComments(pictureId:number):Observable<PictureComment[]>{
+    return this._http.get<PictureComment[]>(`${this.baseURL}/${pictureId}/Comments`)
+  }
+  getCommentChildren(pictureId:number,commentId:number):Observable<PictureComment[]>{
+    return this._http.get<PictureComment[]>(`${this.baseURL}/${pictureId}/Comments/${commentId}/Comments`)
+  }
+  postPictureComment(pictureId:number,commentText:string):Observable<any>{
+    return this._http.post<any>(`${this.baseURL}/${pictureId}/Comments`,`"${commentText}"`,this.httpOptions)
+  }
+  postCommentComment(pictureId:number,commentId:number,commentText:string):Observable<any>{
+    return this._http.post<any>(`${this.baseURL}/${pictureId}/Comments/${commentId}`,`"${commentText}"`,this.httpOptions)
   }
 
 }

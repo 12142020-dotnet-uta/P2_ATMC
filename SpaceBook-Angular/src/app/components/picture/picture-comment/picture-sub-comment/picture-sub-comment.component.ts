@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-picture-sub-comment',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./picture-sub-comment.component.css']
 })
 export class PictureSubCommentComponent implements OnInit {
+  @Input() comment:Comment
 
   constructor() { }
 

@@ -26,7 +26,7 @@ export class UserProfileService {
     searchUsers(searchString: string): Observable<User[]>{
       return this.http.get<User[]>(`${this.usersUrl}/Search?query=${searchString}`)
     }
-    
+
     getLoggedIn(): Observable<User>{
       return this.http.get<User>(`${this.usersUrl}/User`);
     }
@@ -37,6 +37,9 @@ export class UserProfileService {
         return this.http.get<User>(`${this.usersUrl}/User`);
       }
       return this.http.get<User>(`${this.usersUrl}/username/${username}`);
+    }
+    getUserById(userId:string):Observable<User>{
+      return this.http.get<User>(`${this.usersUrl}/Id/${userId}`);
     }
 
     getFollowers(id: string): Observable<User[]>{
