@@ -19,6 +19,7 @@ import { LogInComponent } from './components/user/log-in/log-in.component';
 import { PictureComponent } from './components/picture/picture.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { PictureCommentComponent } from './components/picture/picture-comment/picture-comment.component';
+import { PictureSubCommentComponent } from './components/picture/picture-comment/picture-sub-comment/picture-sub-comment.component';
 
 import { HeroImageComponent } from './components/hero-image/hero-image.component';
 
@@ -71,6 +72,7 @@ import { UserSearchComponent } from './components/user-search/user-search.compon
     PictureComponent,
     ProfileComponent,
     PictureCommentComponent,
+    PictureSubCommentComponent,
     MyProfileComponent,
     FavoritesComponent,
     EditUserDialogComponent,

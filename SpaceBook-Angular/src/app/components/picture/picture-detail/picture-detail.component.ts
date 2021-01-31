@@ -17,7 +17,6 @@ export class PictureDetailComponent implements OnInit {
   picture:Picture;
 
   currentCommentText:string
-  currentlyCommenting:boolean=false
 
   allComments:PictureComment[]=[]
   favorites:Favorite[]=[]
@@ -40,7 +39,7 @@ export class PictureDetailComponent implements OnInit {
         });
 
     this.getLoggedIn();
-
+    
   }
 
   getPicture(picId:number):void{
@@ -107,11 +106,8 @@ export class PictureDetailComponent implements OnInit {
     this._pictureService.getPictureComments(picId).subscribe(x=>{this.allComments=x;})
   }
   createComment(){
-    this.currentlyCommenting=false;
-    this._pictureService.postPictureComment(this.picture.pictureID,this.currentCommentText).subscribe(x=>this.getCommentsForPicture(this.picture.pictureID));
-  }
-  startCommenting(){
-    this.currentlyCommenting=true;
+    console.log('I tried to create a comment: '+this.currentCommentText)
+    this._pictureService.postPictureComment(this.picture.pictureID,this.currentCommentText).subscribe(x=>console.log(`create comment result:`,x));
   }
 
   getLoggedIn(): void{
@@ -119,7 +115,7 @@ export class PictureDetailComponent implements OnInit {
   }
 
   postFavorite(userId:string, picId:number){
-    this._userProfileService.postFavorite(userId, picId).subscribe(x=>this.getFavorites(this.picture.pictureID));
+    this._userProfileService.postFavorite(userId, picId).subscribe();
     let favorite: Favorite;
     this.favorites.push(favorite);
   }
