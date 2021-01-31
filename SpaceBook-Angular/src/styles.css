@@ -60,6 +60,18 @@ nav {
   font-family: "Bebas Neue", cursive;
 }
 
+button {
+  font-family: "Bebas Neue", cursive;
+}
+
+button.btn.btn-secondary {
+  font-family: "Bebas Neue", cursive;
+}
+
+button.btn.btn-success {
+  font-family: "Bebas Neue", cursive;
+}
+
 html,
 body {
   height: 100%;

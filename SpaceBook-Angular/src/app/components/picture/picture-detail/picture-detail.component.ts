@@ -47,6 +47,7 @@ export class PictureDetailComponent implements OnInit {
   }
 
   getFavorites(picId:number){
+    this.favorites = [];
     this._pictureService.getFavorites(picId).subscribe(x=>{this.favorites = x;});
   }
 
