@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PictureCommentComponent } from './picture-comment.component';
@@ -8,7 +9,8 @@ describe('PictureCommentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PictureCommentComponent ]
+      declarations: [ PictureCommentComponent ],
+      imports: [HttpClientModule],
     })
     .compileComponents();
   });

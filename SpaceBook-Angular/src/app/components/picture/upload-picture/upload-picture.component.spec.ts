@@ -28,11 +28,13 @@ describe('UploadPictureComponent', () => {
       providers: [{provide: PictureService, useValue: mockPictureService}]
     })
     .compileComponents();
+  });
+  
+  beforeEach( () => {
     fixture = TestBed.createComponent(UploadPictureComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
+  })
 
   it('should create', () => {
     expect(component).toBeTruthy();

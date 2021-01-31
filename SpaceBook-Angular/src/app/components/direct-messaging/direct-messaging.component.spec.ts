@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DirectMessagingComponent } from './direct-messaging.component';
@@ -8,7 +9,8 @@ describe('DirectMessagingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DirectMessagingComponent ]
+      declarations: [ DirectMessagingComponent ],
+      imports: [HttpClientModule],
     })
     .compileComponents();
   });
