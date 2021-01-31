@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { switchMap } from 'rxjs/operators'
 
-import { Observable, of } from 'rxjs';
+
+
+import { Observable, of, timer } from 'rxjs';
 import {User} from '../interfaces/user';
 import {Follow} from '../interfaces/follow';
 import {Picture} from '../interfaces/picture';
@@ -33,14 +36,19 @@ export class MessageService {
       return this.http.get<User[]>(`${this.messageUrl}/users`);
     }
 
+
+
     getMessagesBetweenUser(userId: string): Observable<Message[]>{
-      return this.http.get<Message[]>(`${this.messageUrl}/User/${userId}`)
+
+      return  this.http.get<Message[]>(`${this.messageUrl}/User/${userId}`);
     }
 
     postMessageToUser(userId: string, message: string): Observable<any>{
       return this.http.post<any>(`${this.messageUrl}/User/${userId}`, `"${message}"`, this.httpOptions);
 
     }
+
+
 
 
 }

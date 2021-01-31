@@ -3,6 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MessageService } from 'src/app/services/message.service';
 import { Message } from 'src/app/interfaces/message';
 import { User } from 'src/app/interfaces/user';
+import { Observable, of, timer } from 'rxjs';
+import { UserProfileService } from 'src/app/services/user-profile.service';
 
 @Component({
   selector: 'app-direct-messaging',
@@ -18,11 +20,14 @@ export class DirectMessagingComponent implements OnInit {
 
   // messagesArr = [];
 
-  constructor(private messageService: MessageService) { }
+  constructor(private messageService: MessageService, private userService: UserProfileService) { }
 
   ngOnInit(): void {
     this.messageService.getMessages()
     .subscribe(data => this.message = data);
+
+
+      this.getUsersInConversation()
   }
 
 
@@ -31,15 +36,51 @@ export class DirectMessagingComponent implements OnInit {
     .subscribe(data => this.users = data);
   }
 
-  getMessagesBetweenUser(userId: string): void {
-    this.messageService.getMessagesBetweenUser(userId)
-    .subscribe(data => this.messages = data);
+  interval: any;
+
+  startTimer() {
+    this.interval = setInterval(() => {
+
+    },1000)
   }
+
+  pauseTimer() {
+    clearInterval(this.interval);
+  }
+
+  getMessagesBetweenUser(userId: string): void {
+    clearInterval(this.interval);
+    this.interval = setInterval(() => {
+      this.messageService.getMessagesBetweenUser(userId)
+      .subscribe(data => this.messages = data);
+    },1000)
+
+    // this.messageService.getMessagesBetweenUser(userId)
+    // .subscribe(data => this.messages = data);
+
+
+    this.currentlyMessaging = userId;
+  }
+
+  currentlyMessaging: string;
+
+  currentMessageText: string = "";
 
   postMessageToUser(userId: string, message: string): void {
     this.messageService.postMessageToUser(userId, message)
     .subscribe(data => this.message = data);
+
+    this.currentMessageText = "";
+
   }
+
+  loggedIn: User;
+
+  getLoggedIn(): void{
+    this.userService.getLoggedIn().subscribe(loggedIn => {this.loggedIn = loggedIn});
+  }
+
+
 
 }
 
