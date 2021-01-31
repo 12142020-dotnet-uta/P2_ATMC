@@ -16,8 +16,8 @@ export class AppComponent {
   loggedIn: User = new User();
 
 
-  constructor(private _userProfileService: UserProfileService, private router: Router) { 
-    
+  constructor(private _userProfileService: UserProfileService, private router: Router) {
+
   }
 
   ngOnInit(): void {
@@ -25,7 +25,7 @@ export class AppComponent {
   }
 
   getLoggedIn(): void{
-    this._userProfileService.getLoggedIn().subscribe(loggedIn => {this.loggedIn = loggedIn});
+    this._userProfileService.getLoggedIn().subscribe(loggedIn => {this.loggedIn = loggedIn;console.log('logged in',loggedIn)});
   }
 
   logout(){
