@@ -1,10 +1,13 @@
+<br/>
 <div class="jumbotron">
   <h1 class="display-4">NASA Photo of the Day</h1>
-  <div><p class="lead">{{photos.title}}</p></div>
+  <div><h3>{{photos.title}}</h3></div>
   <hr class="my-4">
-  <div> <a class="btn" (click)="goToPictureDetails()"><img src={{photos.imageURL}} id="jumboImage"></a></div>
-  <hr>
-  <div><p class="lead">{{photos.description}}</p></div>
+  <div class="row">
+    <div class="col-6"><a class="btn" (click)="goToPictureDetails()"><img src={{photos.imageURL}} id="jumboImage"></a></div>
+    <div class="col-6"><p class="desc">{{photos.description}}</p></div>
+  </div>
+  <hr class="my-4">
   <h3>Rate picture</h3>
   <ngb-rating style="display: block;" [(rate)]="currentRate" (rateChange)='AddRatingToPicture()' [max]='5'></ngb-rating>
     <!-- <a class="btn btn-primary btn-lg" href="#" role="button" >Add to collection</a> -->
