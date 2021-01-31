@@ -37,8 +37,8 @@ export class HeroImageComponent implements OnInit {
     }
 
     goToPictureDetails(){
-      this.router.navigateByUrl('/picture/'+this.picture.pictureID);
-      console.log('going to picture details page for '+this.picture.pictureID);
+      this.router.navigateByUrl('/picture/'+this.photos.pictureID);
+      console.log('going to picture details page for '+this.photos.pictureID);
     }
 
     getPictureGeneralRating() :void
