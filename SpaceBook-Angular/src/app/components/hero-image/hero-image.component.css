@@ -1,6 +1,7 @@
 #jumboImage {
   height: 300px;
   Width: 450px;
+  border: black solid 2px;
 }
 
 .jumbotron {

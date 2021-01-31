@@ -21,3 +21,8 @@ div  a{
 div a:hover{
     color: #794d60;
 }
+
+.btn-purple{
+  background-color:#794d60;
+  border-color: #180f13;
+}

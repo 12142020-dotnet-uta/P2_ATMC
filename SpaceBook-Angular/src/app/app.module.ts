@@ -56,6 +56,7 @@ import { EditUserDialogComponent } from './components/user/my-profile/edit-user-
 import { MessageUserDialogComponent } from './components/user/profile/message-user-dialog/message-user-dialog.component';
 import { FollowersDialogComponent } from './components/user/followers-dialog/followers-dialog.component';
 import { FollowingDialogComponent } from './components/user/following-dialog/following-dialog.component';
+import { UserSearchComponent } from './components/user-search/user-search.component';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import { FollowingDialogComponent } from './components/user/following-dialog/fol
     MessageUserDialogComponent,
     FollowersDialogComponent,
     FollowingDialogComponent,
+    UserSearchComponent,
 
   ],
   imports: [

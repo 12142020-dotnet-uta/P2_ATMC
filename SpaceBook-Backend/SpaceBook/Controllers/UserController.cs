@@ -6,6 +6,7 @@ using SpaceBook.Models;
 using SpaceBook.Repository;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
@@ -45,6 +46,23 @@ namespace SpaceBook.Controllers
         public async Task<ActionResult> GetAllUsers()
         {
                 return Ok(await _userRepo.GetAllUsers());
+        }
+        [HttpGet("Search")]
+        public async Task<ActionResult> GetSearchedUsers([FromQuery(Name = "query")] string searchString)
+        {
+            IEnumerable<ApplicationUser> users = await _userRepo.GetAllUsers();
+            List<ApplicationUser> usersSearched = new List<ApplicationUser>();
+            foreach (ApplicationUser u in users)
+            {
+                if (u.UserName.Contains(searchString, StringComparison.OrdinalIgnoreCase) || 
+                        u.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase) || 
+                            u.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase) || 
+                                u.Email.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                {
+                    usersSearched.Add(u);
+                }
+            }
+            return Ok(usersSearched);
         }
 
         [Authorize]

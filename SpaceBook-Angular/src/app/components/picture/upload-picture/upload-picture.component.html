@@ -1,25 +1,28 @@
 <div class="row">
     <div class="col-md-3"></div>
-    <div class="col-md-6">
-        <h2>Upload your Photo</h2>
+    <div class="col-md-6 pt-3">
+        <h2 class="text-center">Upload your Photo</h2>
          <div class="form-group">
-            <label for="txtTitle">Title</label>
+            <label for="txtTitle"><h5>Title</h5></label>
             <input type="text" class="form-control" id="txtTitle" placeholder="Title of the picture" [(ngModel)]="pictureToUpload.title">
             <!-- [(ngModel)]="pictureToUpload.txtTitle" -->
             <!-- {{pictureToUpload.title}} -->
-            <label for="txtDescription">Description</label>
+            <br/>
+            <label for="txtDescription"><h5>Description</h5></label>
             <textarea class="form-control" id="txtDescription" placeholder="Description of the picture" rows="5" [(ngModel)]="pictureToUpload.description"></textarea>
             <!-- [(ngModel)]="pictureToUpload.txtDescription" -->
             <!-- {{pictureToUpload.description}} -->
-            <br>
+            <br/>
+            <label for="Image"><h5>File Upload</h5></label>
             <div class="custom-file">
+                
                 <input type="file" #file class="custom-file-input " id="Image" (change)='uploadFile(file.files)' > <!--(change)='uploadFile(file.files)'-->
                 <label for="Image" class="custom-file-label" accept="image/*" >{{lblImage}}</label>
             </div>
-            <br>
+            <br/>
             <!-- <label for="txtPassword">Password</label>
             <input type="password" class="form-control" id="txtPassword" placeholder="Password"> -->
-            <br>
+            <br/>
             <button type="button" class="btn btn-primary btn-block" (click)="UploadUserPicture()">Upload Picture</button> <!--(click)='file.click()'-->
         </div>
 

@@ -1,0 +1,38 @@
+<div class="container">
+<h1 class="pt-3 text-center">User Search</h1>
+<div class="form-inline row pt-3">
+    <div class="form-group">
+        <input type="text" [(ngModel)]="searchString" class="form-control" id="txtSearchUser" placeholder="Name of user">
+    </div>
+    <button (click)="getUsersSearch()" class="btn btn-secondary">Search</button>
+
+</div>
+<br/>
+<div class="row">
+        <table class="col table table-striped table-dark rounded">
+            <thead>
+                <th>
+                    Username
+                </th>
+                <th>
+                    First Name
+                </th>
+                <th>
+                    Last Name
+                </th>
+                <th>
+                    Email
+                </th>
+            </thead>
+            <tbody>
+                <tr [routerLink]="['/', 'user', user.userName]" *ngFor="let user of searchResult">
+                    <td>{{user.userName}}</td>
+                    <td>{{user.firstName}}</td>
+                    <td>{{user.lastName}}</td>
+                    <td>{{user.email}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

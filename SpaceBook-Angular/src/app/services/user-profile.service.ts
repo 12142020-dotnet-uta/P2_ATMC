@@ -23,6 +23,10 @@ export class UserProfileService {
   constructor(
     private http: HttpClient) { }
 
+    searchUsers(searchString: string): Observable<User[]>{
+      return this.http.get<User[]>(`${this.usersUrl}/Search?query=${searchString}`)
+    }
+
     getLoggedIn(): Observable<User>{
       return this.http.get<User>(`${this.usersUrl}/User`);
     }
@@ -33,6 +37,9 @@ export class UserProfileService {
         return this.http.get<User>(`${this.usersUrl}/User`);
       }
       return this.http.get<User>(`${this.usersUrl}/username/${username}`);
+    }
+    getUserById(userId:string):Observable<User>{
+      return this.http.get<User>(`${this.usersUrl}/Id/${userId}`);
     }
 
     getFollowers(id: string): Observable<User[]>{
@@ -53,6 +60,10 @@ export class UserProfileService {
 
     getFavorites(id: string): Observable<Picture[]>{
       return this.http.get<Picture[]>(`api/Users/Id/${id}/Favorites`);
+    }
+
+    postFavorite(userId: string, pictureId: number): Observable<any>{
+      return this.http.post<any>(`api/Users/Id/${userId}/Favorites`, pictureId);
     }
 
     removeFavorite(userId: string, pictureId: number): Observable<any>{
