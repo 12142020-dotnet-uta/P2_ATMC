@@ -1,4 +1,5 @@
-<div class="MessageContent">
+<div class="UserCommentBorder">
+<div class="MessageContent ">
     <div class="UserComment">
       <p><strong><a routerLink='/user/{{user.userName}}'>{{user.userName}}:</a> </strong><br>
           {{comment.commentText}} <br>
@@ -23,12 +24,11 @@
     </ng-template>
 
     <div *ngFor="let subcomment of childComments">
-        <div class="UserSubComment">
             <!-- <p><strong>UserName1: </strong> User subcomment comment 1 <span>Date: 24/01/2020</span></p> -->
             <app-picture-comment [picture]="picture" [comment]="subcomment" class="UserSubComment"></app-picture-comment>
-        </div>
     </div>
   </div>
+</div>
 </div>
 <!-- <div class="MessageContent">
     <div class="UserComment">
