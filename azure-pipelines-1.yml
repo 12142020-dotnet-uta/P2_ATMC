@@ -19,10 +19,6 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
-# - script: |
-#     npm install
-#     npm run build
-#   displayName: 'npm install and build'
 - task: Npm@1
   displayName: 'NPM Install'
   inputs:
@@ -34,23 +30,6 @@ steps:
   inputs:
     workingDir: $(angularFolder)/
     verbose: true
-
-# - task: Npm@1
-#   displayName: 'Build Angular'
-#   inputs:
-#     command: custom
-#     workingDir: $(angularFolder)
-#     verbose: true
-#     customCommand: 'run build'
-
-# - task: Npm@1
-#   displayName: 'Publish Angular'
-#   inputs:
-#     command: 'publish'
-#     workingDir: $(angularFolder)
-#     verbose: true
-#     publishRegistry: 'useFeed'
-#     publishFeed: '0afcca8a-a29e-463f-b238-27cf1b8b59db'
 
 - task: Npm@1
   displayName: 'NPM Install Angular CLI'
@@ -73,30 +52,7 @@ steps:
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
 
-# - task: ArchiveFiles@2
-#   inputs:
-#     rootFolderOrFile: '$(angularFolder)/dist/SpaceBook-Angular/'
-#     includeRootFolder: false
-#     archiveType: 'zip'
-#     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-#     replaceExistingArchive: true
-#     verbose: true
 
-# - task: AzureRmWebAppDeployment@4
-#   inputs:
-#     ConnectionType: 'AzureRM'
-#     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
-#     appType: 'webApp'
-#     WebAppName: 'space-book'
-#     packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-#     enableCustomDeployment: true
-#     DeploymentType: 'webDeploy'
-#     RemoveAdditionalFilesFlag: true
-# - task: AzureAppServiceManage@0
-#   inputs:
-#     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
-#     Action: 'Restart Azure App Service'
-#     WebAppName: 'space-book'
 - task: AzureAppServiceManage@0
   inputs:
     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
@@ -113,14 +69,7 @@ steps:
     ResourceGroupName: 'ATMC'
     SlotName: 'production'
     packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    # AppSettings: '-WEBSITE_TIME_ZONE "Eastern Standard Time"'
-# - task: AzureRmWebAppDeployment@4
-#   inputs:
-#     ConnectionType: 'AzureRM'
-#     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
-#     appType: 'webApp'
-#     WebAppName: 'space-book'
-#     packageForLinux: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+
 - task: AzureAppServiceManage@0
   inputs:
     azureSubscription: 'Trevor Subscription(d4f01992-52b9-4047-8f7d-34d2e08c6987)'
