@@ -56,11 +56,11 @@ namespace SpaceBook.Controllers
                 List<ApplicationUser> userList = new List<ApplicationUser>();
                 foreach(Message m in messages)
                 {
-                    if(m.Sender != loggedIn)
+                    if(m.Sender != loggedIn && !userList.Contains(m.Sender))
                     {
                         userList.Add(m.Sender);
                     }
-                    else if(m.Recipient != loggedIn) {
+                    else if(m.Recipient != loggedIn && !userList.Contains(m.Recipient)) {
                         userList.Add(m.Recipient);
                     }
                 }
