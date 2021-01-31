@@ -1,9 +1,13 @@
 #jumboImage {
   height: 300px;
-  Width: 450px;
+  width: 450px;
   border: black solid 2px;
 }
 
 .jumbotron {
   background: #563542;
+}
+
+.desc {
+  font-size: small;
 }
