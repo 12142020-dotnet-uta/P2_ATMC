@@ -21,16 +21,43 @@ export class PictureComponent implements OnInit {
   userAlreadyRated:boolean = false;
   currentRate = 0;
 
+  pictureURL:string;
+
   constructor(private _pictureService:PictureService, private router:Router, private _dialog: MatDialog) { }
 
   ngOnInit(): void {
     //set picture
     this.isPicture = this.picture.mediaType==MediaType.image;
+
     this.getPictureGeneralRating()
+    this.checkPicture()
+
+
+
   }
   goToPictureDetails(){
     this.router.navigateByUrl('/picture/'+this.picture.pictureID);
     console.log('going to picture details page for '+this.picture.pictureID);
+  }
+  checkPicture(){
+    this.isPicture = this.picture.mediaType==MediaType.image;
+    this.pictureURL = this.picture.imageURL;
+    if(!this.isPicture){
+      this.getVideoThumbnail()
+    }
+
+  }
+  getVideoThumbnail(){
+    //pictureURL should be set
+    let pictureId:string;
+    if(this.pictureURL.startsWith('https://www.youtube.com/embed/')){
+      pictureId = this.pictureURL.replace('https://www.youtube.com/embed/','')
+      pictureId = pictureId.replace('?rel=0','')
+    }
+    if(pictureId)
+    //youtube thumbnail
+    this.pictureURL=`https://img.youtube.com/vi/${pictureId}/0.jpg`
+
   }
 
   getPictureGeneralRating() :void
@@ -77,7 +104,7 @@ export class PictureComponent implements OnInit {
           console.log(dataOnError);
         });
     }
-  } 
+  }
 
   openDialog(message: string):void{
     const dialogRef = this._dialog.open(PictureRatingDialogComponent, {
