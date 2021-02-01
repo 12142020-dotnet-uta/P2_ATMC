@@ -25,6 +25,7 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'TeamATMC_P2_ATMC'
     projectName: 'P2_ATMC'
+    extraProperties: sonar.exclusions="**/Migrations/**,**/Controllers/**,**/Startup.cs"
 
 - task: NuGetToolInstaller@1
 
