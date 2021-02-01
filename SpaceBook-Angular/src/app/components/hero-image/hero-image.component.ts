@@ -32,7 +32,7 @@ export class HeroImageComponent implements OnInit {
     this.heroService.getDailyPhoto().subscribe(data => this.photos = data);
 
 
-    this.isPicture = this.picture.mediaType==MediaType.Image;
+    this.isPicture = this.picture.mediaType==MediaType.image;
     this.getPictureGeneralRating()
     }
 

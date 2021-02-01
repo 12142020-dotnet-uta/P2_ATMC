@@ -25,7 +25,7 @@ export class PictureComponent implements OnInit {
 
   ngOnInit(): void {
     //set picture
-    this.isPicture = this.picture.mediaType==MediaType.Image;
+    this.isPicture = this.picture.mediaType==MediaType.image;
     this.getPictureGeneralRating()
   }
   goToPictureDetails(){
