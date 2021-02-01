@@ -13,7 +13,7 @@ import { DialogUserEdit } from '../interfaces/dialog-user-edit';
 })
 export class UserProfileService {
 
-  private usersUrl = 'api/Users';  // URL to web api
+  private usersUrl = '/api/Users';  // URL to web api
   private followUrl = 'api/Users/id'
 
   httpOptions = {
@@ -43,34 +43,34 @@ export class UserProfileService {
     }
 
     getFollowers(id: string): Observable<User[]>{
-      return this.http.get<User[]>(`api/Users/Id/${id}/Followers`);
+      return this.http.get<User[]>(`/api/Users/Id/${id}/Followers`);
     }
 
     getFollowed(id: string): Observable<User[]>{
-      return this.http.get<User[]>(`api/Users/Id/${id}/Followed`);
+      return this.http.get<User[]>(`/api/Users/Id/${id}/Followed`);
     }
 
     postFollow(id: string, loggedInId: string): Observable<any>{
-      return this.http.post<any>(`api/Users/Id/${id}/Follow`, loggedInId);
+      return this.http.post<any>(`/api/Users/Id/${id}/Follow`, loggedInId);
     }
 
     deleteFollow(id:string): Observable<any>{
-      return this.http.delete<any>(`api/Users/Id/${id}/Follow`);
+      return this.http.delete<any>(`/api/Users/Id/${id}/Follow`);
     }
 
     getFavorites(id: string): Observable<Picture[]>{
-      return this.http.get<Picture[]>(`api/Users/Id/${id}/Favorites`);
+      return this.http.get<Picture[]>(`/api/Users/Id/${id}/Favorites`);
     }
 
     postFavorite(userId: string, pictureId: number): Observable<any>{
-      return this.http.post<any>(`api/Users/Id/${userId}/Favorites`, pictureId);
+      return this.http.post<any>(`/api/Users/Id/${userId}/Favorites`, pictureId);
     }
 
     removeFavorite(userId: string, pictureId: number): Observable<any>{
-      return this.http.request('delete', `api/Users/Id/${userId}/Favorites`, { body: pictureId });
+      return this.http.request('delete', `/api/Users/Id/${userId}/Favorites`, { body: pictureId });
     }
     putUser(editUser: DialogUserEdit): Observable<User>{
-      return this.http.put<User>(`api/Users/Id/${editUser.id}`,editUser);
+      return this.http.put<User>(`/api/Users/Id/${editUser.id}`,editUser);
     }
 
 

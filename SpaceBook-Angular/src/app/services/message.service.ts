@@ -18,7 +18,7 @@ import { DialogMessageUser } from '../interfaces/dialog-message-user';
 })
 export class MessageService {
 
-  private messageUrl = 'api/Messages';  // URL to web api
+  private messageUrl = '/api/Messages';  // URL to web api
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
