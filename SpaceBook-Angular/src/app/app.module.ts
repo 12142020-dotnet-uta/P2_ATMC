@@ -56,6 +56,8 @@ import { MessageUserDialogComponent } from './components/user/profile/message-us
 import { FollowersDialogComponent } from './components/user/followers-dialog/followers-dialog.component';
 import { FollowingDialogComponent } from './components/user/following-dialog/following-dialog.component';
 import { UserSearchComponent } from './components/user-search/user-search.component';
+import { UploadPictureDialogComponent } from './components/picture/upload-picture/upload-picture-dialog/upload-picture-dialog.component';
+import { PictureRatingDialogComponent } from './components/picture/picture-rating-dialog/picture-rating-dialog.component';
 
 
 @NgModule({
@@ -78,6 +80,8 @@ import { UserSearchComponent } from './components/user-search/user-search.compon
     FollowersDialogComponent,
     FollowingDialogComponent,
     UserSearchComponent,
+    UploadPictureDialogComponent,
+    PictureRatingDialogComponent,
 
   ],
   imports: [

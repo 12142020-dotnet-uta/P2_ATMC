@@ -6,6 +6,8 @@ import { PictureService } from 'src/app/services/picture.service';
 import { Router, RouterLink } from '@angular/router';
 import { PictureDetailComponent } from './picture-detail/picture-detail.component';
 import { isImportDeclaration } from 'typescript';
+import { MatDialog } from '@angular/material/dialog';
+import { PictureRatingDialogComponent } from './picture-rating-dialog/picture-rating-dialog.component';
 
 @Component({
   selector: 'app-picture',
@@ -19,7 +21,7 @@ export class PictureComponent implements OnInit {
   userAlreadyRated:boolean = false;
   currentRate = 0;
 
-  constructor(private _pictureService:PictureService, private router:Router) { }
+  constructor(private _pictureService:PictureService, private router:Router, private _dialog: MatDialog) { }
 
   ngOnInit(): void {
     //set picture
@@ -54,10 +56,12 @@ export class PictureComponent implements OnInit {
       console.log("Just update the rating");
       this._pictureService.putPictureUserRating(this.picture.pictureID, this.currentRate)
         .subscribe( dataOnSuccess => {
-          alert("Rating updated successfully");
+          // alert("Rating updated successfully");
+          this.openDialog('Rating updated successfully');
           this.currentRate = dataOnSuccess;
         }, dataOnError => {
           //error handling
+          console.log(dataOnError);
         });
     }
     else{
@@ -65,12 +69,27 @@ export class PictureComponent implements OnInit {
       console.log(this.picture.pictureID, this.currentRate);
       this._pictureService.postPictureUserRating(this.picture.pictureID,this.currentRate)
         .subscribe( dataOnSuccess => {
-          alert("Rating added successfully");
+          // alert("Rating added successfully");
+          this.openDialog('Rating added successfully')
           this.currentRate = dataOnSuccess;
         }, dataOnError => {
           //error handling
+          console.log(dataOnError);
         });
     }
   } 
 
+  openDialog(message: string):void{
+    const dialogRef = this._dialog.open(PictureRatingDialogComponent, {
+      width: '400px',
+      data: {message: message}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+
+  }
+
 }
+

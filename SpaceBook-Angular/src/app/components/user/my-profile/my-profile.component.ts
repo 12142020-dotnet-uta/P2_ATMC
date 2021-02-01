@@ -9,6 +9,7 @@ import { DialogUserEdit } from '../../../interfaces/dialog-user-edit';
 import { MatDialog } from '@angular/material/dialog';
 import { FollowingDialogComponent } from '../following-dialog/following-dialog.component';
 import { FollowersDialogComponent } from '../followers-dialog/followers-dialog.component';
+import { UploadPictureDialogComponent } from '../../picture/upload-picture/upload-picture-dialog/upload-picture-dialog.component';
 
 @Component({
   selector: 'app-my-profile',
@@ -84,18 +85,28 @@ export class MyProfileComponent implements OnInit {
           
           if(result)
           {
-            alert("User updaded!");
+            // alert("User updaded!");
+            this.openDialogText("User updaded!");
             this.getLoggedIn().then( (result) => {
               console.log(result);
               this.user = result;
             })
           }
           else{
-            alert("Invalid information.");
+            this.openDialogText("Invalid information.");
+            // alert("Invalid information.");
           }
 
         } )
       
+    });
+  }
+
+  //display the Component Dialog
+  openDialogText(message:string): void{
+    const dialogRef = this.dialog.open(UploadPictureDialogComponent, {
+      width: '400px',
+      data: { message: message },
     });
   }
 
