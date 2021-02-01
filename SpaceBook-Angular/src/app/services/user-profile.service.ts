@@ -14,7 +14,7 @@ import { DialogUserEdit } from '../interfaces/dialog-user-edit';
 export class UserProfileService {
 
   private usersUrl = '/api/Users';  // URL to web api
-  private followUrl = 'api/Users/id'
+  private followUrl = '/api/Users/id'
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
