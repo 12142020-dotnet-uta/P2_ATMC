@@ -3,8 +3,12 @@
     <div class="col-md-1"></div>
     <div class="col-md-5">
         <div class="imgContainer">
-            <img src="{{picture.imageURL}}" alt="" class="img-fluid">
-
+            <img *ngIf="picture.mediaType == 0" src="{{picture.imageURL}}" alt="" class="img-fluid">
+            <embed wmode="transparent"
+            type="video/mp4"
+            width="100%" height="100%"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen *ngIf="picture.mediaType == 1" [src]="safeURL"/>
         </div>
         <br>
         <!-- <button>Fav It</button> -->

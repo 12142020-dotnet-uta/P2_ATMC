@@ -4,6 +4,8 @@ import { UserLogIn } from "../../../interfaces/user-log-in";
 import { UserRegister } from "../../../interfaces/user-register";
 import { UserAuthService } from "../../../services/user-auth.service";
 import { Router } from "@angular/router"
+import { MatDialog } from '@angular/material/dialog';
+import { PictureRatingDialogComponent } from '../../picture/picture-rating-dialog/picture-rating-dialog.component';
 
 
 @Component({
@@ -14,7 +16,7 @@ import { Router } from "@angular/router"
 export class LogInComponent implements OnInit {
   public userRegister: UserRegister = new UserRegister();
   public userLogin: UserLogIn = new UserLogIn();
-  constructor( private _userAuthService: UserAuthService, private router: Router ) { }
+  constructor( private _userAuthService: UserAuthService, private router: Router, private _dialog: MatDialog) { }
 
   ngOnInit(): void {
 
@@ -61,7 +63,9 @@ export class LogInComponent implements OnInit {
     // }
     
     this._userAuthService.postRegisterAutentication(this.userRegister)
-      .subscribe(registerUserResponse => { console.log(registerUserResponse); this.router.navigateByUrl('/authentication').then( () => { window.location.reload() } ); } );
+      .subscribe(registerUserResponse => { 
+        console.log(registerUserResponse); 
+        this.openDialog("Register Successful", '/authentication');} );
     console.log( this.userRegister );
     
   }
@@ -84,14 +88,23 @@ export class LogInComponent implements OnInit {
     let result :any = this._userAuthService.postLoginAutentication(this.userLogin)
         .subscribe( ( userAutenticated ) => {
           console.log(userAutenticated);
-
+          this.openDialog("Login Successful", ''); 
           this._userAuthService.setSession(userAutenticated);
+          console.log(localStorage.getItem('id_token')); 
+          });
+  }
 
-          console.log(localStorage.getItem('id_token'));
-          this.router.navigateByUrl('').then(() => {
-            window.location.reload()});
+  openDialog(message: string, route?: string):void{
+    const dialogRef = this._dialog.open(PictureRatingDialogComponent, {
+      width: '400px',
+      data: {message: message}
+    });
 
-        } )
+    dialogRef.afterClosed().subscribe(result => {
+       this.router.navigateByUrl(route)
+            .then(() => {window.location.reload()}) 
+    });
+
   }
 
 }

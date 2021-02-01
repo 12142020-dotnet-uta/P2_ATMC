@@ -9,6 +9,8 @@ import { Favorite } from 'src/app/interfaces/favorite';
 import { User } from 'src/app/interfaces/user';
 import { MatDialog } from '@angular/material/dialog';
 import { PictureRatingDialogComponent } from '../picture-rating-dialog/picture-rating-dialog.component';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MediaType } from 'src/app/interfaces/media-type';
 
 @Component({
   selector: 'app-picture-detail',
@@ -26,10 +28,10 @@ export class PictureDetailComponent implements OnInit {
 
   currentRate:number = 0;
   userAlreadyRated:boolean = false;
-
+  safeURL:any;
   loggedIn:User;
 
-  constructor(private _pictureService:PictureService, private _userProfileService:UserProfileService, private route:ActivatedRoute, private _dialog: MatDialog) { }
+  constructor(private sanitizer: DomSanitizer, private _pictureService:PictureService, private _userProfileService:UserProfileService, private route:ActivatedRoute, private _dialog: MatDialog) { }
   ngOnInit(): void {
     this.route.params.subscribe( params =>
       {
@@ -39,14 +41,21 @@ export class PictureDetailComponent implements OnInit {
          this.getPictureUserRating(params['id']);
          this.getCommentsForPicture(params['id']);
          this.getFavorites(params['id']);
+         
+          
         });
 
     this.getLoggedIn();
+    
 
   }
 
   getPicture(picId:number):void{
-    this._pictureService.getPictureDetails(picId).subscribe(x=>{this.picture = x;});
+    this._pictureService.getPictureDetails(picId).subscribe(x=>{this.picture = x; if(this.picture.mediaType == MediaType.video){
+      console.log("entering video if statement")
+      this.safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(this.picture.imageURL);
+      console.log(`url is: ${this.safeURL}`);
+  }});
   }
 
   getFavorites(picId:number){

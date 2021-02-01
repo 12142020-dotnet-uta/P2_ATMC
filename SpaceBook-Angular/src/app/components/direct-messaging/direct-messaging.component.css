@@ -19,6 +19,9 @@ p {
 h3 {
   text-align: center;
 }
+h4 {
+  color: black;
+}
 
 #avatar {
   height: 75px;
