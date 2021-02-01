@@ -118,12 +118,12 @@ namespace SpaceBook.Controllers
             var username = claim.Value;
 
 
-            bool result = await _pictureBusinessLogic.CreateUserPicture(userPicture, username);
+            int result = await _pictureBusinessLogic.CreateUserPicture(userPicture, username);
 
-            if(result)
+            if(result > 0)
                 return Accepted(result);
             else
-                return BadRequest(result);
+                return BadRequest("There was an errro when saving the Picture, review the Log message.");
 
         }
 

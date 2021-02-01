@@ -38,8 +38,8 @@ export class PictureService {
   }
 
 
-  PostUserPicture(userPicture: UserPictureViewModel ) : Observable<boolean> {
-    return this._http.post<boolean>(this.baseURL, userPicture);
+  PostUserPicture(userPicture: UserPictureViewModel ) : Observable<number> {
+    return this._http.post<number>(this.baseURL, userPicture);
   }
 
   getPictureGeneralRating(pictureid: number):Observable<number>{

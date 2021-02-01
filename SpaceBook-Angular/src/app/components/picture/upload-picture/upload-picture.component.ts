@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { UserPictureViewModel } from 'src/app/interfaces/user-picture-view-model';
 import { PictureService } from 'src/app/services/picture.service';
 import { Picture } from "../../../interfaces/picture";
@@ -26,7 +27,7 @@ export class UploadPictureComponent implements OnInit {
   lblImage:string = "Image file";
   isPictureUploaded:boolean = false;
 
-  constructor( private _pictureService: PictureService, private dialog:MatDialog ) { }
+  constructor( private _pictureService: PictureService, private dialog:MatDialog, private router:Router ) { }
 
   ngOnInit(): void {
   }
@@ -80,11 +81,13 @@ export class UploadPictureComponent implements OnInit {
       this._pictureService.PostUserPicture(this.pictureToUpload)
         .subscribe( result => {
 
-          console.log(result);
+          // console.log(result);
           if ( result )
           {
-            this.openDialog("Picture was added successfully")
-            this.isPictureUploaded = true;
+            this.openDialog("Picture was added successfully");
+
+            //result is the picture ID
+            this.router.navigateByUrl(`/picture/${result}`);
           }
           
         },
@@ -107,6 +110,8 @@ export class UploadPictureComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      this.isPictureUploaded = true;
+
     });
   }
 

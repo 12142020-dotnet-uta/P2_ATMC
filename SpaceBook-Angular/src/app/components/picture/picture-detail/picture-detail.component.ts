@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute} from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { Picture } from 'src/app/interfaces/picture';
 import { PictureService } from 'src/app/services/picture.service';
 import { PictureComponent } from '../picture.component';
@@ -31,7 +31,7 @@ export class PictureDetailComponent implements OnInit {
   safeURL:any;
   loggedIn:User;
 
-  constructor(private sanitizer: DomSanitizer, private _pictureService:PictureService, private _userProfileService:UserProfileService, private route:ActivatedRoute, private _dialog: MatDialog) { }
+  constructor(private sanitizer: DomSanitizer, private _pictureService:PictureService, private _userProfileService:UserProfileService, private route:ActivatedRoute, private _dialog: MatDialog, private _route:Router) { }
   ngOnInit(): void {
     this.route.params.subscribe( params =>
       {
@@ -95,6 +95,7 @@ export class PictureDetailComponent implements OnInit {
           this.openDialog("Rating updated successfully");
           this.currentRate = dataOnSuccess;
         }, dataOnError => {
+          this._route.navigateByUrl(`/authentication`);
           //error handling
         });
 
@@ -109,6 +110,7 @@ export class PictureDetailComponent implements OnInit {
           this.currentRate = dataOnSuccess;
         }, dataOnError => {
           //error handling
+          this._route.navigateByUrl(`/authentication`);
         })
     }
 

@@ -88,7 +88,8 @@ export class PictureComponent implements OnInit {
           this.currentRate = dataOnSuccess;
         }, dataOnError => {
           //error handling
-          console.log(dataOnError);
+          // console.log(dataOnError);
+          this.router.navigateByUrl(`/authentication`);
         });
     }
     else{
@@ -101,7 +102,8 @@ export class PictureComponent implements OnInit {
           this.currentRate = dataOnSuccess;
         }, dataOnError => {
           //error handling
-          console.log(dataOnError);
+          // console.log(dataOnError);
+          this.router.navigateByUrl(`/authentication`);
         });
     }
   }

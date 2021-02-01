@@ -141,7 +141,7 @@ namespace SpaceBook.Business
         }
 
         #region User Pictures
-        public async Task<bool> CreateUserPicture(UserPictureViewModel pictureVM, string username)
+        public async Task<int> CreateUserPicture(UserPictureViewModel pictureVM, string username)
         {
 
             //Check to ensure the file type is there: 
@@ -193,8 +193,10 @@ namespace SpaceBook.Business
                 UploadedById = user.Id,
                 UploadedBy = user,
             };
+            await _userPictureRepository.AttemptAddUserPictureToDb(userPicture);
 
-            return await _userPictureRepository.AttemptAddUserPictureToDb(userPicture);
+
+            return picture.PictureID;
         }
 
         /// <summary>
