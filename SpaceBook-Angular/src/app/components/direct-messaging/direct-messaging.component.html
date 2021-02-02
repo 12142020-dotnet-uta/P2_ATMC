@@ -21,7 +21,7 @@
     </div>
     <div id="chat">
       <!-- <form id="textChatForm"> -->
-      <textarea type="text" class="form-control" placeholder="Say hello to your friend!" [(ngModel)]="currentMessageText" id="inputBox"></textarea>
+      <textarea type="text" class="form-control" placeholder="Say hello to your friend!" [(ngModel)]="currentMessageText" id="inputBox" (keypress)="keyPress($event)"></textarea>
       <button (click)="postMessageToUser(currentlyMessaging, currentMessageText)">Submit</button>
     <!-- </form> -->
     </div>
