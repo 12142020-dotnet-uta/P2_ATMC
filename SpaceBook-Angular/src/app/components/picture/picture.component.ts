@@ -100,6 +100,7 @@ export class PictureComponent implements OnInit {
           // alert("Rating added successfully");
           this.openDialog('Rating added successfully')
           this.currentRate = dataOnSuccess;
+          this.userAlreadyRated = true;
         }, dataOnError => {
           //error handling
           // console.log(dataOnError);
