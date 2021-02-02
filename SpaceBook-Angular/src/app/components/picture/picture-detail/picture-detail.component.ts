@@ -94,6 +94,7 @@ export class PictureDetailComponent implements OnInit {
           // alert("Rating updated successfully");
           this.openDialog("Rating updated successfully");
           this.currentRate = dataOnSuccess;
+          this.userAlreadyRated = true;
         }, dataOnError => {
           this._route.navigateByUrl(`/authentication`);
           //error handling
@@ -108,6 +109,7 @@ export class PictureDetailComponent implements OnInit {
           // alert("Rating added successfully");
           this.openDialog("Rating added successfully");
           this.currentRate = dataOnSuccess;
+          this.userAlreadyRated = true;
         }, dataOnError => {
           //error handling
           this._route.navigateByUrl(`/authentication`);
