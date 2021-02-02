@@ -1,3 +1,11 @@
 .card {
   background: #563542;
 }
+
+ul.pagination li {
+  cursor: pointer;
+}
+
+ul.pagination .disabled {
+  cursor: not-allowed;
+}
