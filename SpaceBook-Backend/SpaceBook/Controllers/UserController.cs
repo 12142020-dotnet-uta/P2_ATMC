@@ -137,7 +137,7 @@ namespace SpaceBook.Controllers
                     user.Email = model.Email;
                     user.NormalizedEmail = model.Email.ToUpper();
                 }
-                if (!string.IsNullOrEmpty(model.OldPassword) && !string.IsNullOrEmpty(model.OldPassword))
+                if (!string.IsNullOrEmpty(model.OldPassword) && !string.IsNullOrEmpty(model.NewPassword))
                 {
                     await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
 

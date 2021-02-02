@@ -80,6 +80,15 @@ export class DirectMessagingComponent implements OnInit {
     this.userService.getLoggedIn().subscribe(loggedIn => {this.loggedIn = loggedIn});
   }
 
+  keyPress(event: KeyboardEvent){
+    if(event.key == "Enter")
+    {
+      this.postMessageToUser(this.currentlyMessaging, this.currentMessageText)
+      // this.currentMessageText = "";
+      event.preventDefault();
+    }
+  }
+
 
 
 }
