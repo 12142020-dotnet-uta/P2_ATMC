@@ -23,10 +23,12 @@ a {
   width: 100%;
   background-color: lavenderblush;
   overflow-y: scroll;
+  margin-right: 20px;
 }
 
 #messagebox {
   background-color: lavenderblush;
+  margin-right: 20px;
 }
 
 .MessagingContent::-webkit-scrollbar {

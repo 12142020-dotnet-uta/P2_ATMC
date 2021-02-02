@@ -22,9 +22,9 @@
           </div>
         </div>
         <br/>
-        <div class="row">
+        <div style="margin-bottom: 15px;" class="row">
             <textarea type="text" id="messagebox" class="form-control UserCommentBorder rounded" placeholder="Say hello to your friend!" [(ngModel)]="currentMessageText"></textarea>
-            <button class="btn btn-secondary" *ngIf="currentlyMessaging != undefined" (click)="postMessageToUser(currentlyMessaging, currentMessageText)">Submit</button>
+            <button class="btn btn-secondary" *ngIf="currentlyMessaging != undefined" (click)="postMessageToUser(currentlyMessaging, currentMessageText)">Submit&nbsp;&nbsp;<i class="fas fa-reply"></i></button>
         </div>
       </div>
   </div>
