@@ -26,7 +26,7 @@ export class DirectMessagingComponent implements OnInit {
     this.messageService.getMessages()
     .subscribe(data => this.message = data);
 
-
+      this.getLoggedIn();
       this.getUsersInConversation()
   }
 

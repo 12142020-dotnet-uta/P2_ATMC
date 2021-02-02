@@ -1,28 +1,30 @@
 <br>
-
-<div class="row">
-    <div class="col-md-3 UserContent">
-      <div id="messageWelcome">
-       <h3>Inbox:</h3>
+  <div class="row">
+      <div id="col-3" style="width: 25%;">
+        <div class="container-fluid scrollable">
+            <h2 class="text-center">Inbox</h2>
+            <table class="table table-striped table-dark rounded">
+              <tbody>
+                  <tr *ngFor="let user of users">
+                      <td class="text-center"><a (click)="getMessagesBetweenUser(user.id)">{{user.userName}}</a></td>
+                  </tr>
+              </tbody>
+            </table>
+          </div>
       </div>
-        <div class="messageBox">
-          <h4>Click a username to chat!</h4>
-          <div *ngFor="let user of users"><p class="userName" (click)="getMessagesBetweenUser(user.id)">{{user.userName}}</p></div>
-          <!-- <div><p class="messages" *ngFor="let message of messages">{{message.Text}}</p></div> -->
+      <div class="col-9">
+        <div class="row">
+          <div class="MessagingContent rounded">
+              <div *ngFor="let message of messages">
+                    <p *ngIf="message.sender.userName != loggedIn.userName">&nbsp;{{message.sender.userName}}: {{message.text}}</p>
+                    <p *ngIf="message.sender.userName == loggedIn.userName" style="color: #7b1954; font-weight: bold;">&nbsp;{{message.sender.userName}}: {{message.text}}</p>
+              </div>
+          </div>
+        </div>
+        <br/>
+        <div class="row">
+            <textarea type="text" id="messagebox" class="form-control UserCommentBorder rounded" placeholder="Say hello to your friend!" [(ngModel)]="currentMessageText"></textarea>
+            <button class="btn btn-secondary" *ngIf="currentlyMessaging != undefined" (click)="postMessageToUser(currentlyMessaging, currentMessageText)">Submit</button>
         </div>
       </div>
-
-    </div>
-    <div>
-    <div class="col-md-9 MessagingContent scrollable">
-      <div>
-        <div class="talkBox" *ngFor="let message of messages"><p>{{message.sender.userName}}: {{message.text}}</p></div>
-      </div>
-    </div>
-    <div id="chat">
-      <!-- <form id="textChatForm"> -->
-      <textarea type="text" class="form-control" placeholder="Say hello to your friend!" [(ngModel)]="currentMessageText" id="inputBox"></textarea>
-      <button (click)="postMessageToUser(currentlyMessaging, currentMessageText)">Submit</button>
-    <!-- </form> -->
-    </div>
-</div>
+  </div>
