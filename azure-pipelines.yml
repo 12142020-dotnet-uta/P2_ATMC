@@ -26,8 +26,8 @@ steps:
     projectKey: 'TeamATMC_P2_ATMC'
     projectName: 'P2_ATMC'
     extraProperties: |
-      sonar.exclusions="**/Migrations/*,**/Controllers/*,**/Startup.cs"
-      sonar.coverage.exclusions="**/Migrations/*,**/Controllers/*,**/Startup.cs"
+      sonar.exclusions="**/Migrations/*"
+      sonar.coverage.exclusions="**/Migrations/*"
 
 - task: NuGetToolInstaller@1
 
