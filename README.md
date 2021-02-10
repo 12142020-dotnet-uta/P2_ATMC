@@ -58,11 +58,11 @@ SpaceBook is a social media site for space nerds. SpaceBook allows you to see a 
 
 ---
 ## Usage
-Run both the frontend and the backend at the same time to use the website.
-Select the register/login button in the top right to create an account.
-After registering, you can log in.
-After loggin in, you can access the full functionality of the site like saving, rating, and commenting on pictures.
-After loggin in, you can also follow, message, and view profiles for any other users created in the database.
+* Run both the frontend and the backend at the same time to use the website.
+* Select the register/login button in the top right to create an account.
+* After registering, you can log in.
+* After loggin in, you can access the full functionality of the site like saving, rating, and commenting on pictures.
+* After loggin in, you can also follow, message, and view profiles for any other users created in the database.
 
 ---
 ## Contributors
