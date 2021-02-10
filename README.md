@@ -37,8 +37,33 @@ SpaceBook is a social media site for space nerds. SpaceBook allows you to see a 
 * Logged-in users can can search for other users.
 ---
 ## Getting Started
+* Open a command prompt in the directory where you want to create the project.
+* Use the command `git clone https://github.com/12142020-dotnet-uta/P2_ATMC.git` to download the project.
+
+### Backend
+* Install Visual Studio to open the solution.
+* Also install SQL server on your computer.
+* Open SpaceBook-Backend/SpaceBook.sln in visual studio.
+* Update the connection string in the ApplicationDbContext class in the SpaceBook.Repository Project.
+* Open Visual Studio's Package Manager Console (PMC). In the PMC, run `update-database` to add the migrations to the database in your connection string.
+* After you have a database, you can run the development version of the project using IIS.
+* If you click the Play button at the top of the window, Visual Studio will build and run the backend with SwaggerUI showing all of the HTTP endpoints.
+
+###Frontend
+* Install node.js and npm [here](https://nodejs.org/en/)
+* Open a command line terminal in the SpaceBook-Angular/ directory.
+* In the command line, run `npm install`
+* In the command line, run `npm start`
+* Open an web browser and navigate to http://localhost:4200/
+
 ---
 ## Usage
+Run both the frontend and the backend at the same time to use the website.
+Select the register/login button in the top right to create an account.
+After registering, you can log in.
+After loggin in, you can access the full functionality of the site like saving, rating, and commenting on pictures.
+After loggin in, you can also follow, message, and view profiles for any other users created in the database.
+
 ---
 ## Contributors
 * Trevor Graham - Team Lead
