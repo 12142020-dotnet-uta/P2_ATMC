@@ -49,7 +49,7 @@ SpaceBook is a social media site for space nerds. SpaceBook allows you to see a 
 * After you have a database, you can run the development version of the project using IIS.
 * If you click the Play button at the top of the window, Visual Studio will build and run the backend with SwaggerUI showing all of the HTTP endpoints.
 
-###Frontend
+### Frontend
 * Install node.js and npm [here](https://nodejs.org/en/)
 * Open a command line terminal in the SpaceBook-Angular/ directory.
 * In the command line, run `npm install`
